@@ -1,0 +1,14 @@
+{
+  "name": "handy_links",
+  "version": "1.0.0",
+  "description": "Django Based web app to save and share your links",
+  "main": "index.js",
+  "scripts": {
+    "dev": "sass links/static/scss/project.scss links/static/dist/style.css -w"
+  },
+  "author": "Enrique Alemany",
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.83.0"
+  }
+}

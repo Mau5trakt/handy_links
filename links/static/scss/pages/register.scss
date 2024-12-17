@@ -1,0 +1,141 @@
+@use "../globals" as *;
+
+.register {
+  display: flex;
+  justify-content: center;
+  align-items: self-start;
+  padding-top: 10px;
+  background-color: $bg-principal;
+  height: 100vh;
+
+  &__wrapper {
+    display: flex;
+
+    @include mquery($bp-sm) {
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    &--ctn {
+      border: 2px solid $border;
+      width: 400px;
+      color: white;
+
+      @include mquery($bp-sm) {
+        width: 100%;
+      }
+
+      &-header {
+        display: flex;
+        flex-flow: column nowrap;
+        text-align: center;
+        background-color: #2c333a;
+        gap: 10px;
+        padding: 20px 0;
+
+        h1 {
+          margin: 0;
+        }
+
+        a {
+          color: $blue;
+          text-decoration: none;
+        }
+      }
+
+      &-middle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-flow: column nowrap;
+
+        padding: 20px 0;
+        &--messages{
+          text-align: center;
+
+        }
+        &--form {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+
+          @include mquery($bp-sm) {
+            width: 80%;
+          }
+
+          &--container {
+            position: relative;
+            width: 320px;
+
+            @include mquery($bp-sm) {
+              width: 100%;
+            }
+
+            &::after {
+              content: "";
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              width: 0;
+              height: 3px;
+              background-color: $blue;
+              transition: all 500ms cubic-bezier(0, 0.58, 0.22, 1);
+            }
+
+            &:hover::after {
+              width: 100%;
+              left: 0;
+            }
+
+            input {
+                font-family: $font3;
+                font-size: 20px;
+                padding-left: 5px;
+
+              box-sizing: border-box;
+              width: 320px;
+              height: 36px;
+              background-color: $bg-principal;
+              color: white;
+              outline: none;
+              border: none;
+              border-bottom: 3px solid #2c333a;
+
+              @include mquery($bp-sm) {
+                width: 100%;
+              }
+
+              &:focus {
+                border-bottom: 4px solid $blue;
+                outline: none;
+              }
+            }
+
+            &-v2{
+                width: 100%;
+                &-submit{
+                    color: #fff;
+                    background-color: $blue;
+                    width: 100%;
+                    outline: none;
+                    height: 36px;
+                    border: none;
+                    border-radius: 3px;
+
+                    &:hover{
+                        cursor: pointer;
+
+                    }
+
+
+
+                }
+            }
+          }
+
+
+        }
+      }
+    }
+  }
+}

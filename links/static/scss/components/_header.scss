@@ -1,0 +1,50 @@
+@use "../globals" as *;
+
+
+.header{
+    background-color: $bg-principal;
+    display: flex;
+    flex-flow: column wrap;
+    box-sizing: border-box;
+    top: 0;
+    height: 56px;
+    border-bottom: 2px solid $border-input;
+
+   &__wrapper{
+    max-width: 1440px;
+    padding: 18px 40px;
+    display: flex;
+    gap: 20px;
+
+    @include mquery($bp-lg){
+        padding: 18px 30px;
+
+    }
+
+    @include mquery($bp-md){
+        padding: 18px 20px;
+
+    }
+
+    @include mquery($bp-sm){
+        padding: 18px 10px;
+    }
+
+    &-logo{
+      color: #ffffff;
+    }
+
+    &--ul{
+     display: flex;
+     gap: 10px;
+
+      @include mquery($bp-sm)
+      {
+        display: none;
+      }
+    }
+
+
+   }
+
+}

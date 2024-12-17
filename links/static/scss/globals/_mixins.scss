@@ -1,0 +1,8 @@
+@use 'sass:math';
+
+@mixin mquery($width){
+    @media screen and (max-width: $width){
+        @content;
+    }
+}
+
