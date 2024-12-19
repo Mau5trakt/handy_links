@@ -19,7 +19,7 @@ class RegisterUserView(CreateView):
         self.object = form.save(commit=False)
         self.object.set_password(form.cleaned_data['password'])
         self.object.avatar = generate_avatar()
-        
+
         self.object.save()
 
         return super().form_valid(form)
@@ -37,9 +37,13 @@ class MyLoginView(LoginView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
+class Home(LoginRequiredMixin, TemplateView):
+    template_name = 'links/homepage.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(self.request.user)
+        user = CustomUser.objects.get(username=self.request.user)
+        context['user'] = user
 
-class Home(LoginRequiredMixin,TemplateView):
-
-    template_name = 'links/pruebauth.html'
-
+        return context

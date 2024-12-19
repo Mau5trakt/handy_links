@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 
 {% block title %}
-	Register
+    Register
 {% endblock %}
 
 {% block content %}
@@ -11,70 +11,70 @@
         {% include 'partials/_header.html' %}
     {% endblock %}
 
-<section class="register">
+    <section class="register">
 
-<div class="register__wrapper">
-    <div class="register__wrapper--ctn">
-        <div class="register__wrapper--ctn-header">
-            <h1> Register </h1>
-            <span> Having an account? <a href="{% url 'login' %}"> Sign In </a> </span>
+        <div class="register__wrapper">
+            <div class="register__wrapper--ctn">
+                <div class="register__wrapper--ctn-header">
+                    <h1> Register </h1>
+                    <span> Having an account? <a href="{% url 'login' %}"> Sign In </a> </span>
+                </div>
+                <div class="register__wrapper--ctn-middle">
+                    <form class="register__wrapper--ctn-middle--form" method="POST">
+                        {% csrf_token %}
+                        <div class="register__wrapper--ctn-middle--form--container">
+                            {% render_field form.username placeholder="Username" name="username" class="register__wrapper--ctn-middle--form--container-input text-input" %}
+                            {% if form.username.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.username.errors|striptags }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="register__wrapper--ctn-middle--form--container">
+                            {% render_field form.email placeholder="Email" class="register__wrapper--ctn-middle--form--container-input text-input" %}
+                            {% if form.email.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.email.errors|striptags }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="register__wrapper--ctn-middle--form--container">
+                            {% render_field form.password placeholder="Password" class="register__wrapper--ctn-middle--form--container-input text-input" %}
+                            {% if form.password.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.password.errors|striptags }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="register__wrapper--ctn-middle--form--container">
+                            {% render_field form.confirmation placeholder="Confirmation" class="register__wrapper--ctn-middle--form--container-input text-input" %}
+                            {% if form.confirmation.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.confirmation.errors|striptags }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+
+                        <div class="register__wrapper--ctn-middle--form--container-v2">
+                            <input type="submit" value="Enviar"
+                                   class="register__wrapper--ctn-middle--form--container-v2-submit">
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+            </div>
+
+
         </div>
-        <div class="register__wrapper--ctn-middle">
-            <form class="register__wrapper--ctn-middle--form" method="POST">
-                {% csrf_token %}
-                <div class="register__wrapper--ctn-middle--form--container">
-                    {% render_field form.username placeholder="Username" name="username" class="register__wrapper--ctn-middle--form--container-input text-input"  %}
-                    {% if form.username.errors %}
-                        <div class="invalid-feedback">
-                            {{ form.username.errors|striptags }}
-                        </div>
-                    {% endif %}
-                </div>
 
-                <div class="register__wrapper--ctn-middle--form--container">
-                    {% render_field form.email placeholder="Email"  class="register__wrapper--ctn-middle--form--container-input text-input"  %}
-                    {% if form.email.errors %}
-                        <div class="invalid-feedback">
-                            {{ form.email.errors|striptags }}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="register__wrapper--ctn-middle--form--container">
-                    {% render_field form.password placeholder="Password"  class="register__wrapper--ctn-middle--form--container-input text-input"  %}
-                    {% if form.password.errors %}
-                        <div class="invalid-feedback">
-                            {{ form.password.errors|striptags }}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="register__wrapper--ctn-middle--form--container">
-                    {% render_field form.confirmation placeholder="Confirmation"  class="register__wrapper--ctn-middle--form--container-input text-input"  %}
-                    {% if form.confirmation.errors %}
-                        <div class="invalid-feedback">
-                            {{ form.confirmation.errors|striptags }}
-                        </div>
-                    {% endif %}
-                </div>
-
-
-                <div class="register__wrapper--ctn-middle--form--container-v2">
-                    <input type="submit" value="Enviar" class="register__wrapper--ctn-middle--form--container-v2-submit">
-                </div>
-
-            </form>
-
-        </div>
-
-
-
-    </div>
-
-
-</div>
-
-</section>
+    </section>
 
 
 {% endblock %}

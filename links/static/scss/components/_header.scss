@@ -1,50 +1,172 @@
 @use "../globals" as *;
 
+.header {
+  background-color: $bg-principal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column wrap;
+  box-sizing: border-box;
+  top: 0;
+  height: 56px;
+  border-bottom: 2px solid $border-input;
+  padding: 0 20px;
 
-.header{
-    background-color: $bg-principal;
-    display: flex;
-    flex-flow: column wrap;
-    box-sizing: border-box;
-    top: 0;
-    height: 56px;
-    border-bottom: 2px solid $border-input;
+  @include mquery($bp-lg) {
+    padding: 0 20px;
+  }
 
-   &__wrapper{
+  @include mquery($bp-md) {
+    padding: 0 10px;
+  }
+
+  @include mquery($bp-sm) {
+    padding: 0 10px;
+  }
+
+
+  &__wrapper {
     max-width: 1440px;
-    padding: 18px 40px;
+    width: 100%;
     display: flex;
+    justify-content: space-between;
     gap: 20px;
+    height: 100%;
+    align-items: center;
 
-    @include mquery($bp-lg){
-        padding: 18px 30px;
 
-    }
+    &--nav {
+      display: flex;
+      gap: 20px;
 
-    @include mquery($bp-md){
-        padding: 18px 20px;
+      &-logo {
+        color: $text;
+        font-family: $font3;
+        font-size: 22px;
+        text-align: center;
+      }
 
-    }
+      &--ul {
+        display: flex;
+        gap: 10px;
 
-    @include mquery($bp-sm){
-        padding: 18px 10px;
-    }
+        @include mquery($bp-sm) {
+          display: none;
 
-    &-logo{
-      color: #ffffff;
-    }
+        }
 
-    &--ul{
-     display: flex;
-     gap: 10px;
+        &-button {
+          background: $blue;
+          height: 32px;
+          outline: none;
+          border: 1px solid $blue;
+          cursor: pointer;
+          border-radius: 3px;
+          position: relative;
+          color: $bg-principal;
+          font-size: 14px;
+          padding: 0 10px;
+          font: $font3;
+          display: flex;
+          justify-content: center;
+          align-items: center;
 
-      @include mquery($bp-sm)
-      {
-        display: none;
+          &:hover {
+            background: #85b8ff;
+            transition: all 0.4s ease;
+          }
+
+          &-span {
+            font-size: 14px;
+            font-family: $font3;
+            flex: 1;
+          }
+
+          &-icon {
+            flex: 1;
+            height: 24px;
+            width: 24px;
+
+          }
+        }
+
+        &-dropdown {
+          position: absolute;
+          border: 1px solid $border-input;
+          top: 48px;
+          border-radius: 5px;
+          background: #282e33;
+
+
+          &-menu {
+            width: 150px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 5px 0;
+
+
+            &-link {
+              width: 100%;
+              box-sizing: border-box;
+              min-height: 40px;
+
+              line-height: 20px;
+              cursor: pointer;
+              padding: 10px 8px;
+
+
+              &:hover {
+                background: #323940;
+                transition: all 0.4s ease;
+              }
+
+              &-text {
+                font-size: 14px;
+                font-family: $font3;
+                color: $text;
+              }
+
+
+            }
+          }
+        }
       }
     }
 
+    &--div {
+      display: flex;
+      gap: 20px;
 
-   }
+      &-search {
+        width: 100%;
 
+        &-form {
+          &--input {
+            border: 1px solid $border-input;
+            border-radius: 5px;
+            height: 32px;
+            padding: 0 15px;
+            box-sizing: border-box;
+            outline: none;
+            font-family: $font3;
+            background: #22272b;
+            color: $text;
+            width: 100%;
+          }
+        }
+      }
+
+      &-icons {
+        display: flex;
+        gap: 10px;
+
+        img {
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+  }
 }
