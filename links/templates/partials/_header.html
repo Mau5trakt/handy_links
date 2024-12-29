@@ -3,6 +3,24 @@
 <header id="header" class="header">
     <div class="header__wrapper">
         <nav class="header__wrapper--nav">
+            <div class="header__wrapper--nav-menu-toggle">
+                <img src="{% static 'media/img/hamburger-menu-svgrepo-com.svg' %}" alt="" id="mobilemenu">
+                <div class="header__wrapper--nav-menu-toggle--container" id="mobilemenuctn">
+                    <span class="header__wrapper--nav-menu-toggle--container--element">Add a Link</span>
+                    <span class="header__wrapper--nav-menu-toggle--container--element">Add a Folder</span>
+                    <div class="header__wrapper--nav-menu-toggle--container--element">
+                        <form action="" class="header__wrapper--nav-menu-toggle--container--element--form-ctn"><input  type="text" autocomplete="off"
+                                               class="header__wrapper--div-search-form--input"
+                                               placeholder="Search">
+                            <input type="submit" value="Search" class="header__wrapper--nav-menu-toggle--container--element--form-ctn-submit">
+                        </form>
+                    </div>
+                    <span class="header__wrapper--nav-menu-toggle--container--element">Settings</span>
+                    <span class="header__wrapper--nav-menu-toggle--container--element">Info</span>
+                    <span class="header__wrapper--nav-menu-toggle--container--element">Logout</span>
+                </div>
+            </div>
+
             <div class="header__wrapper--nav-logo">
                 <span class="header__wrapper--nav-logo">Handylinks</span>
             </div>
@@ -11,12 +29,15 @@
                 {% if loged %}
                     <button class="header__wrapper--nav--ul-button">
                         <span class="header__wrapper--nav--ul-button-span">Add</span>
-                        <img class="header__wrapper--nav--ul-button-icon" src="{% static 'media/img/down-arrow-5-svgrepo-com.svg' %}" alt="down arrow">
+                        <img class="header__wrapper--nav--ul-button-icon"
+                             src="{% static 'media/img/down-arrow-5-svgrepo-com.svg' %}" alt="down arrow">
                     </button>
-                    <div class="header__wrapper--nav--ul-dropdown">
+                    <div class="header__wrapper--nav--ul-dropdown" id="add-btn-dropdown">
                         <ul class="header__wrapper--nav--ul-dropdown-menu">
-                            <li class="header__wrapper--nav--ul-dropdown-menu-link"><span class="header__wrapper--nav--ul-dropdown-menu-link-text">Link</span></li>
-                            <li class="header__wrapper--nav--ul-dropdown-menu-link"><span class="header__wrapper--nav--ul-dropdown-menu-link-text">Folder</span></li>
+                            <li class="header__wrapper--nav--ul-dropdown-menu-link"><span
+                                    class="header__wrapper--nav--ul-dropdown-menu-link-text">Link</span></li>
+                            <li class="header__wrapper--nav--ul-dropdown-menu-link"><span
+                                    class="header__wrapper--nav--ul-dropdown-menu-link-text">Folder</span></li>
                         </ul>
                     </div>
                 {% endif %}

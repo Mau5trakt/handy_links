@@ -2,6 +2,18 @@
   font-family: "Ubuntu Regular";
   src: url("../fonts/Ubuntu-Regular.ttf") format("truetype");
 }
+.dropdown__active {
+  display: block !important;
+}
+
+.button__active {
+  background: #85b8ff !important;
+}
+
+.mobile-menu__active {
+  display: flex !important;
+}
+
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
@@ -387,11 +399,99 @@ ul {
   display: flex;
   gap: 20px;
 }
+@media screen and (max-width: 576px) {
+  .header__wrapper--nav {
+    width: 100%;
+    position: relative;
+  }
+}
+.header__wrapper--nav-menu-toggle img {
+  height: 30px;
+  width: 30px;
+  display: none;
+}
+@media screen and (max-width: 576px) {
+  .header__wrapper--nav-menu-toggle img {
+    display: block;
+    cursor: pointer;
+  }
+}
+.header__wrapper--nav-menu-toggle--container {
+  position: absolute;
+  top: 50px;
+  width: calc(100vw - 5px);
+  left: -10px;
+  display: none;
+  flex-direction: column;
+  border-radius: 5px;
+  background: #282e33;
+  border: 1px solid #333c44;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  gap: 10px;
+}
+.header__wrapper--nav-menu-toggle--container--element {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 40px;
+  line-height: 20px;
+  cursor: pointer;
+  padding: 10px 8px;
+  font-family: "Ubuntu Regular", serif;
+  font-size: 1rem;
+  color: #B6C2CF;
+}
+.header__wrapper--nav-menu-toggle--container--element:last-child {
+  color: #f15b50;
+}
+.header__wrapper--nav-menu-toggle--container--element--form-ctn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+}
+.header__wrapper--nav-menu-toggle--container--element--form-ctn-input {
+  flex-grow: 1;
+  background: #282e33;
+}
+.header__wrapper--nav-menu-toggle--container--element--form-ctn-submit {
+  flex-grow: 2;
+  background: #579dff;
+  height: 32px;
+  border: 1px solid #579dff;
+  cursor: pointer;
+  border-radius: 3px;
+  position: relative;
+  color: #1d2125;
+  font-size: 14px;
+  padding: 0 10px;
+  font: "Ubuntu Regular", serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.header__wrapper--nav-menu-toggle--container--element--form-ctn-submit:hover {
+  background: #85b8ff;
+  transition: all 0.4s ease;
+}
+.header__wrapper--nav-menu-toggle--container--element:hover {
+  background: #323940;
+  transition: all 0.4s ease;
+}
 .header__wrapper--nav-logo {
   color: #B6C2CF;
   font-family: "Ubuntu Regular", serif;
   font-size: 22px;
   text-align: center;
+}
+@media screen and (max-width: 576px) {
+  .header__wrapper--nav-logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 .header__wrapper--nav--ul {
   display: flex;
@@ -405,7 +505,6 @@ ul {
 .header__wrapper--nav--ul-button {
   background: #579dff;
   height: 32px;
-  outline: none;
   border: 1px solid #579dff;
   cursor: pointer;
   border-radius: 3px;
@@ -421,6 +520,11 @@ ul {
 .header__wrapper--nav--ul-button:hover {
   background: #85b8ff;
   transition: all 0.4s ease;
+}
+@media screen and (max-width: 576px) {
+  .header__wrapper--nav--ul-button {
+    display: none;
+  }
 }
 .header__wrapper--nav--ul-button-span {
   font-size: 14px;
@@ -438,6 +542,7 @@ ul {
   top: 48px;
   border-radius: 5px;
   background: #282e33;
+  display: none;
 }
 .header__wrapper--nav--ul-dropdown-menu {
   width: 150px;
@@ -467,6 +572,11 @@ ul {
 .header__wrapper--div {
   display: flex;
   gap: 20px;
+}
+@media screen and (max-width: 576px) {
+  .header__wrapper--div {
+    display: none;
+  }
 }
 .header__wrapper--div-search {
   width: 100%;

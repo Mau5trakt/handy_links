@@ -39,11 +39,121 @@
       display: flex;
       gap: 20px;
 
+      @include mquery($bp-sm) {
+        width: 100%;
+        position: relative;
+      }
+
+      &-menu-toggle {
+
+        img {
+          height: 30px;
+          width: 30px;
+          display: none;
+
+
+          @include mquery($bp-sm) {
+            display: block;
+            cursor: pointer;
+          }
+
+        }
+
+        &--container {
+          position: absolute;
+          top: 50px;
+          width: calc(100vw - 5px);
+          left: -10px;
+          display: none;
+
+          flex-direction: column;
+          border-radius: 5px;
+          background: #282e33;
+          border: 1px solid $border;
+          padding: 5px 10px;
+          box-sizing: border-box;
+          gap: 10px;
+
+          &--element {
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 40px;
+            line-height: 20px;
+            cursor: pointer;
+            padding: 10px 8px;
+            font-family: $font3;
+            font-size: 1rem;
+            color: $text;
+
+            &:last-child {
+              color: #f15b50;
+            }
+
+            &--form-ctn {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              gap: 10px;
+              padding: 0;
+
+              &-input {
+                flex-grow: 1;
+                background: #282e33;
+              }
+
+              &-submit {
+                flex-grow: 2;
+                background: $blue;
+                height: 32px;
+
+                border: 1px solid $blue;
+                cursor: pointer;
+                border-radius: 3px;
+                position: relative;
+                color: $bg-principal;
+                font-size: 14px;
+                padding: 0 10px;
+                font: $font3;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                &:hover {
+                  background: #85b8ff;
+                  transition: all 0.4s ease;
+                }
+
+              }
+
+
+            }
+
+
+            &:hover {
+              background: #323940;
+              transition: all 0.4s ease;
+            }
+
+          }
+
+
+        }
+
+      }
+
       &-logo {
         color: $text;
         font-family: $font3;
         font-size: 22px;
         text-align: center;
+
+        @include mquery($bp-sm) {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
       }
 
       &--ul {
@@ -58,7 +168,7 @@
         &-button {
           background: $blue;
           height: 32px;
-          outline: none;
+
           border: 1px solid $blue;
           cursor: pointer;
           border-radius: 3px;
@@ -74,6 +184,11 @@
           &:hover {
             background: #85b8ff;
             transition: all 0.4s ease;
+          }
+
+          @include mquery($bp-sm) {
+            display: none;
+
           }
 
           &-span {
@@ -96,6 +211,7 @@
           top: 48px;
           border-radius: 5px;
           background: #282e33;
+          display: none;
 
 
           &-menu {
@@ -138,6 +254,10 @@
     &--div {
       display: flex;
       gap: 20px;
+
+      @include mquery($bp-sm) {
+        display: none;
+      }
 
       &-search {
         width: 100%;
