@@ -7,7 +7,7 @@ admin.site.register(CustomUser)
 
 @admin.register(Folder)
 class FolderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'owner', 'created_at']
+    list_display = ['id', 'title', 'owner', 'created_at']
     search_fields = ['owner', 'public']
     
     
