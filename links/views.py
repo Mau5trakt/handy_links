@@ -1,9 +1,10 @@
+from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import CreateView, TemplateView
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
-from links.models import CustomUser
+from links.models import CustomUser, Folder, Link
 from links.forms import RegisterForm
 from links.avatar_generation import generate_avatar
 from django.urls import reverse_lazy
@@ -46,4 +47,12 @@ class Home(LoginRequiredMixin, TemplateView):
         user = CustomUser.objects.get(username=self.request.user)
         context['user'] = user
 
+        context['personal_folders'] = Folder.objects.filter(owner=self.request.user)[:5]
+        print(context['personal_folders'])
+
         return context
+
+def logoutuser(request):
+    logout(request)
+    return redirect('login')
+
