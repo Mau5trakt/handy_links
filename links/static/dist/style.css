@@ -12,6 +12,83 @@
 
 .mobile-menu__active {
   display: flex !important;
+  z-index: 999;
+}
+
+/*
+                    .-"""-.
+                  / .===. \
+                  \/ 6 6 \/
+                  ( \___/ )
+  ____________ooo__\_____/_________________
+ /                                         \
+|               Form inputs                 |
+ \__________________________ooo____________/
+                   |  |  |
+                   |_ | _|
+                   |  |  |
+                   |__|__|  jgs
+                   /-'Y'-\
+                  (__/ \__)
+*/
+.text-input, .selection > span {
+  box-sizing: border-box;
+  width: 100% !important;
+  height: 32px !important;
+  background: #22272b !important;
+  border: 2px solid #738496 !important;
+  border-radius: 3px !important;
+  font-family: "Ubuntu Regular", serif !important;
+  font-size: 14px !important;
+  color: #B6C2CF !important;
+}
+
+.checkbox-input {
+  height: 16px;
+  width: 16px;
+  background: #1d2125;
+  border-color: #333c44;
+}
+
+/*
+                    .-"""-.
+                  / .===. \
+                  \/ 6 6 \/
+                  ( \___/ )
+  ____________ooo__\_____/_________________
+ /                                         \
+| Django Autocomplete Light Select 2 Widget |
+ \__________________________ooo____________/
+                   |  |  |
+                   |_ | _|
+                   |  |  |
+                   |__|__|  jgs
+                   /-'Y'-\
+                  (__/ \__)
+*/
+.select2-results__option {
+  font-size: 14px !important;
+  font-family: "Ubuntu Regular", serif !important;
+  color: #B6C2CF;
+}
+.select2-results__options {
+  background: #22272b !important;
+}
+.select2-search__field {
+  color: #B6C2CF !important;
+}
+.select2-selection__clear {
+  color: #b6c2cf !important;
+}
+.select2-selection__choice {
+  padding: 2px 5px !important;
+  font-size: 12px !important;
+  background: #579dff !important;
+  color: #1d2126 !important;
+  border: 1px solid #333c44 !important;
+}
+.select2-selection__choice__remove {
+  color: #1d2126 !important;
 }
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
@@ -493,6 +570,7 @@ ul {
   font-family: "Ubuntu Regular", serif;
   font-size: 22px;
   text-align: center;
+  text-decoration: none;
 }
 @media screen and (max-width: 576px) {
   .header__wrapper--nav-logo {
@@ -876,6 +954,117 @@ body {
 }
 .personal_folders__wrapper--folders--info-ctn--description {
   font-size: 10px;
+}
+
+.create-folder {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+@media screen and (max-width: 1024px) {
+  .create-folder {
+    padding: 0 20px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .create-folder {
+    padding: 0 10px;
+  }
+}
+@media screen and (max-width: 576px) {
+  .create-folder {
+    padding: 0 10px;
+  }
+}
+.create-folder__wrapper {
+  display: flex;
+  max-width: 1440px;
+  width: 100%;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+}
+.create-folder__wrapper--form-ctn {
+  border: 2px solid #333c44;
+  padding: 30px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.create-folder__wrapper--form-ctn__header {
+  display: flex;
+  border-bottom: 1px solid #333c44;
+  height: 40px;
+}
+.create-folder__wrapper--form-ctn__header--title {
+  color: #B6C2CF;
+  font-size: 28px;
+  font-family: "Ubuntu Regular", serif;
+  margin: 0;
+}
+.create-folder__wrapper--form-ctn__content__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.create-folder__wrapper--form-ctn__content__form--field {
+  display: flex;
+  gap: 10px;
+}
+.create-folder__wrapper--form-ctn__content__form--field--label-ctn {
+  width: 30%;
+  display: flex;
+  align-items: center;
+}
+.create-folder__wrapper--form-ctn__content__form--field--label-ctn__element {
+  color: #B6C2CF;
+  font-size: 14px;
+  font-family: "Ubuntu Regular", serif;
+}
+.create-folder__wrapper--form-ctn__content__form--field--label-ctn__element--span {
+  color: #f15b50;
+}
+.create-folder__wrapper--form-ctn__content__form--field--input-ctn {
+  width: 70%;
+  display: flex;
+  flex-flow: column wrap;
+  gap: 5px;
+}
+.create-folder__wrapper--form-ctn__content__form--field--input-ctn__help-text {
+  font-size: 12px;
+  color: #B6C2CF;
+  font-family: "Ubuntu Regular", serif;
+}
+.create-folder__wrapper--form-ctn__content__form--field-submit {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: end;
+}
+.create-folder__wrapper--form-ctn__content__form--field-submit--input {
+  height: 32px;
+  font-family: "Ubuntu Regular", serif;
+  font-size: 14px;
+  color: #1d2125;
+  background: #579dff;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 3px;
+}
+.create-folder__wrapper--form-ctn__content__form--field-submit--input:hover {
+  background: #85b8ff;
+  transition: all 0.4s ease;
+}
+.create-folder__wrapper--form-ctn__content__form--field-submit--link {
+  text-decoration: none;
+  color: #579dff;
+  font-size: 14px;
+  font-family: "Ubuntu Regular", serif;
+}
+.create-folder__wrapper--form-ctn__content__form--field-submit--link:hover {
+  text-decoration: underline;
+  transition: text-d;
 }
 
 /*# sourceMappingURL=style.css.map */
