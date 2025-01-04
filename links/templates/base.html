@@ -6,15 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'dist/style.css' %}">
     <title>{% block title %} {% endblock %}</title>
-    
+
 </head>
 <body>
-    {% block content %}
-    	
-    {% endblock %}
+{% block content %}
+
+
+
+    {% block extrajs %}
+
+    {% endblock extrajs %}
+
+{% endblock content %}
 </body>
 <script src="{% static 'dist/project.js' %}" defer></script>
-{% block extrajs %}
-	
-{% endblock %}
+
 </html>
