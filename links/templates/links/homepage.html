@@ -14,11 +14,11 @@
             <div class="personal_folders__wrapper">
                 <div class="personal_folders__wrapper--header">
                     <h3 class="personal_folders__wrapper--header-element">My Folders</h3>
-                    <span class="personal_folders__wrapper--header-element">
+                    <a class="personal_folders__wrapper--header-element" href="{% url 'create-folder' %}">
                         <img class=""
                              src="{% static 'media/img/add-svgrepo-com.svg' %}" alt="Add folder" height="20px"
                              width="20px">
-                    </span>
+                    </a>
 
 
                     <a class="personal_folders__wrapper--header-element" href="">View All</a>
