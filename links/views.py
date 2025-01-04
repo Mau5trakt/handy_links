@@ -5,9 +5,10 @@ from django.views.generic import CreateView, TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
 from links.models import CustomUser, Folder, Link
-from links.forms import RegisterForm
+from links.forms import RegisterForm, FolderCreationForm
 from links.avatar_generation import generate_avatar
 from django.urls import reverse_lazy
+from dal import autocomplete
 
 
 class RegisterUserView(CreateView):
@@ -48,11 +49,40 @@ class Home(LoginRequiredMixin, TemplateView):
         context['user'] = user
 
         context['personal_folders'] = Folder.objects.filter(owner=self.request.user)[:5]
-        print(context['personal_folders'])
+
 
         return context
 
 def logoutuser(request):
     logout(request)
     return redirect('login')
+
+
+class UsersAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return CustomUser.objects.none()
+
+        qs = CustomUser.objects.all().exclude(id=self.request.user.id)
+        if self.q:
+            qs = qs.filter(username__istartswith=self.q)[:5]
+
+        return qs
+
+
+class FolderCreationView(LoginRequiredMixin, CreateView):
+    model = Folder
+    form_class = FolderCreationForm
+    template_name = 'links/create_folder.html'
+    success_url = reverse_lazy('home')
+
+
+    def form_valid(self, form):
+        print('dale')
+        self.object = form.save(commit=False)
+        self.object.owner = self.request.user
+        self.object.save()
+        return super().form_valid(form)
+
+
 
