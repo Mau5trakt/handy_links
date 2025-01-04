@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load widget_tweaks %}
+
+{% block title %}
+    Create a folder
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_header.html' with loged=True %}
+
+    <div class="create-folder">
+        <div class="create-folder__wrapper">
+            <div class="create-folder__wrapper--form-ctn">
+                <div class="create-folder__wrapper--form-ctn__header">
+                    <h3 class="create-folder__wrapper--form-ctn__header--title"> Create a new folder</h3>
+                </div>
+
+                <div class="create-folder__wrapper--form-ctn__content">
+                    <form method="POST" class="create-folder__wrapper--form-ctn__content__form">
+
+                        {% csrf_token %}
+                        <div class="create-folder__wrapper--form-ctn__content__form--field">
+                            <div class="create-folder__wrapper--form-ctn__content__form--field--label-ctn">
+                                <label for="title"
+                                       class="create-folder__wrapper--form-ctn__content__form--field--label-ctn__element">Folder
+                                    Title <span
+                                            class="create-folder__wrapper--form-ctn__content__form--field--label-ctn__element--span">*</span>
+                                </label>
+                            </div>
+
+                            <div class="create-folder__wrapper--form-ctn__content__form--field--input-ctn">
+                                {% render_field form.title|attr:"autocomplete:off"|attr:"autofocus"|add_class:"create-folder__wrapper--form-ctn__content__form--field--input-ctn__element text-input" %}
+                            </div>
+                        </div>
+
+                        <div class="create-folder__wrapper--form-ctn__content__form--field">
+                            <div class="create-folder__wrapper--form-ctn__content__form--field--label-ctn">
+                                <label for="public"
+                                       class="create-folder__wrapper--form-ctn__content__form--field--label-ctn__element">Is
+                                    Public? </label>
+
+                            </div>
+
+                            <div class="create-folder__wrapper--form-ctn__content__form--field--input-ctn">
+                                {% render_field form.public|attr:"id:publicCheckbox"|add_class:"create-folder__wrapper--form-ctn__content__form--field--input-ctn__element checkbox-input" %}
+                                <span class="create-folder__wrapper--form-ctn__content__form--field--input-ctn__help-text"> If checked, the folder is available with everybody with the folder url </span>
+                            </div>
+                        </div>
+
+                        <div class="create-folder__wrapper--form-ctn__content__form--field">
+                            <div class="create-folder__wrapper--form-ctn__content__form--field--label-ctn">
+                                <label for="collaborators"
+                                       class="create-folder__wrapper--form-ctn__content__form--field--label-ctn__element">
+                                    Add Colaborators</label>
+                            </div>
+
+                            <div class="create-folder__wrapper--form-ctn__content__form--field--input-ctn">
+                                {% render_field form.collaborators|add_class:"create-folder__wrapper--form-ctn__content__form--field--input-ctn__element" %}
+                                <span class="create-folder__wrapper--form-ctn__content__form--field--input-ctn__help-text"> Select a list of users who can add, edit or delete links in your folder </span>
+                            </div>
+                        </div>
+
+                        <div class="create-folder__wrapper--form-ctn__content__form--field" id="watchersField">
+                            <div class="create-folder__wrapper--form-ctn__content__form--field--label-ctn">
+                                <label for="collaborators"
+                                       class="create-folder__wrapper--form-ctn__content__form--field--label-ctn__element">
+                                    Add Watchers</label>
+                            </div>
+
+                            <div class="create-folder__wrapper--form-ctn__content__form--field--input-ctn">
+                                {% render_field form.watchers|add_class:"create-folder__wrapper--form-ctn__content__form--field--input-ctn__element" %}
+                                <span class="create-folder__wrapper--form-ctn__content__form--field--input-ctn__help-text"> Select a list of users who can watch the links in your folder </span>
+
+                            </div>
+                        </div>
+
+
+                        <div class="create-folder__wrapper--form-ctn__content__form--field-submit">
+                            <input type="submit" value="Create"
+                                   class="create-folder__wrapper--form-ctn__content__form--field-submit--input">
+                            <a href="{% url 'home' %}"
+                               class="create-folder__wrapper--form-ctn__content__form--field-submit--link"> Cancel </a>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+    {% block extrajs %}
+        <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+        {{ form.media }}
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+
+                let watchers = document.querySelector('#watchersField');
+
+                document.querySelector("#publicCheckbox").addEventListener('change', event => {
+                    if (event.target.checked) {
+                        watchers.style.display = 'none';
+                    } else {
+                        watchers.style.display = 'flex';
+                    }
+                });
+            })
+        </script>
+
+    {% endblock extrajs %}
+
+{% endblock content %}
+
+
+
+
+

@@ -1,0 +1,140 @@
+@use "../globals" as *;
+
+.create-folder {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+
+  @include mquery($bp-lg) {
+    padding: 0 20px;
+  }
+
+  @include mquery($bp-md) {
+    padding: 0 10px;
+  }
+
+  @include mquery($bp-sm) {
+    padding: 0 10px;
+  }
+
+  &__wrapper {
+    display: flex;
+    max-width: 1440px;
+    width: 100%;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+
+    &--form-ctn {
+      border: 2px solid $border;
+      padding: 30px;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+
+      &__header {
+        display: flex;
+        border-bottom: 1px solid $border;
+        height: 40px;
+
+
+        &--title {
+          color: $text;
+          font-size: 28px;
+          font-family: $font3;
+          margin: 0;
+
+        }
+      }
+
+      &__content {
+        &__form {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+
+          &--field {
+            display: flex;
+            gap: 10px;
+
+            &--label-ctn {
+              width: 30%;
+              display: flex;
+              align-items: center;
+
+              &__element {
+                color: $text;
+                font-size: 14px;
+                font-family: $font3;
+
+                &--span {
+                  color: #f15b50;
+                }
+              }
+
+            }
+
+            &--input-ctn {
+              width: 70%;
+              display: flex;
+              flex-flow: column wrap;
+              gap: 5px;
+
+              &__help-text {
+                font-size: 12px;
+                color: $text;
+                font-family: $font3;
+
+              }
+
+            }
+
+          }
+
+          &--field-submit {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: end;
+
+            &--input {
+              height: 32px;
+              font-family: $font3;
+              font-size: 14px;
+              color: #1d2125;
+              background: $blue;
+              padding: 4px 10px;
+              border: none;
+              border-radius: 3px;
+
+              &:hover {
+                background: #85b8ff;
+                transition: all 0.4s ease;
+              }
+            }
+
+            &--link {
+              text-decoration: none;
+              color: $blue;
+              font-size: 14px;
+              font-family: $font3;
+
+              &:hover {
+                text-decoration: underline;
+                transition: text-d;
+              }
+            }
+          }
+        }
+
+
+      }
+    }
+
+
+  }
+
+
+}
