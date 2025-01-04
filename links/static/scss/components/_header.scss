@@ -154,6 +154,7 @@
         font-family: $font3;
         font-size: 22px;
         text-align: center;
+        text-decoration: none;
 
         @include mquery($bp-sm) {
           width: 100%;
