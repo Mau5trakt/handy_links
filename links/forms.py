@@ -1,7 +1,7 @@
 from django import forms
-from links.models import CustomUser
+from links.models import CustomUser, Folder, Link
+from dal import autocomplete
 
-from links.models import CustomUser
 
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
@@ -31,6 +31,7 @@ class RegisterForm(forms.ModelForm):
             raise forms.ValidationError('Username already in use')
         return data
 
+
 class LoginForm(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
 
@@ -42,3 +43,18 @@ class LoginForm(forms.ModelForm):
         data = self.cleaned_data['username']
         if not CustomUser.objects.filter(username__iexact=data).exists():
             raise forms.ValidationError('Username or passsword incorrect')
+
+
+class FolderCreationForm(forms.ModelForm):
+    class Meta:
+        model = Folder
+        fields = ['title', 'public', 'collaborators', 'watchers']
+        widgets = {
+            'collaborators': autocomplete.ModelSelect2Multiple(url='user-autocomplete'),
+            'watchers': autocomplete.ModelSelect2Multiple(url='user-autocomplete'),
+
+        }
+
+
+
+
