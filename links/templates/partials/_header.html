@@ -22,7 +22,8 @@
             </div>
 
             <div class="header__wrapper--nav-logo">
-                <span class="header__wrapper--nav-logo">Handylinks</span>
+                {% if loged %} <a class="header__wrapper--nav-logo" href="{% url 'home' %}">Handylinks</a> {% else %} <span class="header__wrapper--nav-logo">Handylinks</span> {% endif %}
+
             </div>
 
             <ul class="header__wrapper--nav-ul">
