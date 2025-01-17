@@ -630,6 +630,7 @@ ul {
   border-radius: 5px;
   background: #282e33;
   display: none;
+  z-index: 999;
 }
 .header__wrapper--nav--ul-dropdown-menu {
   width: 150px;
@@ -819,6 +820,22 @@ body {
 .register__wrapper--ctn-middle--form--container-v2-submit:hover {
   cursor: pointer;
 }
+.register .error-message {
+  font-family: "Ubuntu Regular", serif;
+  font-size: 16px;
+  color: #f15b50;
+  margin-bottom: 10px;
+}
+.register .error_ctn:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  height: 3px;
+  background-color: #f15b50;
+  transition: all 500ms cubic-bezier(0, 0.58, 0.22, 1);
+}
 
 .personal_folders {
   display: flex;
@@ -953,6 +970,127 @@ body {
   display: none;
 }
 .personal_folders__wrapper--folders--info-ctn--description {
+  font-size: 10px;
+}
+
+.shared_folders {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+@media screen and (max-width: 1024px) {
+  .shared_folders {
+    padding: 0 20px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .shared_folders {
+    padding: 0 10px;
+  }
+}
+@media screen and (max-width: 576px) {
+  .shared_folders {
+    padding: 0 10px;
+  }
+}
+.shared_folders__wrapper {
+  display: flex;
+  max-width: 1440px;
+  width: 100%;
+  flex-direction: column;
+  gap: 30px;
+}
+.shared_folders__wrapper--header {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}
+.shared_folders__wrapper--header-element {
+  margin: 0;
+  color: #B6C2CF;
+  font-family: "Ubuntu Regular", serif;
+}
+.shared_folders__wrapper--header-element:nth-child(1) {
+  font-size: 22px;
+}
+.shared_folders__wrapper--header-element:nth-child(2) {
+  margin-left: auto;
+  text-decoration: none;
+  font-size: 14px;
+  color: #579dff;
+}
+.shared_folders__wrapper--folders {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.shared_folders__wrapper--folders-folder {
+  position: relative;
+  box-sizing: border-box;
+  width: 208px;
+  height: 124px;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #333c44;
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.75);
+  font-family: "Ubuntu Regular", serif;
+  color: #B6C2CF;
+}
+.shared_folders__wrapper--folders-folder:hover {
+  border: 1px solid #91979e;
+  transition: all 0.4s ease;
+}
+.shared_folders__wrapper--folders-folder--top {
+  width: 100%;
+  height: 48px;
+  background: #2c333a;
+}
+.shared_folders__wrapper--folders--info-ctn {
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 32px 16px 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.shared_folders__wrapper--folders--info-ctn--img {
+  width: 36px;
+  height: 36px;
+  box-sizing: border-box;
+  border: 4px solid #282e33;
+  border-radius: 3px;
+}
+.shared_folders__wrapper--folders--info-ctn--img img {
+  width: 100%;
+  height: 100%;
+}
+.shared_folders__wrapper--folders--info-ctn--main {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+.shared_folders__wrapper--folders--info-ctn--main img {
+  height: 25px;
+  width: 25px;
+  margin-left: auto;
+  position: relative;
+}
+.shared_folders__wrapper--folders--info-ctn--main--folder-visibility {
+  background: #b6c2cf;
+  font-size: 12px;
+  padding: 0 5px;
+  color: #000;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  border-radius: 3px;
+  z-index: 2;
+  display: none;
+}
+.shared_folders__wrapper--folders--info-ctn--description {
   font-size: 10px;
 }
 
