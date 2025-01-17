@@ -7,7 +7,7 @@
                 <img src="{% static 'media/img/hamburger-menu-svgrepo-com.svg' %}" alt="" id="mobilemenu">
                 <div class="header__wrapper--nav-menu-toggle--container" id="mobilemenuctn">
                     <span class="header__wrapper--nav-menu-toggle--container--element">Add a Link</span>
-                    <span class="header__wrapper--nav-menu-toggle--container--element">Add a Folder</span>
+                    <span class="header__wrapper--nav-menu-toggle--container--element" id="folderCreationLink">Add a Folder</span>
                     <div class="header__wrapper--nav-menu-toggle--container--element">
                         <form action="" class="header__wrapper--nav-menu-toggle--container--element--form-ctn"><input  type="text" autocomplete="off"
                                                class="header__wrapper--div-search-form--input"
@@ -37,8 +37,8 @@
                         <ul class="header__wrapper--nav--ul-dropdown-menu">
                             <li class="header__wrapper--nav--ul-dropdown-menu-link"><span
                                     class="header__wrapper--nav--ul-dropdown-menu-link-text">Link</span></li>
-                            <li class="header__wrapper--nav--ul-dropdown-menu-link"><span
-                                    class="header__wrapper--nav--ul-dropdown-menu-link-text">Folder</span></li>
+                            <li class="header__wrapper--nav--ul-dropdown-menu-link" id="folderCreationLink"><span
+                                    class="header__wrapper--nav--ul-dropdown-menu-link-text" id="folderCreationLink">Folder</span></li>
                         </ul>
                     </div>
                 {% endif %}
