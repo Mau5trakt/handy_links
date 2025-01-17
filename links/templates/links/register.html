@@ -23,39 +23,43 @@
                     <form class="register__wrapper--ctn-middle--form" method="POST">
                         {% csrf_token %}
                         <div class="register__wrapper--ctn-middle--form--container">
-                            {% render_field form.username placeholder="Username" name="username" class="register__wrapper--ctn-middle--form--container-input text-input" %}
                             {% if form.username.errors %}
-                                <div class="invalid-feedback">
+                                <div class="error-message">
                                     {{ form.username.errors|striptags }}
                                 </div>
                             {% endif %}
+                            {% render_field form.username placeholder="Username" name="username" class="register__wrapper--ctn-middle--form--container-input text-input" %}
+
                         </div>
 
                         <div class="register__wrapper--ctn-middle--form--container">
-                            {% render_field form.email placeholder="Email" class="register__wrapper--ctn-middle--form--container-input text-input" %}
                             {% if form.email.errors %}
-                                <div class="invalid-feedback">
+                                <div class="error-message">
                                     {{ form.email.errors|striptags }}
                                 </div>
                             {% endif %}
+                            {% render_field form.email placeholder="Email" class="register__wrapper--ctn-middle--form--container-input text-input" %}
+
                         </div>
 
                         <div class="register__wrapper--ctn-middle--form--container">
-                            {% render_field form.password placeholder="Password" class="register__wrapper--ctn-middle--form--container-input text-input" %}
                             {% if form.password.errors %}
-                                <div class="invalid-feedback">
+                                <div class="error-message">
                                     {{ form.password.errors|striptags }}
                                 </div>
                             {% endif %}
+                            {% render_field form.password placeholder="Password" class="register__wrapper--ctn-middle--form--container-input text-input" %}
+
                         </div>
 
                         <div class="register__wrapper--ctn-middle--form--container">
-                            {% render_field form.confirmation placeholder="Confirmation" class="register__wrapper--ctn-middle--form--container-input text-input" %}
                             {% if form.confirmation.errors %}
-                                <div class="invalid-feedback">
+                                <div class="error-message">
                                     {{ form.confirmation.errors|striptags }}
                                 </div>
                             {% endif %}
+                            {% render_field form.confirmation placeholder="Confirmation" class="register__wrapper--ctn-middle--form--container-input text-input" %}
+
                         </div>
 
 

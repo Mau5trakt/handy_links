@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 
 {% block title %}
-	Login
+    Login
 {% endblock %}
 
 {% block content %}
@@ -11,79 +11,81 @@
         {% include 'partials/_header.html' %}
     {% endblock %}
 
-<section class="register">
+    <section class="register">
 
-<div class="register__wrapper">
-    <div class="register__wrapper--ctn">
-        <div class="register__wrapper--ctn-header">
-            <h1> Login </h1>
-            <span> Dont have an account? <a href="{% url 'register' %}"> Register </a> </span>
-        </div>
+        <div class="register__wrapper">
+            <div class="register__wrapper--ctn">
+                <div class="register__wrapper--ctn-header">
+                    <h1> Login </h1>
+                    <span> Dont have an account? <a href="{% url 'register' %}"> Register </a> </span>
+                </div>
 
-        <div class="register__wrapper--ctn-middle">
+                <div class="register__wrapper--ctn-middle">
 
-            <div class="register__wrapper--ctn-middle--messages">
-                {% if messages %}
-                    {% for message in messages%}
-                        <h4>{{ message }}</h4>
-                    {% endfor %}
-                {% endif %}
+                    <div class="register__wrapper--ctn-middle--messages">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <h4 class="error-message">
+                                    {{ message }}
+                                </h4>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <form class="register__wrapper--ctn-middle--form" method="POST">
+                        {% csrf_token %}
+                        <div class="register__wrapper--ctn-middle--form--container">
+                            {% render_field form.username placeholder="Username" name="username" class="register__wrapper--ctn-middle--form--container-input text-input" %}
+                            {% if form.username.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.username.errors|striptags }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="register__wrapper--ctn-middle--form--container">
+                            {% render_field form.email placeholder="Email" class="register__wrapper--ctn-middle--form--container-input text-input" %}
+                            {% if form.email.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.email.errors|striptags }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="register__wrapper--ctn-middle--form--container">
+                            {% render_field form.password placeholder="Password" class="register__wrapper--ctn-middle--form--container-input text-input" %}
+                            {% if form.password.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.password.errors|striptags }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="register__wrapper--ctn-middle--form--container">
+                            {% render_field form.confirmation placeholder="Confirmation" class="register__wrapper--ctn-middle--form--container-input text-input" %}
+                            {% if form.confirmation.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.confirmation.errors|striptags }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+
+                        <div class="register__wrapper--ctn-middle--form--container-v2">
+                            <input type="submit" value="Login"
+                                   class="register__wrapper--ctn-middle--form--container-v2-submit">
+                        </div>
+
+                    </form>
+
+                </div>
+
+
             </div>
-            <form class="register__wrapper--ctn-middle--form" method="POST">
-                {% csrf_token %}
-                <div class="register__wrapper--ctn-middle--form--container">
-                    {% render_field form.username placeholder="Username" name="username" class="register__wrapper--ctn-middle--form--container-input text-input"  %}
-                    {% if form.username.errors %}
-                        <div class="invalid-feedback">
-                            {{ form.username.errors|striptags }}
-                        </div>
-                    {% endif %}
-                </div>
 
-                <div class="register__wrapper--ctn-middle--form--container">
-                    {% render_field form.email placeholder="Email"  class="register__wrapper--ctn-middle--form--container-input text-input"  %}
-                    {% if form.email.errors %}
-                        <div class="invalid-feedback">
-                            {{ form.email.errors|striptags }}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="register__wrapper--ctn-middle--form--container">
-                    {% render_field form.password placeholder="Password"  class="register__wrapper--ctn-middle--form--container-input text-input"  %}
-                    {% if form.password.errors %}
-                        <div class="invalid-feedback">
-                            {{ form.password.errors|striptags }}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="register__wrapper--ctn-middle--form--container">
-                    {% render_field form.confirmation placeholder="Confirmation"  class="register__wrapper--ctn-middle--form--container-input text-input"  %}
-                    {% if form.confirmation.errors %}
-                        <div class="invalid-feedback">
-                            {{ form.confirmation.errors|striptags }}
-                        </div>
-                    {% endif %}
-                </div>
-
-
-                <div class="register__wrapper--ctn-middle--form--container-v2">
-                    <input type="submit" value="Login" class="register__wrapper--ctn-middle--form--container-v2-submit">
-                </div>
-
-            </form>
 
         </div>
 
-
-
-    </div>
-
-
-</div>
-
-</section>
+    </section>
 
 
 {% endblock %}
