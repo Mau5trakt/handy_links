@@ -17,7 +17,7 @@ class RegisterForm(forms.ModelForm):
         confirmation = cleaned_data.get("confirmation")
 
         if password and confirmation and password != confirmation:
-            self.add_error('password', "Passwords don't match.")
+            self.add_error('password', "Passwords doesn't match.")
 
     def clean_email(self):
         data = self.cleaned_data['email']
@@ -42,7 +42,7 @@ class LoginForm(forms.ModelForm):
     def clean_username(self):
         data = self.cleaned_data['username']
         if not CustomUser.objects.filter(username__iexact=data).exists():
-            raise forms.ValidationError('Username or passsword incorrect')
+            raise forms.ValidationError('Username or password incorrect')
 
 
 class FolderCreationForm(forms.ModelForm):
