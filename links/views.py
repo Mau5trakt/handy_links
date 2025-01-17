@@ -17,6 +17,10 @@ class RegisterUserView(CreateView):
     template_name = 'links/register.html'
     success_url = reverse_lazy('register')
 
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect(reverse_lazy('home'))
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.set_password(form.cleaned_data['password'])
@@ -44,12 +48,12 @@ class Home(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         print(self.request.user)
         user = CustomUser.objects.get(username=self.request.user)
         context['user'] = user
-
+        self.request.session['user_id'] = user.id
         context['personal_folders'] = Folder.objects.filter(owner=self.request.user)[:5]
-
 
         return context
 
