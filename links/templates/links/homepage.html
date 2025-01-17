@@ -57,6 +57,47 @@
             </div>
 
         </section>
+        <section class="shared_folders">
+            <div class="shared_folders__wrapper">
+                <div class="shared_folders__wrapper--header">
+                    <h3 class="shared_folders__wrapper--header-element">Shared Folders</h3>
+                    <a class="shared_folders__wrapper--header-element" href="">View All</a>
+                </div>
+                <div class="shared_folders__wrapper--folders">
+
+                    {% for folder in personal_folders %}
+                        <a href="#" class="shared_folders__wrapper--folders-folder">
+                        <div class="shared_folders__wrapper--folders-folder--top">
+
+                        </div>
+
+                        <div class="shared_folders__wrapper--folders--info-ctn">
+                            <div class="shared_folders__wrapper--folders--info-ctn--img">
+                                <img src="https://placehold.co/100x100/58afe0/FFF?text=%3Ca%3E" alt="Folder Image">
+                            </div>
+
+                            <div class="shared_folders__wrapper--folders--info-ctn--main" id="folderMainInfo">
+                                <span class="shared_folders__wrapper--folders--info-ctn--main--title">{{ folder.title|truncatechars:21 }} </span>
+                                {% if folder.public %}
+                                    <img class="shared_folders__wrapper--folders--info-ctn--main--icon" src="{% static 'media/img/world-svgrepo-com.svg' %}" alt="">
+                                    <span class="shared_folders__wrapper--folders--info-ctn--main--folder-visibility" id="manipulate">Public Folder</span>
+                                {% else %}
+                                    <img class="shared_folders__wrapper--folders--info-ctn--main--icon" src="{% static 'media/img/padlock-outlined-svgrepo-com.svg' %}" alt="">
+                                    <span class="shared_folders__wrapper--folders--info-ctn--main--folder-visibility" id="manipulate">Private Folder</span>
+                                {% endif %}
+                            </div>
+
+                            <span class="shared_folders__wrapper--folders--info-ctn--description"> {{ folder.get_link_qty|pluralize_links }}  </span>
+                        </div>
+
+                    </a>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+        </section>
+
     </main>
 
 {% endblock %}
