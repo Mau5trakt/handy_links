@@ -1,0 +1,231 @@
+@use "../globals" as *;
+
+.folders-detail{
+
+  &__wrapper{
+    display: flex;
+    max-width: 1440px;
+    width: 100%;
+    flex-direction: column;
+    gap: 20px;
+    &--header{
+      display: flex;
+      justify-content: space-between;
+
+      &-text{
+        font-family: $font3;
+        color: $text;
+        font-size: 24px;
+      }
+
+      &-button{
+        height: 32px;
+        border: 1px solid $blue;
+        cursor: pointer;
+        border-radius: 3px;
+        color: $bg-principal;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: $blue;
+        padding: 0 10px;
+
+        transition: all 400ms ease;
+        outline: none;
+
+        &:hover{
+          background: #85b8ff;
+        }
+
+
+        &-text{
+            font-family: $font3;
+          color: #1d2125;
+          font-size: 14px;
+        }
+
+        img{
+          width: 18px;
+          height: 18px;
+        }
+
+
+
+      }
+
+
+
+    }
+    &--tabs{
+      background: #262c36;
+      border-radius: 2px;
+      width: 100%;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 20px;
+
+
+      &-element{
+        box-sizing: border-box;
+        padding: 6px 12px;
+        color: $blue;
+        font-family: $font3;
+        font-size: 16px;
+        background: none;
+        border-radius: 3px;
+        cursor: pointer;
+        border: 1px solid $blue;
+        transition: all 400ms ease-in-out;
+
+        &:hover{
+          background: $blue;
+          border: 1px solid $blue;
+          color: $bg-principal;
+        }
+      }
+
+    }
+    &--settings{
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      &-element{
+        padding: 16px;
+        border-radius: 8px;
+        border: 1px solid $border;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        &-title{
+          font-family: $font3;
+          color: $blue;
+          font-size: 18px;
+          text-transform: capitalize;
+
+        }
+
+        &-users-ctn{
+          display: flex;
+          gap: 10px;
+          margin-top: 10px;
+
+          &-element{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            position: relative;
+
+            &-image-ctn{
+              width: 40px;
+              height: 40px;
+              position: relative;
+
+              &-close-icon{
+                width: 20px;
+                height: 20px;
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                cursor: pointer;
+
+                &:hover{
+                  opacity: 0.8;
+                }
+              }
+            }
+
+
+
+            &-username{
+
+            }
+
+            &-user-avatar{
+              width: 40px;
+            height: 40px;
+            cursor: pointer;
+
+            }
+
+          }
+        }
+
+        &-description{
+          font-family: $font3;
+          font-size: 16px;
+        }
+
+        &-add-people{
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+
+
+          &-input-ctn{
+            display: flex;
+            gap: 5px;
+
+            input{
+              background: #1d2125;
+              border: 1px solid $blue;
+              padding: 0 10px;
+              border-radius: 3px;
+
+              &:focus{
+                outline: none;
+              }
+
+            }
+
+            button{
+              background: $blue;
+              color: $bg-principal;
+              height: 32px;
+              border:  1px solid $blue;
+              cursor: pointer;
+              border-radius: 3px;
+              font-size: 14px;
+              padding: 0 10px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              &:hover{
+                opacity: 0.8;
+              }
+            }
+
+          }
+        }
+
+
+
+
+        &-input{
+          align-self: baseline;
+        }
+
+      }
+
+
+    }
+  }
+
+  .tab_active{
+    background: $blue;
+    color: $bg-principal !important;
+  }
+
+
+
+  .hide{
+    display: none;
+
+  }
+}

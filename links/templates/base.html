@@ -12,13 +12,12 @@
 {% block content %}
 
 
-
-    {% block extrajs %}
-
-    {% endblock extrajs %}
-
 {% endblock content %}
+
+{% block extrajs %}
+
+{% endblock extrajs %}
 </body>
-<script src="{% static 'dist/project.js' %}" defer></script>
+<script src="{% static 'dist/project.js' %}" type="module" defer></script>
 
 </html>

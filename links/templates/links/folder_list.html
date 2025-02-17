@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load links_tags %}
+{% load static %}
+
+{% block title %}
+	{{ folder.title }} by {{ folder.owner.username }}
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_header.html' %}
+    <section class="folders-detail container_wrapper">
+    <div class="folders-detail__wrapper">
+
+        <div class="folders-detail__wrapper--header">
+            <span class="folders-detail__wrapper--header-text"> {{ folder.title }}</span>
+            <button class="folders-detail__wrapper--header-button">
+                <img src="{% static 'media/img/add-alt-icon.svg' %}" alt="add button">
+                <span class="folders-detail__wrapper--header-button-text">Add Link </span>
+            </button>
+        </div>
+
+        <div class="folders-detail__wrapper--tabs">
+            <button class="folders-detail__wrapper--tabs-element tab_active" data-show="links"  data-hide="settings"> Links </button>
+           {% if request.user.username == folder.owner.username %}
+                <button class="folders-detail__wrapper--tabs-element" data-show="settings" data-hide="links"> Folder Settings</button>
+           {% endif %}
+        </div>
+
+        <div class="folders-detail__wrapper--links hide" id="links">
+            {% for link in folder.Links.all %}
+                <h1>{{ link.title }}</h1>
+                <h1>{{ link.description }}</h1>
+                <a href="{{ link.url }}" target="_blank">{{ link.url }}</a>
+
+
+            {% endfor %}
+
+        </div>
+    {% if request.user.username == folder.owner.username %}
+        <div class="folders-detail__wrapper--settings " id="settings">
+
+            <div class="folders-detail__wrapper--settings-element">
+                <h3 class="folders-detail__wrapper--settings-element-title">Public Access</h3>
+                <span class="folders-detail__wrapper--settings-element-description">Make this folder visible to everyone? </span>
+                <input class="folders-detail__wrapper--settings-element-input" type="checkbox" name="" id="" {% if folder.public %} checked {% endif %}>
+            </div>
+
+            <div class="folders-detail__wrapper--settings-element">
+                <h3 class="folders-detail__wrapper--settings-element-title">Colaborators</h3>
+                <span class="folders-detail__wrapper--settings-element-description">People who can add or remove links </span>
+                <div class="folders-detail__wrapper--settings-element-users-ctn">
+                    {% for user in folder.get_collaborators %}
+                        <div class="folders-detail__wrapper--settings-element-users-ctn-element">
+                            <div class="folders-detail__wrapper--settings-element-users-ctn-element-image-ctn">
+                                <img src="{{ user|get_user_avatar }}" alt="{{ user }} User Avatar" class="folders-detail__wrapper--settings-element-users-ctn-element-image-ctn-user-avatar">
+                                <img src="{% static 'media/img/cross-circle-svgrepo-com.svg' %}" alt="close icon" class="folders-detail__wrapper--settings-element-users-ctn-element-image-ctn-close-icon">
+
+                            </div>
+                            <span class="folders-detail__wrapper--settings-element-users-ctn-element-username">{{ user }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="folders-detail__wrapper--settings-element-add-people">
+                    <label for="addcolaborator">Add a Colaborator</label>
+                    <div class="folders-detail__wrapper--settings-element-add-people-input-ctn">
+                        <input type="text" name="addcolaborator" id="addcolaborator" placeholder="Enter collaborator's username">
+                        <button> Add </button>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="folders-detail__wrapper--settings-element">
+                <h3>Watchers</h3>
+                <div>
+                    {% for user in folder.get_watchers %}
+                        {{ user }}
+                    {% endfor %}
+                </div>
+                
+            </div>
+
+
+
+        </div>
+    {% endif %}
+
+
+    </div>
+
+
+
+
+    </section>
+
+
+
+
+{% endblock %}
+
+

@@ -1,5 +1,26 @@
 @use "variables" as *;
 
+.container_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-inline: 40px;
+  margin: 20px 0;
+
+  @media (max-width: 1024px) {
+    padding-inline: 30px;
+  }
+
+  @media (max-width: 768px) {
+    padding-inline: 20px;
+  }
+
+  @media (max-width: 425px) {
+    padding-inline: 10px;
+  }
+}
+
+
 .dropdown__active {
   display: block !important;
 }
