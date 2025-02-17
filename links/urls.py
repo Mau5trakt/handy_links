@@ -9,6 +9,6 @@ urlpatterns = [
     path('home/', views.Home.as_view(), name='home'),
     path('logout/', views.logoutuser, name='logout'),
     re_path(r'^user-autocomplete/$', views.UsersAutocomplete.as_view(), name='user-autocomplete'),
-    path('create-folder/', views.FolderCreationView.as_view(), name='create-folder')
-
+    path('create-folder/', views.FolderCreationView.as_view(), name='create-folder'),
+    path('folder-detail/<uuid:uuid>', views.FolderListView.as_view(), name='folder_detail')
 ]
