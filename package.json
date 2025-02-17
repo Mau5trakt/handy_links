@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "sass": "^1.83.0"
+  },
+  "dependencies": {
+    "swapy": "^1.0.5"
   }
 }
