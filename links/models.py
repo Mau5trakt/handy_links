@@ -34,10 +34,13 @@ class Folder(models.Model):
     def get_collaborators(self):
         return list(self.collaborators.values_list('username', flat=True))
 
+    def get_watchers(self):
+        return list(self.watchers.values_list('username', flat=True))
+
 
     def get_absolute_url(self):
         """Return the absolute URL for the folder."""
-        return reverse('folder_detail', kwargs={'pk': self.pk})
+        return reverse('folder_detail', kwargs={'uuid': self.id})
 
     def get_link_qty(self):
         return self.Links.count()
