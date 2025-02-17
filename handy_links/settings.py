@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'links',
     'widget_tweaks',
     'debug_toolbar',
+    'django_extensions',
 ]
 
 
