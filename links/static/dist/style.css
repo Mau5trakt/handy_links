@@ -2,6 +2,29 @@
   font-family: "Ubuntu Regular";
   src: url("../fonts/Ubuntu-Regular.ttf") format("truetype");
 }
+.container_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-inline: 40px;
+  margin: 20px 0;
+}
+@media (max-width: 1024px) {
+  .container_wrapper {
+    padding-inline: 30px;
+  }
+}
+@media (max-width: 768px) {
+  .container_wrapper {
+    padding-inline: 20px;
+  }
+}
+@media (max-width: 425px) {
+  .container_wrapper {
+    padding-inline: 10px;
+  }
+}
+
 .dropdown__active {
   display: block !important;
 }
@@ -436,6 +459,83 @@ ul {
   list-style-type: none;
 }
 
+* {
+  font-family: "Ubuntu Regular", serif;
+  transition: all 400ms ease-in-out;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  clear: both;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+dfn,
+cite,
+em,
+i {
+  font-style: italic;
+}
+
+blockquote {
+  margin: 0 1.5em;
+}
+
+address {
+  margin: 0 0 1.5em;
+}
+
+pre {
+  margin-bottom: 1.6em;
+  max-width: 100%;
+  overflow: auto;
+  padding: 1.6em;
+}
+
+code,
+kbd,
+tt,
+var {
+  font-family: monospace;
+}
+
+abbr,
+acronym {
+  border-bottom: 1px dotted #333c44;
+  cursor: help;
+}
+
+mark,
+ins {
+  text-decoration: none;
+}
+
+big {
+  font-size: 125%;
+}
+
+body,
+button,
+input,
+select,
+optgroup,
+textarea {
+  color: #B6C2CF;
+  font-size: 1rem;
+}
+
 .header {
   background-color: #1d2125;
   display: flex;
@@ -844,17 +944,17 @@ body {
 }
 @media screen and (max-width: 1024px) {
   .personal_folders {
-    padding: 0 20px;
+    padding: 40px 20px;
   }
 }
 @media screen and (max-width: 768px) {
   .personal_folders {
-    padding: 0 10px;
+    padding: 20px 10px;
   }
 }
 @media screen and (max-width: 576px) {
   .personal_folders {
-    padding: 0 10px;
+    padding: 10px;
   }
 }
 .personal_folders__wrapper {
@@ -902,6 +1002,11 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+@media screen and (max-width: 576px) {
+  .personal_folders__wrapper--folders {
+    justify-content: center;
+  }
 }
 .personal_folders__wrapper--folders-folder {
   position: relative;
@@ -980,17 +1085,17 @@ body {
 }
 @media screen and (max-width: 1024px) {
   .shared_folders {
-    padding: 0 20px;
+    padding: 30px 20px;
   }
 }
 @media screen and (max-width: 768px) {
   .shared_folders {
-    padding: 0 10px;
+    padding: 20px 10px;
   }
 }
 @media screen and (max-width: 576px) {
   .shared_folders {
-    padding: 0 10px;
+    padding: 10px;
   }
 }
 .shared_folders__wrapper {
@@ -1023,6 +1128,11 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+@media screen and (max-width: 576px) {
+  .shared_folders__wrapper--folders {
+    justify-content: center;
+  }
 }
 .shared_folders__wrapper--folders-folder {
   position: relative;
@@ -1203,6 +1313,177 @@ body {
 .create-folder__wrapper--form-ctn__content__form--field-submit--link:hover {
   text-decoration: underline;
   transition: text-d;
+}
+
+.folders-detail__wrapper {
+  display: flex;
+  max-width: 1440px;
+  width: 100%;
+  flex-direction: column;
+  gap: 20px;
+}
+.folders-detail__wrapper--header {
+  display: flex;
+  justify-content: space-between;
+}
+.folders-detail__wrapper--header-text {
+  font-family: "Ubuntu Regular", serif;
+  color: #B6C2CF;
+  font-size: 24px;
+}
+.folders-detail__wrapper--header-button {
+  height: 32px;
+  border: 1px solid #579dff;
+  cursor: pointer;
+  border-radius: 3px;
+  color: #1d2125;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #579dff;
+  padding: 0 10px;
+  transition: all 400ms ease;
+  outline: none;
+}
+.folders-detail__wrapper--header-button:hover {
+  background: #85b8ff;
+}
+.folders-detail__wrapper--header-button-text {
+  font-family: "Ubuntu Regular", serif;
+  color: #1d2125;
+  font-size: 14px;
+}
+.folders-detail__wrapper--header-button img {
+  width: 18px;
+  height: 18px;
+}
+.folders-detail__wrapper--tabs {
+  background: #262c36;
+  border-radius: 2px;
+  width: 100%;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+.folders-detail__wrapper--tabs-element {
+  box-sizing: border-box;
+  padding: 6px 12px;
+  color: #579dff;
+  font-family: "Ubuntu Regular", serif;
+  font-size: 16px;
+  background: none;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid #579dff;
+  transition: all 400ms ease-in-out;
+}
+.folders-detail__wrapper--tabs-element:hover {
+  background: #579dff;
+  border: 1px solid #579dff;
+  color: #1d2125;
+}
+.folders-detail__wrapper--settings {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.folders-detail__wrapper--settings-element {
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #333c44;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.folders-detail__wrapper--settings-element-title {
+  font-family: "Ubuntu Regular", serif;
+  color: #579dff;
+  font-size: 18px;
+  text-transform: capitalize;
+}
+.folders-detail__wrapper--settings-element-users-ctn {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+.folders-detail__wrapper--settings-element-users-ctn-element {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+.folders-detail__wrapper--settings-element-users-ctn-element-image-ctn {
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+.folders-detail__wrapper--settings-element-users-ctn-element-image-ctn-close-icon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  cursor: pointer;
+}
+.folders-detail__wrapper--settings-element-users-ctn-element-image-ctn-close-icon:hover {
+  opacity: 0.8;
+}
+.folders-detail__wrapper--settings-element-users-ctn-element-user-avatar {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+.folders-detail__wrapper--settings-element-description {
+  font-family: "Ubuntu Regular", serif;
+  font-size: 16px;
+}
+.folders-detail__wrapper--settings-element-add-people {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.folders-detail__wrapper--settings-element-add-people-input-ctn {
+  display: flex;
+  gap: 5px;
+}
+.folders-detail__wrapper--settings-element-add-people-input-ctn input {
+  background: #1d2125;
+  border: 1px solid #579dff;
+  padding: 0 10px;
+  border-radius: 3px;
+}
+.folders-detail__wrapper--settings-element-add-people-input-ctn input:focus {
+  outline: none;
+}
+.folders-detail__wrapper--settings-element-add-people-input-ctn button {
+  background: #579dff;
+  color: #1d2125;
+  height: 32px;
+  border: 1px solid #579dff;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 14px;
+  padding: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.folders-detail__wrapper--settings-element-add-people-input-ctn button:hover {
+  opacity: 0.8;
+}
+.folders-detail__wrapper--settings-element-input {
+  align-self: baseline;
+}
+.folders-detail .tab_active {
+  background: #579dff;
+  color: #1d2125 !important;
+}
+.folders-detail .hide {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */
