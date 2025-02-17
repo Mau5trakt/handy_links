@@ -10,15 +10,15 @@
 
 
   @include mquery($bp-lg) {
-    padding: 0 20px;
+    padding: 40px 20px;
   }
 
   @include mquery($bp-md) {
-    padding: 0 10px;
+    padding: 20px 10px;
   }
 
   @include mquery($bp-sm) {
-    padding: 0 10px;
+    padding: 10px;
   }
 
 
@@ -83,6 +83,10 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
+
+      @include mquery($bp-sm){
+        justify-content: center;
+      }
 
       &-folder {
         position: relative;
@@ -188,15 +192,15 @@
 
 
   @include mquery($bp-lg) {
-    padding: 0 20px;
+    padding: 30px 20px;
   }
 
   @include mquery($bp-md) {
-    padding: 0 10px;
+    padding: 20px 10px;
   }
 
   @include mquery($bp-sm) {
-    padding: 0 10px;
+    padding: 10px;
   }
 
 
@@ -243,6 +247,10 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
+
+      @include mquery($bp-sm){
+        justify-content: center;
+      }
 
       &-folder {
         position: relative;
