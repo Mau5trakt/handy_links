@@ -100,6 +100,7 @@
         flex-direction: column;
         gap: 10px;
 
+
         &-title{
           font-family: $font3;
           color: $blue;
@@ -110,8 +111,10 @@
 
         &-users-ctn{
           display: flex;
-          gap: 10px;
-          margin-top: 10px;
+          gap: 15px;
+          padding-top: 10px;
+          overflow-x: auto;
+          overflow-y: hidden;
 
           &-element{
             display: flex;
@@ -120,6 +123,18 @@
             align-items: center;
             gap: 5px;
             position: relative;
+
+            &.new-item{
+              opacity: 0;
+              transform: translateY(120%);
+              animation: slideIn 0.7s forwards;
+              animation-delay: 500ms;
+            }
+
+            &.delete-item{
+              animation: slideOut 0.7s forwards;
+              animation-delay: 500ms;
+            }
 
             &-image-ctn{
               width: 40px;
@@ -171,14 +186,25 @@
             display: flex;
             gap: 5px;
 
+            @include mquery($bp-sm){
+              width: 100%;
+              flex-wrap: wrap;
+            }
+
             input{
               background: #1d2125;
-              border: 1px solid $blue;
+              border: 1px solid $border-input;
               padding: 0 10px;
-              border-radius: 3px;
+              border-radius: 5px;
+
+              @include mquery($bp-sm){
+                height: 32px;
+
+              }
 
               &:focus{
                 outline: none;
+                border: 1px solid $blue;
               }
 
             }
@@ -196,11 +222,25 @@
               justify-content: center;
               align-items: center;
 
+              &:disabled{
+                background: #738496;
+                cursor: not-allowed;
+                border: #738496;
+
+                &:hover{
+                  opacity: 1;
+                }
+              }
+
               &:hover{
                 opacity: 0.8;
               }
             }
 
+          }
+          &-msg{
+            font-size: 14px;
+            margin-left: 5px;
           }
         }
 
@@ -226,6 +266,31 @@
 
   .hide{
     display: none;
+  }
+
+  .msg-show-error{
+    color: #f15b50;
+  }
+
+  .msg-show-success{
+    color: #24953e;
+  }
+
+
+
+  @keyframes slideIn {
+    to{
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideOut {
+    to{
+      opacity: 0;
+      transform: translateY(120%);
+    }
 
   }
+
 }
