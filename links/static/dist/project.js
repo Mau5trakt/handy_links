@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () =>{
 
     let openModal = false;
+    let timeoutId;
     let toggleAddButton = () => {
         document.querySelector("#add-btn-dropdown").classList.toggle('dropdown__active');
         document.querySelector('.header__wrapper--nav--ul-button').classList.toggle('button__active');
@@ -30,6 +31,157 @@ document.addEventListener('DOMContentLoaded', () =>{
         }
     }
 
+    // adds the hover delete icon on Colaborators or Watchers  users on folder-detail
+    let iconsWithDelete = document.querySelectorAll(".folders-detail__wrapper--settings-element-users-ctn-element-image-ctn")
+    if (iconsWithDelete.length > 0){
+        iconsWithDelete.forEach((img) =>{
+            img.addEventListener('mouseenter', () =>{
+                img.querySelector("#close").classList.remove('hide');
+            })
+            img.addEventListener('mouseleave', () =>{
+                img.querySelector("#close").classList.add('hide');
+            })
+        })
+    }
+
+    let deleteUserParticipation = event =>{
+        // deletes a user from the collaborator or watchers list from a folder
+        let container = event.target.parentNode.parentNode
+        let username = container.querySelector('#username').textContent
+        console.log("BOrrar");
+
+        // mostrar animacion de borrado y luego
+    }
+
+    function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+    let csrftoken = getCookie("csrftoken");
+    let headers = {
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRFToken': csrftoken,
+    }
+
+    let requestUser = event =>{
+        let inputAside = event.target.parentNode.querySelector('input');
+        let settingCtn = event.target.parentNode.parentNode.parentNode;
+        let spanCtn = settingCtn.querySelector('#usersCtn');
+        let span = spanCtn.querySelector("span");
+        let addBtn = settingCtn.querySelector('#searchUser')
+
+
+        span.classList.remove("msg-show-success", "msg-show-error");
+
+        if(inputAside.value.length <= 2){
+            span.innerText = '';
+            span.classList.remove("msg-show-success", "msg-show-error");
+            addBtn.setAttribute('disabled', '');
+        }
+        else{
+            fetch("/get-user", {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify({username: inputAside.value,
+                                            action:inputAside.dataset.action,
+                                            folder: document.querySelector("#folder_uuid").value
+                })
+
+            })
+            .then(response =>{
+                return response.json()
+            })
+            .then(result =>{
+                if(result.status === "success"){
+                    span.innerText = `You can add this user as ${inputAside.dataset.action}`;
+                    span.classList.add("msg-show-success");
+                    addBtn.removeAttribute('disabled');
+                }else{
+                    span.innerText = result.message;
+                    span.classList.add("msg-show-error");
+                    addBtn.setAttribute('disabled', '');
+                }
+            })
+        }
+    }
+
+    let addUser = event =>{
+        let user = event.target.parentNode.querySelector("input").value;
+
+        let inputAside = event.target.parentNode.querySelector('input');
+        let action = inputAside.dataset.action
+
+        let settingCtn = event.target.parentNode.parentNode.parentNode;
+        let spanCtn = settingCtn.querySelector('#usersCtn');
+        let span = spanCtn.querySelector("span");
+
+        fetch('/add-user', {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify({"username": user, 'action': action, 'folder': document.querySelector("#folder_uuid").value})
+        }).then(response =>{
+            return response.json()
+        }).then(result =>{
+             if(result.status === "success"){
+                 let sectionCtn = event.target.parentNode.parentNode.parentNode;
+                 let usersCtn = sectionCtn.querySelector("#peopleCtn");
+                 let div = document.createElement('div');
+                 let addBtn = settingCtn.querySelector('#searchUser');
+
+                 div.classList.add('folders-detail__wrapper--settings-element-users-ctn-element', 'new-item')
+                 div.innerHTML = `<div class="folders-detail__wrapper--settings-element-users-ctn-element-image-ctn">
+                                <img src="${result.avatar}" alt="${result.username} User Avatar" class="folders-detail__wrapper--settings-element-users-ctn-element-image-ctn-user-avatar">
+                                <img src="${usersCtn.dataset.circle}" id="close" alt="close icon" class="folders-detail__wrapper--settings-element-users-ctn-element-image-ctn-close-icon hide">
+                            </div>
+                            <span class="folders-detail__wrapper--settings-element-users-ctn-element-username" id="username">${result.username}</span>`
+                 usersCtn.appendChild(div);
+                 div.addEventListener('mouseenter', ()  =>  div.querySelector("#close").classList.remove('hide'));
+                 div.addEventListener('mouseleave', ()  =>  div.querySelector("#close").classList.add('hide'));
+
+                 inputAside.value = '';
+                 span.innerText = '';
+                 span.classList.remove('msg-show-success');
+                 addBtn.setAttribute("disabled", "");
+
+                 console.log(result);
+
+                 if (result.changeStatus){
+                     console.log("a borrar");
+
+                 }
+
+
+             }
+             else if(result.status === "failed"){
+                 span.classList.add('msg-show-error');
+                 span.innerText = result.message;
+             }
+        })
+
+    }
+
+    document.addEventListener('input', event =>{
+        if (event.target.closest("#addcollaborator") || event.target.closest("#addwatcher"))  {
+            if(timeoutId){
+                clearTimeout(timeoutId);
+            }
+            timeoutId = setTimeout(() =>{
+                requestUser(event);
+            }, 500)
+        }
+
+    })
 
 
     document.addEventListener('click', event =>{
@@ -44,7 +196,12 @@ document.addEventListener('DOMContentLoaded', () =>{
             closeAddMenu();
         }else if(event.target.closest(".folders-detail__wrapper--tabs-element")){
             toggleActive(event.target);
+        }else if(event.target.closest("#close")){
+            deleteUserParticipation(event);
+        }else if(event.target.closest('#searchUser')) {
+            addUser(event);
         }
+
     })
 
 

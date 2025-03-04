@@ -1405,8 +1405,10 @@ body {
 }
 .folders-detail__wrapper--settings-element-users-ctn {
   display: flex;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 15px;
+  padding-top: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 .folders-detail__wrapper--settings-element-users-ctn-element {
   display: flex;
@@ -1415,6 +1417,16 @@ body {
   align-items: center;
   gap: 5px;
   position: relative;
+}
+.folders-detail__wrapper--settings-element-users-ctn-element.new-item {
+  opacity: 0;
+  transform: translateY(120%);
+  animation: slideIn 0.7s forwards;
+  animation-delay: 500ms;
+}
+.folders-detail__wrapper--settings-element-users-ctn-element.delete-item {
+  animation: slideOut 0.7s forwards;
+  animation-delay: 500ms;
 }
 .folders-detail__wrapper--settings-element-users-ctn-element-image-ctn {
   width: 40px;
@@ -1450,14 +1462,26 @@ body {
   display: flex;
   gap: 5px;
 }
+@media screen and (max-width: 576px) {
+  .folders-detail__wrapper--settings-element-add-people-input-ctn {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}
 .folders-detail__wrapper--settings-element-add-people-input-ctn input {
   background: #1d2125;
-  border: 1px solid #579dff;
+  border: 1px solid #738496;
   padding: 0 10px;
-  border-radius: 3px;
+  border-radius: 5px;
+}
+@media screen and (max-width: 576px) {
+  .folders-detail__wrapper--settings-element-add-people-input-ctn input {
+    height: 32px;
+  }
 }
 .folders-detail__wrapper--settings-element-add-people-input-ctn input:focus {
   outline: none;
+  border: 1px solid #579dff;
 }
 .folders-detail__wrapper--settings-element-add-people-input-ctn button {
   background: #579dff;
@@ -1472,8 +1496,20 @@ body {
   justify-content: center;
   align-items: center;
 }
+.folders-detail__wrapper--settings-element-add-people-input-ctn button:disabled {
+  background: #738496;
+  cursor: not-allowed;
+  border: #738496;
+}
+.folders-detail__wrapper--settings-element-add-people-input-ctn button:disabled:hover {
+  opacity: 1;
+}
 .folders-detail__wrapper--settings-element-add-people-input-ctn button:hover {
   opacity: 0.8;
+}
+.folders-detail__wrapper--settings-element-add-people-msg {
+  font-size: 14px;
+  margin-left: 5px;
 }
 .folders-detail__wrapper--settings-element-input {
   align-self: baseline;
@@ -1484,6 +1520,24 @@ body {
 }
 .folders-detail .hide {
   display: none;
+}
+.folders-detail .msg-show-error {
+  color: #f15b50;
+}
+.folders-detail .msg-show-success {
+  color: #24953e;
+}
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slideOut {
+  to {
+    opacity: 0;
+    transform: translateY(120%);
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

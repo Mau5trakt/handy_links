@@ -1,7 +1,11 @@
+import json
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.db.models import Q
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, TemplateView, ListView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
@@ -122,4 +126,49 @@ class FolderListView(FolderAccessMixin, TemplateView):
         return context
 
 
+@require_POST
+def get_user(request):
+    data = json.load(request)
+    action = data['action']
+
+    folder = Folder.objects.get(pk=data['folder'])
+    user = CustomUser.objects.filter(
+        username__iexact=data['username']
+    ).order_by("username").first()
+    if user:
+        if user == request.user:
+            return JsonResponse({"status": "failed", "message": f"you're already the owner"})
+        elif action == "watcher" and user.username in folder.get_collaborators():
+            return JsonResponse({"status": "failed", "message": f"this user is already a collaborator"})
+        elif action == "watcher" and user.username not in folder.get_watchers():
+            return JsonResponse({"status": "success", "username": user.username})
+        elif action == "collaborator" and user.username not in folder.get_collaborators():
+            return JsonResponse({"status": "success", "username": user.username})
+        return JsonResponse({"status": "failed",  "message": f"this user is already a {action}" })
+    return JsonResponse({"status": "failed", "message": "this user doesn't exists"})
+
+@require_POST
+def add_user(request):
+    data = json.load(request)
+
+    returned_user = data['username']
+    folder = Folder.objects.get(pk=data['folder'])
+    user = CustomUser.objects.filter(username__iexact=returned_user).first()
+    if user and request.user == folder.owner:
+        if data['action'] == 'watcher' and user.username in folder.get_watchers():
+            return JsonResponse({'status': 'failed', 'message': "this user is already a watcher"})
+        elif data['action'] == 'collaborator' and user.username in folder.get_collaborators():
+            return JsonResponse({'status': 'failed', 'message': "this user is already a collaborator"})
+        elif data['action'] == 'watcher' and user.username not in folder.get_watchers():
+            folder.watchers.add(user)
+            return JsonResponse({'status': 'success', "username": user.username, "avatar": user.avatar})
+        elif data['action'] == 'collaborator' and user.username in folder.get_watchers():
+            folder.watchers.remove(user)
+            folder.collaborators.add(user)
+            folder.save()
+            return JsonResponse({'status': 'success', 'changeStatus': True, "username": user.username, "avatar": user.avatar})
+        elif data['action'] == 'collaborator' and user.username not in folder.get_collaborators():
+            folder.collaborators.add(user)
+            return JsonResponse({'status': 'success', "username": user.username, "avatar": user.avatar})
+    return JsonResponse({'status': 'failed', 'message': 'there was an error doing this request'})
 
