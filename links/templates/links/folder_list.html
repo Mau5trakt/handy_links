@@ -14,10 +14,15 @@
         <div class="folders-detail__wrapper--header">
             <span class="folders-detail__wrapper--header-text"> {{ folder.title }}</span>
             <input type="hidden" name="folder_uuid" id="folder_uuid" value="{{ folder.pk }}">
+            {% if user.is_authenticated %}
             <button class="folders-detail__wrapper--header-button">
                 <img src="{% static 'media/img/add-alt-icon.svg' %}" alt="add button">
+
+                	
+
                 <span class="folders-detail__wrapper--header-button-text">Add Link </span>
             </button>
+            {% endif %}
         </div>
 
         <div class="folders-detail__wrapper--tabs">
@@ -76,7 +81,7 @@
 
             </div>
 
-            <div class="folders-detail__wrapper--settings-element">
+            <div class="folders-detail__wrapper--settings-element" data-modal="delete-watcher">
                 <h3 class="folders-detail__wrapper--settings-element-title">Watchers</h3>
                 <span class="folders-detail__wrapper--settings-element-description">People who can see folder content (if isn't a public folder) </span>
                 <div class="folders-detail__wrapper--settings-element-users-ctn" id="peopleCtn" data-circle="{% static 'media/img/cross-circle-svgrepo-com.svg' %} ">

@@ -44,6 +44,23 @@ document.addEventListener('DOMContentLoaded', () =>{
         })
     }
 
+    let removeUser = event =>{
+
+        console.log("en remove user");
+
+        fetch('/remove-user', {
+            method: "POST",
+            headers:headers,
+            body: JSON.stringify({'msg': 'hola'})
+        }).then(response =>{
+            return response.json()
+        }).then(result =>{
+            console.log(result)
+        })
+
+        event.target.removeEventListener('click', removeUser);
+    }
+
     let deleteUserParticipation = event =>{
         // deletes a user from the collaborator or watchers list from a folder
         let container = event.target.parentNode.parentNode
@@ -53,17 +70,21 @@ document.addEventListener('DOMContentLoaded', () =>{
         let sectionCtn = event.target.parentNode.parentNode.parentNode.parentNode;
         console.log(sectionCtn.dataset.modal);
         let message = "";
+        let actionBtn = modal.querySelector('#modalActionBtn');
 
         if (sectionCtn.dataset.modal === "delete-collaborator"){
             message = `Do you want to remove ${username} as a collaborator?`;
+        }else if(sectionCtn.dataset.modal === "delete-watcher"){
+            message = `Do you want to remove ${username} as a watcher?`;
         }
+
 
         modal.setAttribute("data-action", "deleteUser");
         modal.setAttribute("data-username", username);
         let messageText = modal.querySelector("#text-ctn");
         messageText.innerText = message;
-        modal.showModal();  
-        console.log("llega al final de la funcion?")      
+        actionBtn.addEventListener('click', removeUser);
+        modal.showModal();
     }
 
     function getCookie(name) {
@@ -186,28 +207,14 @@ document.addEventListener('DOMContentLoaded', () =>{
 
     let dialogManage = (event) =>{
         let dialog = document.querySelector("#alert-dialog")
-        let username = dialog.dataset.username;
-
         if (event.target.contains(dialog)){
             dialog.close();
         }
-        
-
-        
     }
 
     let closeDialog = event => {
         let modal = event.target.parentNode.parentNode.parentNode;
         modal.close();
-        
-
-
-        if(event.target.id === "modalCancelBtn"){
-            console.log("Fue el botón");
-        }
-        else if(event.target.id === "modalCloseImg"){
-            console.log("Fue el icono");
-        }   
     }
 
 

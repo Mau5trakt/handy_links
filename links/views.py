@@ -70,8 +70,6 @@ class Home(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        print(self.request.user)
         user = CustomUser.objects.get(username=self.request.user)
         context['user'] = user
         self.request.session['user_id'] = user.id
@@ -172,3 +170,9 @@ def add_user(request):
             return JsonResponse({'status': 'success', "username": user.username, "avatar": user.avatar})
     return JsonResponse({'status': 'failed', 'message': 'there was an error doing this request'})
 
+@require_POST
+def remove_user(request):
+    data = json.load(request)
+
+
+    return JsonResponse({"status": "success from remove user"})
