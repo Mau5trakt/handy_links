@@ -48,9 +48,22 @@ document.addEventListener('DOMContentLoaded', () =>{
         // deletes a user from the collaborator or watchers list from a folder
         let container = event.target.parentNode.parentNode
         let username = container.querySelector('#username').textContent
-        console.log("BOrrar");
+        container.classList.add("delete-item");
+        const  modal = document.querySelector("#alert-dialog");
+        let sectionCtn = event.target.parentNode.parentNode.parentNode.parentNode;
+        console.log(sectionCtn.dataset.modal);
+        let message = "";
 
-        // mostrar animacion de borrado y luego
+        if (sectionCtn.dataset.modal === "delete-collaborator"){
+            message = `Do you want to remove ${username} as a collaborator?`;
+        }
+
+        modal.setAttribute("data-action", "deleteUser");
+        modal.setAttribute("data-username", username);
+        let messageText = modal.querySelector("#text-ctn");
+        messageText.innerText = message;
+        modal.showModal();  
+        console.log("llega al final de la funcion?")      
     }
 
     function getCookie(name) {
@@ -171,6 +184,33 @@ document.addEventListener('DOMContentLoaded', () =>{
 
     }
 
+    let dialogManage = (event) =>{
+        let dialog = document.querySelector("#alert-dialog")
+        let username = dialog.dataset.username;
+
+        if (event.target.contains(dialog)){
+            dialog.close();
+        }
+        
+
+        
+    }
+
+    let closeDialog = event => {
+        let modal = event.target.parentNode.parentNode.parentNode;
+        modal.close();
+        
+
+
+        if(event.target.id === "modalCancelBtn"){
+            console.log("Fue el botón");
+        }
+        else if(event.target.id === "modalCloseImg"){
+            console.log("Fue el icono");
+        }   
+    }
+
+
     document.addEventListener('input', event =>{
         if (event.target.closest("#addcollaborator") || event.target.closest("#addwatcher"))  {
             if(timeoutId){
@@ -200,6 +240,10 @@ document.addEventListener('DOMContentLoaded', () =>{
             deleteUserParticipation(event);
         }else if(event.target.closest('#searchUser')) {
             addUser(event);
+        }else if(event.target.closest("#modalCloseImg") || (event.target.closest("#modalCancelBtn"))){
+            closeDialog(event);
+        }else if(event.target.closest("#alert-dialog")){
+            dialogManage(event);
         }
 
     })
