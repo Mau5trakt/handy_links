@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
+
 
 load_dotenv()
 
@@ -93,16 +94,28 @@ WSGI_APPLICATION = 'handy_links.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "handy_links",
-        "USER": "postgres",
-        "PASSWORD": "1234",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
+db = os.getenv("DATABASE")
+
+if db == "SQLITE":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+
+
+elif db == "POSTGRES":
+    DATABASES = {   
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "handy_links",
+            "USER": "postgres",
+            "PASSWORD": "1234",
+            "HOST": "127.0.0.1",
+            "PORT": "5432",
+        }
+    }
 
 
 
