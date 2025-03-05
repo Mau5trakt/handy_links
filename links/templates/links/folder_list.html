@@ -46,7 +46,7 @@
                 <input class="folders-detail__wrapper--settings-element-input" type="checkbox" name="" id="" {% if folder.public %} checked {% endif %}>
             </div>
 
-            <div class="folders-detail__wrapper--settings-element">
+            <div class="folders-detail__wrapper--settings-element" data-modal="delete-collaborator">
                 <h3 class="folders-detail__wrapper--settings-element-title">Collaborators</h3>
                 <span class="folders-detail__wrapper--settings-element-description">People who can add or remove links </span>
                 <div class="folders-detail__wrapper--settings-element-users-ctn" id="peopleCtn" data-circle="{% static 'media/img/cross-circle-svgrepo-com.svg' %} ">
@@ -107,7 +107,23 @@
 
     </div>
 
+    <dialog id="alert-dialog">
+        <div id="dialog-ctn" class="folder-detail-dialog">
+            <div class="folder-detail-dialog__header"> 
+                <span class="folder-detail-dialog__header-action">Confirm Action</span>
+                <img src="https://i.postimg.cc/WzTCLccf/cross-svgrepo-com.png" alt="close icon" id="modalCloseImg" class="imagen">
+            </div>
+            <div class="folder-detail-dialog__body" id="body">
+                <span id="text-ctn">  </span>
+            </div>
+            <div class="folder-detail-dialog__footer"> 
+                <button class="blue-bg" id="modalCancelBtn">Cancel</button>
+                <button class="red-bg" id="modalActionBtn">Remove</button>
+            </div>
+        </div>
+    </dialog>
 
+    
 
 
     </section>
