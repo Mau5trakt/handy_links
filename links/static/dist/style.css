@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: "Ubuntu Regular";
   src: url("../fonts/Ubuntu-Regular.ttf") format("truetype");
@@ -459,6 +460,16 @@ ul {
   list-style-type: none;
 }
 
+dialog {
+  padding: 0;
+  border: none;
+  outline: none;
+}
+dialog::backdrop {
+  background: #B6C2CF;
+  opacity: 0.3;
+}
+
 * {
   font-family: "Ubuntu Regular", serif;
   transition: all 400ms ease-in-out;
@@ -527,7 +538,6 @@ big {
 }
 
 body,
-button,
 input,
 select,
 optgroup,
@@ -1538,6 +1548,80 @@ body {
     opacity: 0;
     transform: translateY(120%);
   }
+}
+
+.folder-detail-dialog {
+  width: 300px;
+  background: #1d2125;
+  color: #B6C2CF;
+  padding: 5px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+}
+@media screen and (max-width: 576px) {
+  .folder-detail-dialog {
+    max-width: 300px;
+    width: 100%;
+  }
+}
+.folder-detail-dialog__header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #579dff;
+  padding: 10px 0;
+}
+.folder-detail-dialog__header-action {
+  font-size: 24px;
+}
+.folder-detail-dialog__header img {
+  width: 25px;
+  height: 25px;
+}
+.folder-detail-dialog__header img:hover {
+  opacity: 0.3;
+  cursor: pointer;
+}
+.folder-detail-dialog__body {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.folder-detail-dialog__body--text {
+  font-size: 18px;
+}
+.folder-detail-dialog__footer {
+  border-top: 1px solid #B6C2CF;
+  padding: 10px 0;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+.folder-detail-dialog__footer button {
+  color: · #1d2125 !important;
+  box-sizing: border-box;
+  padding: 6px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 400ms ease-in-out;
+}
+.folder-detail-dialog__footer button.blue-bg {
+  background-color: #579dff;
+  border: 1px solid #579dff;
+}
+.folder-detail-dialog__footer button.red-bg {
+  background-color: #f15b50;
+  border: 1px solid #f15b50;
+}
+.folder-detail-dialog__footer button:hover {
+  opacity: 0.6;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=style.css.map */

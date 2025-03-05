@@ -154,13 +154,6 @@
                 }
               }
             }
-
-
-
-            &-username{
-
-            }
-
             &-user-avatar{
               width: 40px;
             height: 40px;
@@ -293,4 +286,97 @@
 
   }
 
+}
+
+.folder-detail-dialog{
+  width: 300px;
+  background: #1d2125;
+  color: $text;
+  padding: 5px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+
+  @include mquery($bp-sm){
+    max-width: 300px;
+    width: 100%;
+  }
+
+  &__header{
+    width: 100%;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid $blue;
+    padding: 10px 0;
+
+    &-action{
+      font-size: 24px;
+
+    }
+
+    img{
+      width: 25px;
+      height: 25px;
+
+      &:hover{
+        opacity: 0.3;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__body{
+    width: 100%;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    //border-bottom: 1px solid $blue;
+    &--text{
+      font-size: 18px;
+    }
+
+  }
+
+  &__footer{
+    border-top: 1px solid $text;
+    padding: 10px 0;
+
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+
+    button{
+      color: ·#1d2125 !important;
+      box-sizing: border-box;
+      padding: 6px 12px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 400ms ease-in-out;
+      
+
+      &.blue-bg{
+        background-color: $blue;
+        border: 1px solid $blue;
+      }
+
+      &.red-bg{
+        background-color: $red;
+        border: 1px solid $red;
+      }
+
+
+      &:hover{
+        opacity: 0.6;
+        cursor: pointer;
+      }
+    }
+
+  }
+  
 }
