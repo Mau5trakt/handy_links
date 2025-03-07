@@ -1487,6 +1487,7 @@ body {
 @media screen and (max-width: 576px) {
   .folders-detail__wrapper--settings-element-add-people-input-ctn input {
     height: 32px;
+    width: 100%;
   }
 }
 .folders-detail__wrapper--settings-element-add-people-input-ctn input:focus {

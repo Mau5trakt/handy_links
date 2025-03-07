@@ -116,7 +116,11 @@ class FolderListView(FolderAccessMixin, TemplateView):
         context = super().get_context_data(**kwargs)
 
         folder = get_object_or_404(Folder, id=kwargs.get('uuid'))
+        user = self.request.user
 
+        if folder.owner == user or user.username in folder.get_watchers():
+            context["can_add"] = True
+            
         context['folder'] = folder
         if self.request.user.is_authenticated:
             context['loged'] = True
@@ -154,9 +158,9 @@ def add_user(request):
     user = CustomUser.objects.filter(username__iexact=returned_user).first()
     if user and request.user == folder.owner:
         if data['action'] == 'watcher' and user.username in folder.get_watchers():
-            return JsonResponse({'status': 'failed', 'message': "this user is already a watcher"})
+            return JsonResponse({'status': 'failed', 'message': "This user is already a watcher"})
         elif data['action'] == 'collaborator' and user.username in folder.get_collaborators():
-            return JsonResponse({'status': 'failed', 'message': "this user is already a collaborator"})
+            return JsonResponse({'status': 'failed', 'message': "This user is already a collaborator"})
         elif data['action'] == 'watcher' and user.username not in folder.get_watchers():
             folder.watchers.add(user)
             return JsonResponse({'status': 'success', "username": user.username, "avatar": user.avatar})
@@ -168,11 +172,21 @@ def add_user(request):
         elif data['action'] == 'collaborator' and user.username not in folder.get_collaborators():
             folder.collaborators.add(user)
             return JsonResponse({'status': 'success', "username": user.username, "avatar": user.avatar})
-    return JsonResponse({'status': 'failed', 'message': 'there was an error doing this request'})
+    return JsonResponse({'status': 'failed', 'message': 'There was an error doing this request.'})
 
 @require_POST
 def remove_user(request):
     data = json.load(request)
+    action = data["action"]
+    user = CustomUser.objects.filter(username__iexact=data["username"]).first()
+    folder = Folder.objects.get(pk=data["folder"])
 
-
-    return JsonResponse({"status": "success from remove user"})
+    if user:
+        if action == "delete-collaborator":
+            folder.collaborators.remove(user)    
+            return JsonResponse({"status": "success"})
+        elif action == "delete-watcher":
+            folder.watchers.remove(user)
+            return JsonResponse({"status": "success"})
+        
+    return JsonResponse({"status": "failed", "message": "There was an error removing this user, pleasy try again. "})

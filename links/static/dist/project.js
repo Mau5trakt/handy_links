@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', () =>{
 
     let openModal = false;
+    let userToremove;
+    let actionToSend;
     let timeoutId;
+    let hasEvent = false;
     let toggleAddButton = () => {
         document.querySelector("#add-btn-dropdown").classList.toggle('dropdown__active');
         document.querySelector('.header__wrapper--nav--ul-button').classList.toggle('button__active');
@@ -36,39 +39,54 @@ document.addEventListener('DOMContentLoaded', () =>{
     if (iconsWithDelete.length > 0){
         iconsWithDelete.forEach((img) =>{
             img.addEventListener('mouseenter', () =>{
-                img.querySelector("#close").classList.remove('hide');
+                img.querySelector("#removeUser").classList.remove('hide');
             })
             img.addEventListener('mouseleave', () =>{
-                img.querySelector("#close").classList.add('hide');
+                img.querySelector("#removeUser").classList.add('hide');
             })
         })
     }
 
     let removeUser = event =>{
-
-        console.log("en remove user");
-
+        let modal = event.target.parentNode.parentNode.parentNode;
+        let username = modal.dataset.username;
         fetch('/remove-user', {
             method: "POST",
             headers:headers,
-            body: JSON.stringify({'msg': 'hola'})
+            body: JSON.stringify({username: username,folder: document.querySelector("#folder_uuid").value, action:actionToSend})
         }).then(response =>{
             return response.json()
         }).then(result =>{
-            console.log(result)
+            if(result.status === "success"){
+                modal.close();
+                userToremove.classList.add("delete-item");
+                setTimeout(() =>{
+                    userToremove.remove();
+                    userToremove = null;
+                }, 1300)
+            }
+            event.target.removeEventListener('click', removeUser);
+            hasEvent = false;
         })
 
-        event.target.removeEventListener('click', removeUser);
+        
     }
 
+    
+
     let deleteUserParticipation = event =>{
+
+        console.log("kiere borrar")
+        // ver lo del evento, y el modal , aqui con un if ver lo de la info
+
+        userToremove = event.target.parentNode.parentNode;
+        actionToSend = userToremove.parentNode.parentNode.dataset.modal;
         // deletes a user from the collaborator or watchers list from a folder
         let container = event.target.parentNode.parentNode
         let username = container.querySelector('#username').textContent
-        container.classList.add("delete-item");
+        
         const  modal = document.querySelector("#alert-dialog");
         let sectionCtn = event.target.parentNode.parentNode.parentNode.parentNode;
-        console.log(sectionCtn.dataset.modal);
         let message = "";
         let actionBtn = modal.querySelector('#modalActionBtn');
 
@@ -77,13 +95,17 @@ document.addEventListener('DOMContentLoaded', () =>{
         }else if(sectionCtn.dataset.modal === "delete-watcher"){
             message = `Do you want to remove ${username} as a watcher?`;
         }
-
-
         modal.setAttribute("data-action", "deleteUser");
         modal.setAttribute("data-username", username);
         let messageText = modal.querySelector("#text-ctn");
         messageText.innerText = message;
-        actionBtn.addEventListener('click', removeUser);
+
+        if(!hasEvent){   
+            actionBtn.addEventListener('click', removeUser);
+            hasEvent = true;
+        }
+        
+        
         modal.showModal();
     }
 
@@ -176,26 +198,37 @@ document.addEventListener('DOMContentLoaded', () =>{
                  div.classList.add('folders-detail__wrapper--settings-element-users-ctn-element', 'new-item')
                  div.innerHTML = `<div class="folders-detail__wrapper--settings-element-users-ctn-element-image-ctn">
                                 <img src="${result.avatar}" alt="${result.username} User Avatar" class="folders-detail__wrapper--settings-element-users-ctn-element-image-ctn-user-avatar">
-                                <img src="${usersCtn.dataset.circle}" id="close" alt="close icon" class="folders-detail__wrapper--settings-element-users-ctn-element-image-ctn-close-icon hide">
+                                <img src="${usersCtn.dataset.circle}" id="removeUser" alt="close icon" class="folders-detail__wrapper--settings-element-users-ctn-element-image-ctn-close-icon hide">
                             </div>
-                            <span class="folders-detail__wrapper--settings-element-users-ctn-element-username" id="username">${result.username}</span>`
+                            <span class="folders-detail__wrapper--settings-element-users-ctn-element-username" id="username">${result.username}</span>
+                            <button class="folders-detail__wrapper--settings-element-users-ctn-element-remove-btn" id="removeUser"> Remove</button>`
                  usersCtn.appendChild(div);
-                 div.addEventListener('mouseenter', ()  =>  div.querySelector("#close").classList.remove('hide'));
-                 div.addEventListener('mouseleave', ()  =>  div.querySelector("#close").classList.add('hide'));
+                 div.addEventListener('mouseenter', ()  =>  div.querySelector("#removeUser").classList.remove('hide'));
+                 div.addEventListener('mouseleave', ()  =>  div.querySelector("#removeUser").classList.add('hide'));
 
                  inputAside.value = '';
                  span.innerText = '';
                  span.classList.remove('msg-show-success');
                  addBtn.setAttribute("disabled", "");
 
-                 console.log(result);
+                 setTimeout(() =>{
+                    div.classList.remove("new-item");//delete animation class when it ends
+                 }, 1300)
 
                  if (result.changeStatus){
-                     console.log("a borrar");
-
+                     let watchers = document.querySelector("#watchersCtn");
+                     let users = watchers.querySelectorAll("#username");
+                     users.forEach((user) =>{
+                        if(user.textContent === result.username){
+                            console.log(user);
+                            let usernameCtn = user.parentNode;
+                            usernameCtn.classList.add("delete-item");
+                            setTimeout(() =>{
+                                usernameCtn.remove();
+                            },1300)
+                        }
+                     })
                  }
-
-
              }
              else if(result.status === "failed"){
                  span.classList.add('msg-show-error');
@@ -243,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () =>{
             closeAddMenu();
         }else if(event.target.closest(".folders-detail__wrapper--tabs-element")){
             toggleActive(event.target);
-        }else if(event.target.closest("#close")){
+        }else if(event.target.closest("#removeUser")){
             deleteUserParticipation(event);
         }else if(event.target.closest('#searchUser')) {
             addUser(event);
