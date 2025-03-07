@@ -227,7 +227,6 @@ document.addEventListener('DOMContentLoaded', () =>{
                      let users = watchers.querySelectorAll("#username");
                      users.forEach((user) =>{
                         if(user.textContent === result.username){
-                            console.log(user);
                             let usernameCtn = user.parentNode;
                             usernameCtn.classList.add("delete-item");
                             setTimeout(() =>{
