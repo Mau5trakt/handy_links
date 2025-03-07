@@ -32,18 +32,17 @@
            {% endif %}
         </div>
 
-        <div class="folders-detail__wrapper--links hide" id="links">
+        <div class="folders-detail__wrapper--links" id="links">
             {% for link in folder.Links.all %}
                 <h1>{{ link.title }}</h1>
                 <h1>{{ link.description }}</h1>
                 <a href="{{ link.url }}" target="_blank">{{ link.url }}</a>
-
-
+                {# Add empty case #}
             {% endfor %}
 
         </div>
     {% if request.user.username == folder.owner.username %}
-        <div class="folders-detail__wrapper--settings " id="settings">
+        <div class="folders-detail__wrapper--settings hide" id="settings">
 
             <div class="folders-detail__wrapper--settings-element">
                 <h3 class="folders-detail__wrapper--settings-element-title">Folder Access</h3>
