@@ -76,19 +76,26 @@ document.addEventListener('DOMContentLoaded', () =>{
 
     let deleteUserParticipation = event =>{
 
-        console.log("kiere borrar")
-        // ver lo del evento, y el modal , aqui con un if ver lo de la info
-
         userToremove = event.target.parentNode.parentNode;
         actionToSend = userToremove.parentNode.parentNode.dataset.modal;
         // deletes a user from the collaborator or watchers list from a folder
-        let container = event.target.parentNode.parentNode
-        let username = container.querySelector('#username').textContent
+        let container = event.target.parentNode.parentNode;
+        let username = container.querySelector('#username').textContent;
         
         const  modal = document.querySelector("#alert-dialog");
         let sectionCtn = event.target.parentNode.parentNode.parentNode.parentNode;
         let message = "";
         let actionBtn = modal.querySelector('#modalActionBtn');
+
+
+        if (event.target.classList.contains("folders-detail__wrapper--settings-element-users-ctn-element-remove-btn")){
+            container = event.target.parentNode;
+            username = container.querySelector('#username').textContent;
+            sectionCtn = event.target.parentNode.parentNode.parentNode;
+            actionToSend = sectionCtn.dataset.modal;
+            userToremove = container;
+        }
+
 
         if (sectionCtn.dataset.modal === "delete-collaborator"){
             message = `Do you want to remove ${username} as a collaborator?`;
