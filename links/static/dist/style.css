@@ -1,3 +1,11 @@
+.folders-detail__wrapper--links-element--body-link, .folders-detail__wrapper--links-element--body-description {
+  scrollbar-width: none;
+  -ms-text-overflow-style: none;
+}
+.folders-detail__wrapper--links-element--body-link::-webkit-scrollbar, .folders-detail__wrapper--links-element--body-description::-webkit-scrollbar {
+  display: none;
+}
+
 @font-face {
   font-family: "Ubuntu Regular";
   src: url("../fonts/Ubuntu-Regular.ttf") format("truetype");
@@ -1375,6 +1383,7 @@ body {
   align-items: center;
   gap: 5px;
   margin-bottom: 20px;
+  box-sizing: border-box;
 }
 .folders-detail__wrapper--tabs-element {
   box-sizing: border-box;
@@ -1392,6 +1401,90 @@ body {
   background: #579dff;
   border: 1px solid #579dff;
   color: #1d2125;
+}
+.folders-detail__wrapper--links {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media screen and (max-width: 768px) {
+  .folders-detail__wrapper--links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 576px) {
+  .folders-detail__wrapper--links {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+.folders-detail__wrapper--links-element {
+  border: 1px solid #333c44;
+  border-radius: 8px;
+  grid-column: span 1;
+  word-break: break-all;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transition: box-shadow 800ms ease-in-out, opacity 400ms ease-in-out !important;
+}
+.folders-detail__wrapper--links-element:hover {
+  box-shadow: 0 0 30px 0 rgba(160, 160, 160, 0.12);
+}
+.folders-detail__wrapper--links-element--header {
+  display: flex;
+  gap: 15px;
+  align-items: self-start;
+}
+.folders-detail__wrapper--links-element--header-user {
+  font-size: 20px;
+  color: hsl(210, 92%, 93%);
+}
+.folders-detail__wrapper--links-element--header img {
+  width: 30px;
+  height: 30px;
+}
+.folders-detail__wrapper--links-element--body {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  gap: 10px;
+}
+.folders-detail__wrapper--links-element--body-link {
+  color: #579dff;
+  font-size: 18px;
+  max-height: 250px;
+  overflow-y: scroll;
+}
+.folders-detail__wrapper--links-element--body-description {
+  font-size: 16px;
+  max-height: 250px;
+  overflow-y: scroll;
+}
+.folders-detail__wrapper--links-element--footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: end;
+  gap: 5px;
+}
+.folders-detail__wrapper--links-element--footer img:last-child:hover {
+  background-color: #fdeeed;
+}
+.folders-detail__wrapper--links-element--footer img:only-child:hover {
+  background-color: #ddebff;
+}
+.folders-detail__wrapper--links-element--footer img {
+  padding: 5px;
+  width: 24px;
+  height: 24px;
+  filter: grayscale(100%);
+  cursor: pointer;
+  border-radius: 8px;
+}
+.folders-detail__wrapper--links-element--footer img:hover {
+  filter: grayscale(0);
+  background-color: #ddebff;
 }
 .folders-detail__wrapper--settings {
   display: flex;
@@ -1542,6 +1635,13 @@ body {
   background: #579dff;
   color: #1d2125 !important;
 }
+.folders-detail .opacity-f {
+  opacity: 0;
+}
+.folders-detail .box-shadow {
+  box-shadow: 0 0 30px 0 rgba(160, 160, 160, 0.32);
+  transition: all 1000ms linear !important;
+}
 .folders-detail .hide {
   display: none;
 }
@@ -1562,6 +1662,10 @@ body {
     opacity: 0;
     transform: translateY(120%);
   }
+}
+
+.dialog {
+  border-radius: 4px;
 }
 
 .folder-detail-dialog {
@@ -1600,13 +1704,47 @@ body {
   cursor: pointer;
 }
 .folder-detail-dialog__body {
+  box-sizing: border-box;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 10px;
+}
+.folder-detail-dialog__body--text {
+  font-size: 18px;
+}
+.folder-detail-dialog__body--alert-span {
+  text-align: center;
+}
+.folder-detail-dialog__body--field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.folder-detail-dialog__body--field--info {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.folder-detail-dialog__body--text {
-  font-size: 18px;
+.folder-detail-dialog__body--field--info-char-count {
+  font-size: 12px;
+}
+.folder-detail-dialog__body label {
+  margin-left: 2px;
+}
+.folder-detail-dialog__body input {
+  height: 32px;
+  box-sizing: border-box;
+  background: #1d2125;
+  border: 2px solid #333c44;
+  padding: 0 10px;
+  border-radius: 5px;
+  outline: none;
+  width: 100%;
+}
+.folder-detail-dialog__body input:focus {
+  border: 2px solid #738496;
 }
 .folder-detail-dialog__footer {
   border-top: 1px solid #B6C2CF;

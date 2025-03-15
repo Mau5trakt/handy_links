@@ -6,3 +6,12 @@
     }
 }
 
+
+%hide-scroll{
+    scrollbar-width: none;
+    -ms-text-overflow-style:none ;
+
+    &::-webkit-scrollbar{
+        display: none;
+    }
+}

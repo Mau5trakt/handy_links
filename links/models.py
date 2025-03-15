@@ -49,8 +49,10 @@ class Folder(models.Model):
 
 class Link(models.Model):
     folder = models.ForeignKey(Folder, on_delete=models.CASCADE, related_name='Links', verbose_name='Folder')
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50, blank=True)
     url = models.TextField('Link Url',max_length=1000)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="Link_Owner", verbose_name="Link Owner")
-    description = models.TextField('Link Description', blank=True)
+    description = models.TextField('Link Description', max_length=255, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 

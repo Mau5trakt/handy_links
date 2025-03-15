@@ -21,10 +21,11 @@ from debug_toolbar.toolbar import debug_toolbar_urls
 
 
 urlpatterns = [
+     
+     path(r'jet/', include('jet.urls', 'jet')), 
+     path(r'jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')), # Django JET dashboard URLS
      path('admin/', admin.site.urls),
-
-
-     path("", include('links.urls'))
+     path("", include('links.urls')),
 ]
 
 if settings.DEBUG:

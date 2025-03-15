@@ -9,6 +9,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, TemplateView, ListView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from links.models import CustomUser, Folder, Link
 from links.forms import RegisterForm, FolderCreationForm
 from links.avatar_generation import generate_avatar
@@ -117,17 +118,20 @@ class FolderListView(FolderAccessMixin, TemplateView):
 
         folder = get_object_or_404(Folder, id=kwargs.get('uuid'))
         user = self.request.user
+        
+        links = folder.Links.all().order_by('-updated_at')
 
-        if folder.owner == user or user.username in folder.get_watchers():
+        if folder.owner == user or user.username in folder.get_collaborators():
             context["can_add"] = True
             
         context['folder'] = folder
+        context['links'] = links
         if self.request.user.is_authenticated:
             context['loged'] = True
 
         return context
 
-
+@login_required
 @require_POST
 def get_user(request):
     data = json.load(request)
@@ -149,6 +153,7 @@ def get_user(request):
         return JsonResponse({"status": "failed",  "message": f"this user is already a {action}" })
     return JsonResponse({"status": "failed", "message": "this user doesn't exists"})
 
+@login_required
 @require_POST
 def add_user(request):
     data = json.load(request)
@@ -174,6 +179,7 @@ def add_user(request):
             return JsonResponse({'status': 'success', "username": user.username, "avatar": user.avatar})
     return JsonResponse({'status': 'failed', 'message': 'There was an error doing this request.'})
 
+@login_required
 @require_POST
 def remove_user(request):
     data = json.load(request)
@@ -190,3 +196,31 @@ def remove_user(request):
             return JsonResponse({"status": "success"})
         
     return JsonResponse({"status": "failed", "message": "There was an error removing this user, pleasy try again. "})
+
+@login_required
+@require_POST
+def add_link(request):
+    data = json.load(request)
+    folder = Folder.objects.get(pk=data["folder"])
+    user = CustomUser.objects.get(username__iexact=data['username'])
+    has_description = True if len(data['description'].replace('', '')) > 0 else False
+    if folder and user and (user == folder.owner or user.username in folder.get_collaborators()):
+        #verify if the link exists, if then 
+        Link.objects.create(
+           folder=folder,
+            url=data['url'],
+            owner=user,
+            **({'description': data['description']} if has_description else {})
+        )
+        return JsonResponse({
+    'status': 'success', 
+    'user': {
+        'username': request.user.username,
+        'avatar': request.user.avatar  # Asegúrate de que 'avtar' sea el nombre correcto del campo
+    },
+    'link': {
+        'url': data['url'],
+        **({'description': data['description']} if has_description else {})
+    }
+})
+    return JsonResponse({'status': 'failed', 'message': 'There was an error submiting yor link'})

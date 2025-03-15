@@ -14,6 +14,5 @@ urlpatterns = [
     path('get-user', views.get_user, name="get_user"),
     path('add-user', views.add_user, name='add_user'),
     path('remove-user', views.remove_user, name='remove_user'),
-
-
+    path('add-link', views.add_link, name='add_link'),
 ]
