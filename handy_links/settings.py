@@ -167,5 +167,6 @@ LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL =  '/'
 STATIC_ROOT = 'links/static'
 
-JET_DEFAULT_THEME = 'light-violet'
+
 JET_SIDE_MENU_COMPACT = True
+JET_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
