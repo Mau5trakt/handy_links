@@ -10,6 +10,32 @@
   font-family: "Ubuntu Regular";
   src: url("../fonts/Ubuntu-Regular.ttf") format("truetype");
 }
+.tab_active {
+  background: #579dff !important;
+  color: #1d2125 !important;
+}
+
+.opacity-f {
+  opacity: 0;
+}
+
+.box-shadow {
+  box-shadow: 0 0 30px 0 rgba(160, 160, 160, 0.32);
+  transition: all 1000ms linear !important;
+}
+
+.hide {
+  display: none !important;
+}
+
+.msg-show-error {
+  color: #ff5a66;
+}
+
+.msg-show-success {
+  color: #18a038;
+}
+
 .container_wrapper {
   display: flex;
   justify-content: center;
@@ -71,7 +97,7 @@
   border-radius: 3px !important;
   font-family: "Ubuntu Regular", serif !important;
   font-size: 14px !important;
-  color: #B6C2CF !important;
+  color: #b6c2cf !important;
 }
 
 .checkbox-input {
@@ -100,13 +126,13 @@
 .select2-results__option {
   font-size: 14px !important;
   font-family: "Ubuntu Regular", serif !important;
-  color: #B6C2CF;
+  color: #b6c2cf;
 }
 .select2-results__options {
   background: #22272b !important;
 }
 .select2-search__field {
-  color: #B6C2CF !important;
+  color: #b6c2cf !important;
 }
 .select2-selection__clear {
   color: #b6c2cf !important;
@@ -549,7 +575,7 @@ input,
 select,
 optgroup,
 textarea {
-  color: #B6C2CF;
+  color: #b6c2cf;
   font-size: 1rem;
 }
 
@@ -641,10 +667,10 @@ textarea {
   padding: 10px 8px;
   font-family: "Ubuntu Regular", serif;
   font-size: 1rem;
-  color: #B6C2CF;
+  color: #b6c2cf;
 }
 .header__wrapper--nav-menu-toggle--container--element:last-child {
-  color: #f15b50;
+  color: #ff5a66;
   text-decoration: none;
 }
 .header__wrapper--nav-menu-toggle--container--element--form-ctn {
@@ -683,7 +709,7 @@ textarea {
   transition: all 0.4s ease;
 }
 .header__wrapper--nav-logo {
-  color: #B6C2CF;
+  color: #b6c2cf;
   font-family: "Ubuntu Regular", serif;
   font-size: 22px;
   text-align: center;
@@ -772,7 +798,7 @@ textarea {
 .header__wrapper--nav--ul-dropdown-menu-link-text {
   font-size: 14px;
   font-family: "Ubuntu Regular", serif;
-  color: #B6C2CF;
+  color: #b6c2cf;
 }
 .header__wrapper--div {
   display: flex;
@@ -795,7 +821,7 @@ textarea {
   outline: none;
   font-family: "Ubuntu Regular", serif;
   background: #22272b;
-  color: #B6C2CF;
+  color: #b6c2cf;
   width: 100%;
 }
 .header__wrapper--div-icons {
@@ -806,6 +832,185 @@ textarea {
 .header__wrapper--div-icons img {
   width: 30px;
   height: 30px;
+}
+
+.dialog--ctn {
+  width: 300px;
+  background: #1d2125;
+  color: #b6c2cf;
+  padding: 5px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+}
+@media screen and (max-width: 576px) {
+  .dialog--ctn {
+    max-width: 300px;
+    width: 100%;
+  }
+}
+.dialog--ctn__header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #579dff;
+  padding: 10px 0;
+}
+.dialog--ctn__header-action {
+  font-size: 24px;
+}
+.dialog--ctn__header img {
+  width: 25px;
+  height: 25px;
+}
+.dialog--ctn__header img:hover {
+  opacity: 0.3;
+  cursor: pointer;
+}
+.dialog--ctn__body {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 10px;
+}
+.dialog--ctn__body--text {
+  font-size: 18px;
+}
+.dialog--ctn__body--alert-span {
+  text-align: center;
+}
+.dialog--ctn__body--field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.dialog--ctn__body--field--info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dialog--ctn__body--field--info-char-count {
+  font-size: 12px;
+}
+.dialog--ctn__body select {
+  height: 32px;
+  box-sizing: border-box;
+  border: 2px solid #333c44;
+  border-radius: 5px;
+  background: #1d2125;
+  font-family: "Ubuntu Regular", serif;
+  padding: 0 10px;
+}
+.dialog--ctn__body select option {
+  font-family: "Ubuntu Regular", serif;
+}
+.dialog--ctn__body label {
+  margin-left: 2px;
+}
+.dialog--ctn__body input {
+  height: 32px;
+  box-sizing: border-box;
+  background: #1d2125;
+  border: 2px solid #333c44;
+  padding: 0 10px;
+  border-radius: 5px;
+  outline: none;
+  width: 100%;
+}
+.dialog--ctn__body input:focus {
+  border: 2px solid #738496;
+}
+.dialog--ctn__footer {
+  border-top: 1px solid #b6c2cf;
+  padding: 10px 0;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+.dialog--ctn__footer button {
+  color: #1d2125 !important;
+  box-sizing: border-box;
+  padding: 6px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 400ms ease-in-out;
+}
+.dialog--ctn__footer button.blue-bg {
+  background-color: #579dff;
+  border: 1px solid #579dff;
+}
+.dialog--ctn__footer button.red-bg {
+  background-color: #ff5a66;
+  border: 1px solid #ff5a66;
+}
+.dialog--ctn__footer button:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.toast {
+  box-sizing: border-box;
+  width: 300px;
+  height: 50px;
+  background-color: #262c36;
+  position: fixed;
+  bottom: 5px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  border-radius: 3px;
+  transform: translateY(70px);
+}
+@media screen and (max-width: 576px) {
+  .toast {
+    width: 100%;
+    right: 0;
+    bottom: 0;
+  }
+}
+.toast-ctn {
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  border: 2px solid #b6c2cf;
+  display: flex;
+  gap: 5px;
+  justify-content: space-between;
+  align-items: center;
+}
+.toast-ctn-msj {
+  margin: 0 auto;
+}
+
+.toast-active {
+  transform: translateY(0) !important;
+}
+
+.toast-success div {
+  border-color: #18a038;
+  transition: none;
+}
+.toast-success div span {
+  color: #18a038;
+  transition: none;
+}
+
+.toast-error div {
+  border-color: #ff5a66;
+  transition: none;
+}
+.toast-error div span {
+  color: #ff5a66;
+  transition: none;
 }
 
 body {
@@ -940,7 +1145,7 @@ body {
 .register .error-message {
   font-family: "Ubuntu Regular", serif;
   font-size: 16px;
-  color: #f15b50;
+  color: #ff5a66;
   margin-bottom: 10px;
 }
 .register .error_ctn:after {
@@ -950,7 +1155,7 @@ body {
   left: 50%;
   width: 100%;
   height: 3px;
-  background-color: #f15b50;
+  background-color: #ff5a66;
   transition: all 500ms cubic-bezier(0, 0.58, 0.22, 1);
 }
 
@@ -988,7 +1193,7 @@ body {
 }
 .personal_folders__wrapper--header-element {
   margin: 0;
-  color: #B6C2CF;
+  color: #b6c2cf;
   font-family: "Ubuntu Regular", serif;
 }
 .personal_folders__wrapper--header-element:nth-child(1) {
@@ -1025,6 +1230,10 @@ body {
     justify-content: center;
   }
 }
+.personal_folders__wrapper--folders-empty-msj {
+  opacity: 0.4;
+  font-size: 18px;
+}
 .personal_folders__wrapper--folders-folder {
   position: relative;
   box-sizing: border-box;
@@ -1036,7 +1245,7 @@ body {
   border: 1px solid #333c44;
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.75);
   font-family: "Ubuntu Regular", serif;
-  color: #B6C2CF;
+  color: #b6c2cf;
 }
 .personal_folders__wrapper--folders-folder:hover {
   border: 1px solid #91979e;
@@ -1129,7 +1338,7 @@ body {
 }
 .shared_folders__wrapper--header-element {
   margin: 0;
-  color: #B6C2CF;
+  color: #b6c2cf;
   font-family: "Ubuntu Regular", serif;
 }
 .shared_folders__wrapper--header-element:nth-child(1) {
@@ -1151,6 +1360,10 @@ body {
     justify-content: center;
   }
 }
+.shared_folders__wrapper--folders-empty-msj {
+  opacity: 0.4;
+  font-size: 18px;
+}
 .shared_folders__wrapper--folders-folder {
   position: relative;
   box-sizing: border-box;
@@ -1162,7 +1375,7 @@ body {
   border: 1px solid #333c44;
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.75);
   font-family: "Ubuntu Regular", serif;
-  color: #B6C2CF;
+  color: #b6c2cf;
 }
 .shared_folders__wrapper--folders-folder:hover {
   border: 1px solid #91979e;
@@ -1263,7 +1476,7 @@ body {
   height: 40px;
 }
 .create-folder__wrapper--form-ctn__header--title {
-  color: #B6C2CF;
+  color: #b6c2cf;
   font-size: 28px;
   font-family: "Ubuntu Regular", serif;
   margin: 0;
@@ -1283,12 +1496,12 @@ body {
   align-items: center;
 }
 .create-folder__wrapper--form-ctn__content__form--field--label-ctn__element {
-  color: #B6C2CF;
+  color: #b6c2cf;
   font-size: 14px;
   font-family: "Ubuntu Regular", serif;
 }
 .create-folder__wrapper--form-ctn__content__form--field--label-ctn__element--span {
-  color: #f15b50;
+  color: #ff5a66;
 }
 .create-folder__wrapper--form-ctn__content__form--field--input-ctn {
   width: 70%;
@@ -1298,7 +1511,7 @@ body {
 }
 .create-folder__wrapper--form-ctn__content__form--field--input-ctn__help-text {
   font-size: 12px;
-  color: #B6C2CF;
+  color: #b6c2cf;
   font-family: "Ubuntu Regular", serif;
 }
 .create-folder__wrapper--form-ctn__content__form--field-submit {
@@ -1345,7 +1558,7 @@ body {
 }
 .folders-detail__wrapper--header-text {
   font-family: "Ubuntu Regular", serif;
-  color: #B6C2CF;
+  color: #b6c2cf;
   font-size: 24px;
 }
 .folders-detail__wrapper--header-button {
@@ -1468,12 +1681,6 @@ body {
   justify-content: end;
   gap: 5px;
 }
-.folders-detail__wrapper--links-element--footer img:last-child:hover {
-  background-color: #fdeeed;
-}
-.folders-detail__wrapper--links-element--footer img:only-child:hover {
-  background-color: #ddebff;
-}
 .folders-detail__wrapper--links-element--footer img {
   padding: 5px;
   width: 24px;
@@ -1484,7 +1691,7 @@ body {
 }
 .folders-detail__wrapper--links-element--footer img:hover {
   filter: grayscale(0);
-  background-color: #ddebff;
+  background-color: #262c36;
 }
 .folders-detail__wrapper--settings {
   display: flex;
@@ -1553,8 +1760,8 @@ body {
 }
 .folders-detail__wrapper--settings-element-users-ctn-element-remove-btn {
   display: none;
-  background: #f15b50;
-  border: 1px solid #f15b50;
+  background: #ff5a66;
+  border: 1px solid #ff5a66;
   color: #1d2125;
   padding: 6px 12px;
   border-radius: 3px;
@@ -1567,6 +1774,22 @@ body {
 .folders-detail__wrapper--settings-element-description {
   font-family: "Ubuntu Regular", serif;
   font-size: 16px;
+}
+.folders-detail__wrapper--settings-element-action-btn {
+  background-color: #ff5a66;
+  outline: none;
+  height: 32px;
+  border: 1px solid #ff5a66;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 3px;
+  width: fit-content;
+  cursor: pointer;
+}
+.folders-detail__wrapper--settings-element-action-btn:hover {
+  opacity: 0.75;
 }
 .folders-detail__wrapper--settings-element-add-people {
   display: flex;
@@ -1631,26 +1854,6 @@ body {
 .folders-detail__wrapper--settings-element-input {
   align-self: baseline;
 }
-.folders-detail .tab_active {
-  background: #579dff;
-  color: #1d2125 !important;
-}
-.folders-detail .opacity-f {
-  opacity: 0;
-}
-.folders-detail .box-shadow {
-  box-shadow: 0 0 30px 0 rgba(160, 160, 160, 0.32);
-  transition: all 1000ms linear !important;
-}
-.folders-detail .hide {
-  display: none;
-}
-.folders-detail .msg-show-error {
-  color: #f15b50;
-}
-.folders-detail .msg-show-success {
-  color: #24953e;
-}
 @keyframes slideIn {
   to {
     opacity: 1;
@@ -1668,112 +1871,12 @@ body {
   border-radius: 4px;
 }
 
-.folder-detail-dialog {
-  width: 300px;
-  background: #1d2125;
-  color: #B6C2CF;
-  padding: 5px 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  box-sizing: border-box;
+.hide-elements * {
+  opacity: 0;
 }
-@media screen and (max-width: 576px) {
-  .folder-detail-dialog {
-    max-width: 300px;
-    width: 100%;
-  }
-}
-.folder-detail-dialog__header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid #579dff;
-  padding: 10px 0;
-}
-.folder-detail-dialog__header-action {
-  font-size: 24px;
-}
-.folder-detail-dialog__header img {
-  width: 25px;
-  height: 25px;
-}
-.folder-detail-dialog__header img:hover {
-  opacity: 0.3;
-  cursor: pointer;
-}
-.folder-detail-dialog__body {
-  box-sizing: border-box;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  gap: 10px;
-}
-.folder-detail-dialog__body--text {
-  font-size: 18px;
-}
-.folder-detail-dialog__body--alert-span {
-  text-align: center;
-}
-.folder-detail-dialog__body--field {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.folder-detail-dialog__body--field--info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.folder-detail-dialog__body--field--info-char-count {
-  font-size: 12px;
-}
-.folder-detail-dialog__body label {
-  margin-left: 2px;
-}
-.folder-detail-dialog__body input {
-  height: 32px;
-  box-sizing: border-box;
-  background: #1d2125;
-  border: 2px solid #333c44;
-  padding: 0 10px;
-  border-radius: 5px;
-  outline: none;
-  width: 100%;
-}
-.folder-detail-dialog__body input:focus {
-  border: 2px solid #738496;
-}
-.folder-detail-dialog__footer {
-  border-top: 1px solid #B6C2CF;
-  padding: 10px 0;
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 10px;
-}
-.folder-detail-dialog__footer button {
-  color: #1d2125 !important;
-  box-sizing: border-box;
-  padding: 6px 12px;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: all 400ms ease-in-out;
-}
-.folder-detail-dialog__footer button.blue-bg {
-  background-color: #579dff;
-  border: 1px solid #579dff;
-}
-.folder-detail-dialog__footer button.red-bg {
-  background-color: #f15b50;
-  border: 1px solid #f15b50;
-}
-.folder-detail-dialog__footer button:hover {
-  opacity: 0.6;
-  cursor: pointer;
+
+.hide-card {
+  opacity: 0;
 }
 
 /*# sourceMappingURL=style.css.map */
