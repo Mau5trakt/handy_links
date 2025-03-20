@@ -15,4 +15,7 @@ urlpatterns = [
     path('add-user', views.add_user, name='add_user'),
     path('remove-user', views.remove_user, name='remove_user'),
     path('add-link', views.add_link, name='add_link'),
+    path('edit-link', views.edit_link, name='edit_link'),
+    path('delete-link', views.delete_link, name='delete_link'),
+    path('get-user-folders', views.get_user_folders, name='get_folders')
 ]

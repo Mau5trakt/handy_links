@@ -75,6 +75,7 @@ class Home(LoginRequiredMixin, TemplateView):
         context['user'] = user
         self.request.session['user_id'] = user.id
         context['personal_folders'] = Folder.objects.filter(owner=self.request.user)[:5]
+        context['shared_folders'] = Folder.objects.filter(Q(collaborators=user) | Q(watchers=user)).distinct()
 
         return context
 
@@ -110,6 +111,8 @@ class FolderCreationView(LoginRequiredMixin, CreateView):
 
 
 class FolderListView(FolderAccessMixin, TemplateView):
+    # Work on the inactive folders
+
     template_name = 'links/folder_list.html'
 
 
@@ -123,6 +126,9 @@ class FolderListView(FolderAccessMixin, TemplateView):
 
         if folder.owner == user or user.username in folder.get_collaborators():
             context["can_add"] = True
+
+        if folder.owner == user or user.username in folder.get_collaborators() or user.username in folder.get_watchers():
+            context['user_has_settings'] = True
             
         context['folder'] = folder
         context['links'] = links
@@ -202,25 +208,73 @@ def remove_user(request):
 def add_link(request):
     data = json.load(request)
     folder = Folder.objects.get(pk=data["folder"])
-    user = CustomUser.objects.get(username__iexact=data['username'])
+    user = CustomUser.objects.get(username=request.user)
     has_description = True if len(data['description'].replace('', '')) > 0 else False
     if folder and user and (user == folder.owner or user.username in folder.get_collaborators()):
-        #verify if the link exists, if then 
-        Link.objects.create(
+        link = Link.objects.create(
            folder=folder,
             url=data['url'],
             owner=user,
             **({'description': data['description']} if has_description else {})
         )
+
+        
         return JsonResponse({
     'status': 'success', 
     'user': {
         'username': request.user.username,
-        'avatar': request.user.avatar  # Asegúrate de que 'avtar' sea el nombre correcto del campo
+        'avatar': request.user.avatar  
     },
     'link': {
         'url': data['url'],
+        'id': link.id,
         **({'description': data['description']} if has_description else {})
+    },
+    'folder': {
+        'id': folder.id,
+        'linksQty': folder.get_link_qty()
     }
 })
     return JsonResponse({'status': 'failed', 'message': 'There was an error submiting yor link'})
+
+@login_required
+@require_POST
+def edit_link(request):
+    data = json.load(request)
+    folder = Folder.objects.get(pk=data["folder"])
+    user = CustomUser.objects.get(username=request.user)
+    link = Link.objects.get(pk=data['link'])
+
+    if folder and user and link and (user in folder.get_collaborators() or user == folder.owner or link.owner == user):
+        link.url = data['url']
+        link.description = data['description']
+        link.save()
+        return JsonResponse({'status': "success", "url": data["url"], "description": data["description"]})
+    return JsonResponse({'status': 'failed', 'message': 'There was an error modifying this link'})
+
+@login_required
+@require_POST
+def delete_link(request):
+    data = json.load(request)
+    folder = Folder.objects.get(pk=data["folder"])
+    user = CustomUser.objects.get(username=request.user)
+    link = Link.objects.get(pk=data['link'])
+    if folder and user and link and (user in folder.get_collaborators() or user == folder.owner or link.owner == user):
+        link.delete()
+        return JsonResponse({"status": "success"})
+    return JsonResponse({"status": "failed", "message": "There was an error deleting this link"})
+
+
+@login_required
+@require_POST
+def get_user_folders(request):
+    active_folders = Folder.objects.filter(
+        Q(status=Folder.Status.ACTIVE) & 
+            (Q(owner=request.user) | Q(collaborators=request.user))
+    ).distinct()
+    folders = []
+    for folder in active_folders:
+        element = {"id": folder.id, "title": folder.title} 
+        folders.append(element)
+
+    return JsonResponse({"status": "success", "folders": folders})

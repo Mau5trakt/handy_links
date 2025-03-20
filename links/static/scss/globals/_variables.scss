@@ -1,19 +1,16 @@
 @font-face {
-    font-family: 'Ubuntu Regular';
-    src: url('../fonts/Ubuntu-Regular.ttf') format('truetype');
+  font-family: "Ubuntu Regular";
+  src: url("../fonts/Ubuntu-Regular.ttf") format("truetype");
 }
-
-
 
 $bg-principal: #1d2125;
 $border: #333c44;
 $border-input: #738496;
 $blue: #579dff;
-$red: #f15b50;
-$text: #B6C2CF;
-$contrast:hsl(210, 92%, 93%);
-
-
+$red: #ff5a66;
+$text: #b6c2cf;
+$contrast: hsl(210, 92%, 93%);
+$success: #18a038;
 
 $bp-sm: 576px;
 $bp-md: 768px;
@@ -22,8 +19,32 @@ $bp-xl: 1280px;
 $bp-xxl: 1440px;
 $bp-xxxl: 2000px;
 
+$font: "Absolut Pro 1", serif;
+$font-alternative: "Absolut Pro 2", serif;
+$font3: "Ubuntu Regular", serif;
 
-$font: 'Absolut Pro 1', serif;
-$font-alternative: 'Absolut Pro 2', serif;
-$font3: 'Ubuntu Regular', serif;
+.tab_active {
+  background: $blue !important;
+  color: $bg-principal !important;
+}
 
+.opacity-f {
+  opacity: 0;
+}
+
+.box-shadow {
+  box-shadow: 0 0 30px 0 rgba(160, 160, 160, 0.32);
+  transition: all 1000ms linear !important;
+}
+
+.hide {
+  display: none !important;
+}
+
+.msg-show-error {
+  color: $red;
+}
+
+.msg-show-success {
+  color: $success;
+}
