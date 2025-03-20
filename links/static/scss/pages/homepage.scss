@@ -88,6 +88,12 @@
         justify-content: center;
       }
 
+      &-empty-msj{
+        opacity: 0.4;
+        font-size: 18px;
+
+      }
+
       &-folder {
         position: relative;
 
@@ -250,6 +256,12 @@
 
       @include mquery($bp-sm){
         justify-content: center;
+      }
+
+      &-empty-msj{
+        opacity: 0.4;
+        font-size: 18px;
+
       }
 
       &-folder {

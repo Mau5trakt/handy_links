@@ -1,24 +1,23 @@
 @use "../globals" as *;
 
-.folders-detail{
-
-  &__wrapper{
+.folders-detail {
+  &__wrapper {
     display: flex;
     max-width: 1440px;
     width: 100%;
     flex-direction: column;
     gap: 20px;
-    &--header{
+    &--header {
       display: flex;
       justify-content: space-between;
 
-      &-text{
+      &-text {
         font-family: $font3;
         color: $text;
         font-size: 24px;
       }
 
-      &-button{
+      &-button {
         height: 32px;
         border: 1px solid $blue;
         cursor: pointer;
@@ -33,30 +32,23 @@
         transition: all 400ms ease;
         outline: none;
 
-        &:hover{
+        &:hover {
           background: #85b8ff;
         }
 
-
-        &-text{
-            font-family: $font3;
+        &-text {
+          font-family: $font3;
           color: #1d2125;
           font-size: 14px;
         }
 
-        img{
+        img {
           width: 18px;
           height: 18px;
         }
-
-
-
       }
-
-
-
     }
-    &--tabs{
+    &--tabs {
       background: #262c36;
       border-radius: 2px;
       width: 100%;
@@ -65,9 +57,9 @@
       align-items: center;
       gap: 5px;
       margin-bottom: 20px;
+      box-sizing: border-box;
 
-
-      &-element{
+      &-element {
         box-sizing: border-box;
         padding: 6px 12px;
         color: $blue;
@@ -79,20 +71,108 @@
         border: 1px solid $blue;
         transition: all 400ms ease-in-out;
 
-        &:hover{
+        &:hover {
           background: $blue;
           border: 1px solid $blue;
           color: $bg-principal;
         }
       }
-
     }
-    &--settings{
+    &--links {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+
+      @include mquery($bp-md) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @include mquery($bp-sm) {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      &-element {
+        border: 1px solid $border;
+        border-radius: 8px;
+        grid-column: span 1;
+        word-break: break-all;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        transition: box-shadow 800ms ease-in-out, opacity 400ms ease-in-out !important;
+
+        &:hover {
+          box-shadow: 0 0 30px 0 rgba(160, 160, 160, 0.12);
+        }
+
+        &--header {
+          display: flex;
+          gap: 15px;
+          align-items: self-start;
+
+          &-user {
+            font-size: 20px;
+            color: $contrast;
+          }
+
+          img {
+            width: 30px;
+            height: 30px;
+          }
+        }
+
+        &--body {
+          display: flex;
+          flex-direction: column;
+          font-size: 20px;
+          gap: 10px;
+
+          &-link {
+            color: $blue;
+            font-size: 18px;
+            max-height: 250px;
+            overflow-y: scroll;
+            @extend %hide-scroll;
+          }
+
+          &-description {
+            font-size: 16px;
+            max-height: 250px;
+            overflow-y: scroll;
+            @extend %hide-scroll;
+          }
+        }
+
+        &--footer {
+          margin-top: auto;
+          display: flex;
+          justify-content: end;
+          gap: 5px;
+
+          img {
+            padding: 5px;
+            width: 24px;
+            height: 24px;
+            filter: grayscale(100%);
+            cursor: pointer;
+            border-radius: 8px;
+
+            &:hover {
+              filter: grayscale(0);
+              background-color: #262c36;
+            }
+          }
+        }
+      }
+    }
+
+    &--settings {
       display: flex;
       flex-direction: column;
       gap: 20px;
 
-      &-element{
+      &-element {
         padding: 16px;
         border-radius: 8px;
         border: 1px solid $border;
@@ -100,23 +180,21 @@
         flex-direction: column;
         gap: 10px;
 
-
-        &-title{
+        &-title {
           font-family: $font3;
           color: $blue;
           font-size: 18px;
           text-transform: capitalize;
-
         }
 
-        &-users-ctn{
+        &-users-ctn {
           display: flex;
           gap: 15px;
           padding-top: 10px;
           overflow-x: auto;
           overflow-y: hidden;
 
-          &-element{
+          &-element {
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -124,24 +202,24 @@
             gap: 5px;
             position: relative;
 
-            &.new-item{
+            &.new-item {
               opacity: 0;
               transform: translateY(120%);
               animation: slideIn 0.7s forwards;
               animation-delay: 500ms;
             }
 
-            &.delete-item{
+            &.delete-item {
               animation: slideOut 0.7s forwards;
               animation-delay: 500ms;
             }
 
-            &-image-ctn{
+            &-image-ctn {
               width: 40px;
               height: 40px;
               position: relative;
 
-              &-close-icon{
+              &-close-icon {
                 width: 20px;
                 height: 20px;
                 position: absolute;
@@ -149,18 +227,17 @@
                 right: -10px;
                 cursor: pointer;
 
-                &:hover{
+                &:hover {
                   opacity: 0.8;
                 }
               }
             }
-            &-user-avatar{
+            &-user-avatar {
               width: 40px;
-            height: 40px;
-            cursor: pointer;
-
+              height: 40px;
+              cursor: pointer;
             }
-            &-remove-btn{
+            &-remove-btn {
               display: none;
               background: $red;
               border: 1px solid $red;
@@ -168,58 +245,72 @@
               padding: 6px 12px;
               border-radius: 3px;
 
-              @include mquery($bp-sm){
+              @include mquery($bp-sm) {
                 display: block;
               }
             }
           }
         }
 
-        &-description{
+        &-description {
           font-family: $font3;
           font-size: 16px;
         }
+        &-action-btn {
+          background-color: $red;
+          outline: none;
+          height: 32px;
+          border: 1px solid $red;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 0 10px;
+          border-radius: 3px;
+          width: fit-content;
+          cursor: pointer;
 
-        &-add-people{
+          &:hover {
+            opacity: 0.75;
+          }
+        }
+
+        &-add-people {
           display: flex;
           flex-direction: column;
           gap: 5px;
 
-
-          &-input-ctn{
+          &-input-ctn {
             display: flex;
             gap: 5px;
 
-            @include mquery($bp-sm){
+            @include mquery($bp-sm) {
               width: 100%;
               flex-wrap: wrap;
             }
 
-            input{
+            input {
               background: #1d2125;
               border: 1px solid $border-input;
               padding: 0 10px;
               border-radius: 5px;
 
-              @include mquery($bp-sm){
+              @include mquery($bp-sm) {
                 height: 32px;
                 width: 100%;
                 max-width: 220px;
-
               }
 
-              &:focus{
+              &:focus {
                 outline: none;
                 border: 1px solid $blue;
               }
-
             }
 
-            button{
+            button {
               background: $blue;
               color: $bg-principal;
               height: 32px;
-              border:  1px solid $blue;
+              border: 1px solid $blue;
               cursor: pointer;
               border-radius: 3px;
               font-size: 14px;
@@ -228,167 +319,61 @@
               justify-content: center;
               align-items: center;
 
-              &:disabled{
+              &:disabled {
                 background: #738496;
                 cursor: not-allowed;
                 border: #738496;
 
-                &:hover{
+                &:hover {
                   opacity: 1;
                 }
               }
 
-              &:hover{
+              &:hover {
                 opacity: 0.8;
               }
             }
-
           }
-          &-msg{
+          &-msg {
             font-size: 14px;
             margin-left: 5px;
           }
         }
 
-
-
-
-        &-input{
+        &-input {
           align-self: baseline;
         }
-
       }
-
-
     }
   }
 
-  .tab_active{
-    background: $blue;
-    color: $bg-principal !important;
-  }
-
-
-
-  .hide{
-    display: none;
-  }
-
-  .msg-show-error{
-    color: #f15b50;
-  }
-
-  .msg-show-success{
-    color: #24953e;
-  }
-
-
+  
 
   @keyframes slideIn {
-    to{
+    to {
       opacity: 1;
       transform: translateX(0);
     }
   }
 
   @keyframes slideOut {
-    to{
+    to {
       opacity: 0;
       transform: translateY(120%);
     }
-
   }
-
 }
 
-.folder-detail-dialog{
-  width: 300px;
-  background: #1d2125;
-  color: $text;
-  padding: 5px 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  box-sizing: border-box;
+.dialog {
+  border-radius: 4px;
+}
 
-  @include mquery($bp-sm){
-    max-width: 300px;
-    width: 100%;
+.hide-elements{
+  *{
+    opacity: 0;
   }
+}
 
-  &__header{
-    width: 100%;
-    
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid $blue;
-    padding: 10px 0;
-
-    &-action{
-      font-size: 24px;
-
-    }
-
-    img{
-      width: 25px;
-      height: 25px;
-
-      &:hover{
-        opacity: 0.3;
-        cursor: pointer;
-      }
-    }
-  }
-
-  &__body{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    //border-bottom: 1px solid $blue;
-    &--text{
-      font-size: 18px;
-    }
-
-  }
-
-  &__footer{
-    border-top: 1px solid $text;
-    padding: 10px 0;
-
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px;
-
-    button{
-      color: #1d2125 !important;
-      box-sizing: border-box;
-      padding: 6px 12px;
-      border-radius: 3px;
-      cursor: pointer;
-      transition: all 400ms ease-in-out;
-      
-
-      &.blue-bg{
-        background-color: $blue;
-        border: 1px solid $blue;
-      }
-
-      &.red-bg{
-        background-color: $red;
-        border: 1px solid $red;
-      }
-
-
-      &:hover{
-        opacity: 0.6;
-        cursor: pointer;
-      }
-    }
-
-  }
-  
+.hide-card{
+  opacity: 0;
 }

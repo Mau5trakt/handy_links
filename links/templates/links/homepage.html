@@ -26,14 +26,14 @@
                 <div class="personal_folders__wrapper--folders">
 
                     {% for folder in personal_folders %}
-                        <a href="{{ folder.get_absolute_url }}" class="personal_folders__wrapper--folders-folder">
+                        <a href="{{ folder.get_absolute_url }}" class="personal_folders__wrapper--folders-folder" id="folderHomepage" data-folderId="{{folder.id}}">
                             <div class="personal_folders__wrapper--folders-folder--top">
 
                             </div>
 
                             <div class="personal_folders__wrapper--folders--info-ctn">
                                 <div class="personal_folders__wrapper--folders--info-ctn--img">
-                                    <img src="https://placehold.co/100x100/58afe0/FFF?text=%3Ca%3E" alt="Folder Image">
+                                    <img src="https://placehold.co/100x100/579dff/FFF?text=%3Ca%3E" alt="Folder Image">
                                 </div>
 
                                 <div class="personal_folders__wrapper--folders--info-ctn--main" id="folderMainInfo">
@@ -51,7 +51,7 @@
                                     {% endif %}
                                 </div>
 
-                                <span class="personal_folders__wrapper--folders--info-ctn--description"> {{ folder.get_link_qty|pluralize_links }}  </span>
+                                <span class="personal_folders__wrapper--folders--info-ctn--description" id="linksQty"> {{ folder.get_link_qty|pluralize_links }}  </span>
                             </div>
 
                         </a>
@@ -65,19 +65,20 @@
             <div class="shared_folders__wrapper">
                 <div class="shared_folders__wrapper--header">
                     <h3 class="shared_folders__wrapper--header-element">Shared Folders</h3>
-                    <a class="shared_folders__wrapper--header-element" href="">View All</a>
+                   {% if  shared_folders|length > 0 %} <a class="shared_folders__wrapper--header-element" href="">View All</a> {% endif %}
                 </div>
                 <div class="shared_folders__wrapper--folders">
 
-                    {% for folder in personal_folders %}
-                        <a href="#" class="shared_folders__wrapper--folders-folder">
+                    {% for folder in shared_folders %}
+                    
+                        <a href="{{ folder.get_absolute_url }}" class="shared_folders__wrapper--folders-folder" id="folderHomepage" data-folderId="{{folder.id}}">
                             <div class="shared_folders__wrapper--folders-folder--top">
 
                             </div>
 
                             <div class="shared_folders__wrapper--folders--info-ctn">
                                 <div class="shared_folders__wrapper--folders--info-ctn--img">
-                                    <img src="https://placehold.co/100x100/58afe0/FFF?text=%3Ca%3E" alt="Folder Image">
+                                    <img src="https://placehold.co/100x100/579dff/FFF?text=%3Ca%3E" alt="Folder Image">
                                 </div>
 
                                 <div class="shared_folders__wrapper--folders--info-ctn--main" id="folderMainInfo">
@@ -95,10 +96,14 @@
                                     {% endif %}
                                 </div>
 
-                                <span class="shared_folders__wrapper--folders--info-ctn--description"> {{ folder.get_link_qty|pluralize_links }}  </span>
+                                <span class="shared_folders__wrapper--folders--info-ctn--description"  id="linksQty"> {{ folder.get_link_qty|pluralize_links }}  </span>
                             </div>
 
                         </a>
+
+                    {% empty %}
+
+                        <h3 class="shared_folders__wrapper--folders-empty-msj">You dont have shared folders</h1>
                     {% endfor %}
 
                 </div>

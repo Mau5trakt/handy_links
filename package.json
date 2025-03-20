@@ -12,6 +12,7 @@
     "sass": "^1.83.0"
   },
   "dependencies": {
-    "swapy": "^1.0.5"
+    "swapy": "^1.0.5",
+    "toastify-js": "^1.12.0"
   }
 }

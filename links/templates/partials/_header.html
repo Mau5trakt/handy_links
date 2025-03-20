@@ -35,8 +35,8 @@
                     </button>
                     <div class="header__wrapper--nav--ul-dropdown" id="add-btn-dropdown">
                         <ul class="header__wrapper--nav--ul-dropdown-menu">
-                            <li class="header__wrapper--nav--ul-dropdown-menu-link"><span
-                                    class="header__wrapper--nav--ul-dropdown-menu-link-text">Link</span></li>
+                            <li class="header__wrapper--nav--ul-dropdown-menu-link" id="addLink"><span
+                                    class="header__wrapper--nav--ul-dropdown-menu-link-text"  data-source="header_dropdown">Link</span></li>
                             <li class="header__wrapper--nav--ul-dropdown-menu-link" id="folderCreationLink"><span
                                     class="header__wrapper--nav--ul-dropdown-menu-link-text" id="folderCreationLink">Folder</span></li>
                         </ul>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="header__wrapper--div-icons">
                     <img src="{% static 'media/img/settings-svgrepo-com.svg' %}" alt="" height="100px" width="100px">
-                    <a href="/logout/"> <img src="{{ user.avatar }}" alt="" height="100px" width="100px"></a>
+                    <a href="/logout/"> <img src="{{ user.avatar }}" alt="" height="100px" width="100px" id="userAvatar"></a>
                 </div>
             </div>
         {% endif %}
