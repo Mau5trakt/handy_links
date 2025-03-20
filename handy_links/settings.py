@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from urllib.parse import urlparse
+
 
 
 load_dotenv()
@@ -96,7 +98,8 @@ WSGI_APPLICATION = 'handy_links.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-db = os.getenv("DATABASE")
+db = os.getenv("DATABASE", "SQLITE")
+db_conn = os.getenv("DATABASE_CONN", "local")
 
 if db == "SQLITE":
     DATABASES = {
@@ -108,8 +111,22 @@ if db == "SQLITE":
 
 
 elif db == "POSTGRES":
-    DATABASES = {   
-        "default": {
+    if db_conn == "remote":
+        tmpPostgres = urlparse(os.getenv("DATABASE_URL"))
+        DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': tmpPostgres.path.replace('/', ''),
+            'USER': tmpPostgres.username,
+            'PASSWORD': tmpPostgres.password,
+            'HOST': tmpPostgres.hostname,
+            'PORT': 5432,
+        }
+    }
+
+    else:
+        DATABASES = {
+        'default': {
             "ENGINE": "django.db.backends.postgresql",
             "NAME": "handy_links",
             "USER": "postgres",
@@ -117,8 +134,8 @@ elif db == "POSTGRES":
             "HOST": "127.0.0.1",
             "PORT": "5432",
         }
-    }
-
+    
+}
 
 
 # Password validation
