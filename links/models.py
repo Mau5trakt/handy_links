@@ -6,7 +6,12 @@ from django.urls import reverse
 # Create your models here.
 
 
-
+class ActiveManager(models.Manager):
+    def get_queryset(self):
+        return(
+            super().get_queryset().filter(status=Folder.Status.ACTIVE)
+        )
+    
 
 
 class CustomUser(AbstractUser):
@@ -14,6 +19,11 @@ class CustomUser(AbstractUser):
     is_premium = models.BooleanField(default=False)
 
 class Folder(models.Model):
+    class Status(models.TextChoices):
+        ACTIVE = 'A', 'Active'
+        INACTIVE = 'I', 'Inactive'
+
+
     id = models.UUIDField("Id", primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField('Folder Name', max_length=100)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="Folder_Owner", verbose_name="Owner")
@@ -22,6 +32,9 @@ class Folder(models.Model):
     watchers = models.ManyToManyField(CustomUser, related_name='watchers_folders', blank=True, verbose_name='Collaborators Watchers')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=1,choices=Status,default=Status.ACTIVE)
+    objects = models.Manager()
+    active=ActiveManager()
 
 
     class Meta:
