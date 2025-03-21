@@ -278,3 +278,6 @@ def get_user_folders(request):
         folders.append(element)
 
     return JsonResponse({"status": "success", "folders": folders})
+
+
+#@login_required

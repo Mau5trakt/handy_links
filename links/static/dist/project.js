@@ -488,7 +488,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             modal.close();
           }
+        })
+        .catch((err) =>{
+            alertSpan.innerText = "There was an error adding your link"          
+            alertSpan.classList.remove("hide");
+            alertSpan.classList.add("msg-show-error");
         });
+        
+        
+
     } else {
       alertSpan.innerText = "Enter a valid link";
       alertSpan.classList.remove("hide");

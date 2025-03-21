@@ -66,9 +66,9 @@
 
             <div class="folders-detail__wrapper--settings-element">
                 <h3 class="folders-detail__wrapper--settings-element-title">Folder Access</h3>
-                <span class="folders-detail__wrapper--settings-element-description">Make this folder available  to everyone? </span>
-                 <button class="folders-detail__wrapper--settings-element-description">
-                    
+                <span class="folders-detail__wrapper--settings-element-description"> </span>
+                 <button class="folders-detail__wrapper--settings-element-privacity-btn {%if folder.public%} public-btn {% else %} private-btn {% endif %}" id="privacityLinkBtn">
+                {% if folder.public %} Public {% else %} Private {% endif %}
                  </button>
             </div>
 

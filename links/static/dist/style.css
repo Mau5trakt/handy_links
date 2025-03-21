@@ -1791,6 +1791,14 @@ body {
 .folders-detail__wrapper--settings-element-action-btn:hover {
   opacity: 0.75;
 }
+.folders-detail__wrapper--settings-element-privacity-btn {
+  box-sizing: border-box;
+  padding: 6px 12px;
+  font-size: 16px;
+  border-radius: 3px;
+  cursor: pointer;
+  width: fit-content;
+}
 .folders-detail__wrapper--settings-element-add-people {
   display: flex;
   flex-direction: column;
@@ -1877,6 +1885,26 @@ body {
 
 .hide-card {
   opacity: 0;
+}
+
+.public-btn {
+  background: #579dff;
+  border: 1px solid #579dff;
+  color: #1d2125;
+}
+.public-btn:hover {
+  background: #1d2125;
+  color: #579dff;
+}
+
+.private-btn {
+  border: 1px solid #579dff;
+  background: #1d2125;
+  color: #579dff;
+}
+.private-btn:hover {
+  background: #579dff;
+  color: #1d2125;
 }
 
 /*# sourceMappingURL=style.css.map */
