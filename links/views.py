@@ -280,4 +280,19 @@ def get_user_folders(request):
     return JsonResponse({"status": "success", "folders": folders})
 
 
-#@login_required
+@login_required
+@require_POST
+def folder_privacity(request):
+    data = json.load(request)
+    user = request.user
+    folder = Folder.objects.get(pk=data["folder"])
+    if folder.owner == user:
+        folder.public = not folder.public
+        folder.save()
+        return JsonResponse({"status": "success", "message": "Public" if folder.public else "Private"})
+    return JsonResponse({"status": "failed", "message": "There was an error changing the privacity of your folder."})
+    
+
+
+
+    

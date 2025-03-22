@@ -18,5 +18,5 @@ urlpatterns = [
     path('edit-link', views.edit_link, name='edit_link'),
     path('delete-link', views.delete_link, name='delete_link'),
     path('get-user-folders', views.get_user_folders, name='get_folders'),
-    #path('folder-privacity')
+    path('folder-privacity', views.folder_privacity, name="folder_privacity")
 ]

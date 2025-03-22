@@ -401,9 +401,14 @@
   color: $bg-principal;
 
   &:hover{
-    background: $bg-principal;
-    color: $blue;
+    opacity: 0.6;
   }
+
+  &:disabled{
+    opacity: 0.3;
+  }
+
+
 }
 
 .private-btn{
@@ -412,9 +417,13 @@
   color: $blue;
 
   &:hover{
-    background: $blue;
-    color: $bg-principal;
+    opacity: 0.6;
+  }
+
+  &:disabled{
+    opacity: 0.3;
   }
 
 
 }
+

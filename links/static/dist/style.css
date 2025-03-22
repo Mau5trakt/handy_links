@@ -989,6 +989,7 @@ textarea {
 }
 .toast-ctn-msj {
   margin: 0 auto;
+  padding: 10px;
 }
 
 .toast-active {
@@ -1893,8 +1894,10 @@ body {
   color: #1d2125;
 }
 .public-btn:hover {
-  background: #1d2125;
-  color: #579dff;
+  opacity: 0.6;
+}
+.public-btn:disabled {
+  opacity: 0.3;
 }
 
 .private-btn {
@@ -1903,8 +1906,10 @@ body {
   color: #579dff;
 }
 .private-btn:hover {
-  background: #579dff;
-  color: #1d2125;
+  opacity: 0.6;
+}
+.private-btn:disabled {
+  opacity: 0.3;
 }
 
 /*# sourceMappingURL=style.css.map */

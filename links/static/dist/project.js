@@ -820,6 +820,58 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  let changeVisibilityBtn = event =>{
+    let element;
+    if (event.target.localName === "span" ){
+       element = event.target.parentNode
+    }
+    else{
+      element = event.target;
+    }
+    element.setAttribute("disabled", "");
+    setTimeout(() =>{
+      element.removeAttribute("disabled");
+    }, 3000)
+
+    let toast = document.querySelector("#toast");
+    let messageCtn = toast.querySelector("#toastMsj");
+
+    fetch("/folder-privacity",{
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify({
+        folder: document.querySelector("#folder_uuid").value,
+      })
+
+    })
+    .then((response) =>{
+      return response.json();
+    })
+    .then((result) =>{
+      toast.classList.add("toast-active", "toast-success");
+      messageCtn.innerText = "The privacity of your folder has been updated";
+      let span = element.querySelector("span");
+      span.classList.add("opacity-f");
+      setTimeout(() =>{
+        span.innerText = result.message;
+      },400);
+      
+
+      setTimeout(() =>{
+        toast.classList.remove("toast-active", "toast-success", "toast-error");
+      },1500)
+
+      
+
+
+      
+      
+    })
+    .catch((err) =>{
+      console.error(err);
+    })
+  }
+
   document.addEventListener("input", (event) => {
     if (
       event.target.closest("#addcollaborator") ||
@@ -869,6 +921,9 @@ document.addEventListener("DOMContentLoaded", () => {
       editLinkDialog(event);
     } else if (event.target.closest("#deleteLink")) {
       deleteLinkDialog(event);
+    } else if (event.target.closest("#privacityLinkBtn")){
+      changeVisibilityBtn(event);
     }
+
   });
 });
