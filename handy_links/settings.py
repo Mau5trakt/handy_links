@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'debug_toolbar',
     'django_extensions',
+    'easy_select2',
 ]
 
 

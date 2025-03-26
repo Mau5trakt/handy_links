@@ -1,7 +1,7 @@
 from django import forms
 from links.models import CustomUser, Folder, Link
 from dal import autocomplete
-
+from easy_select2 import select2_modelform, Select2Multiple, apply_select2
 
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
@@ -50,8 +50,9 @@ class FolderCreationForm(forms.ModelForm):
         model = Folder
         fields = ['title', 'public', 'collaborators', 'watchers']
         widgets = {
-            'collaborators': autocomplete.ModelSelect2Multiple(url='user-autocomplete'),
-            'watchers': autocomplete.ModelSelect2Multiple(url='user-autocomplete'),
+            'collaborators': apply_select2(forms.Select)
+            #'collaborators': autocomplete.ModelSelect2Multiple(url='user-autocomplete'),
+            #'watchers': autocomplete.ModelSelect2Multiple(url='user-autocomplete'),
 
         }
 

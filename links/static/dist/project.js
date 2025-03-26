@@ -854,21 +854,22 @@ document.addEventListener("DOMContentLoaded", () => {
       span.classList.add("opacity-f");
       setTimeout(() =>{
         span.innerText = result.message;
+        span.classList.remove("opacity-f");
       },400);
       
 
       setTimeout(() =>{
         toast.classList.remove("toast-active", "toast-success", "toast-error");
       },1500)
-
-      
-
-
       
       
     })
     .catch((err) =>{
-      console.error(err);
+      toast.classList.add("toast-active", "toast-error");
+      messageCtn.innerText = "There was an error please try later";
+      setTimeout(() =>{
+        toast.classList.remove("toast-active", "toast-success", "toast-error");
+      },1500)
     })
   }
 
