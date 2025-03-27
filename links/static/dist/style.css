@@ -1798,7 +1798,7 @@ body {
   font-size: 16px;
   border-radius: 3px;
   cursor: pointer;
-  width: fit-content;
+  width: 80px;
 }
 .folders-detail__wrapper--settings-element-add-people {
   display: flex;
