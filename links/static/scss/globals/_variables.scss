@@ -23,6 +23,8 @@ $font: "Absolut Pro 1", serif;
 $font-alternative: "Absolut Pro 2", serif;
 $font3: "Ubuntu Regular", serif;
 
+$br-default: 5px;
+
 .tab_active {
   background: $blue !important;
   color: $bg-principal !important;
@@ -48,3 +50,4 @@ $font3: "Ubuntu Regular", serif;
 .msg-show-success {
   color: $success;
 }
+

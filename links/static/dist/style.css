@@ -503,6 +503,10 @@ dialog::backdrop {
   opacity: 0.3;
 }
 
+html, body {
+  height: 100%;
+}
+
 * {
   font-family: "Ubuntu Regular", serif;
   transition: all 400ms ease-in-out;
@@ -588,7 +592,7 @@ textarea {
   box-sizing: border-box;
   top: 0;
   height: 56px;
-  border-bottom: 2px solid #738496;
+  border-bottom: 1px solid #39424b;
   padding: 0 20px;
 }
 @media screen and (max-width: 1024px) {
@@ -1022,9 +1026,9 @@ body {
 .register {
   display: flex;
   justify-content: center;
-  align-items: self-start;
+  align-items: center;
   padding-top: 10px;
-  height: 100vh;
+  height: 90vh;
 }
 .register__wrapper {
   display: flex;
@@ -1160,47 +1164,47 @@ body {
   transition: all 500ms cubic-bezier(0, 0.58, 0.22, 1);
 }
 
-.personal_folders {
+.homepage {
   display: flex;
   justify-content: center;
   padding: 40px 20px;
 }
 @media screen and (max-width: 1024px) {
-  .personal_folders {
+  .homepage {
     padding: 40px 20px;
   }
 }
 @media screen and (max-width: 768px) {
-  .personal_folders {
+  .homepage {
     padding: 20px 10px;
   }
 }
 @media screen and (max-width: 576px) {
-  .personal_folders {
+  .homepage {
     padding: 10px;
   }
 }
-.personal_folders__wrapper {
+.homepage__wrapper {
   display: flex;
   max-width: 1440px;
   width: 100%;
   flex-direction: column;
   gap: 30px;
 }
-.personal_folders__wrapper--header {
+.homepage__wrapper--header {
   display: flex;
   width: 100%;
   gap: 10px;
 }
-.personal_folders__wrapper--header-element {
+.homepage__wrapper--header-element {
   margin: 0;
   color: #b6c2cf;
   font-family: "Ubuntu Regular", serif;
 }
-.personal_folders__wrapper--header-element:nth-child(1) {
+.homepage__wrapper--header-element:nth-child(1) {
   font-size: 22px;
 }
-.personal_folders__wrapper--header-element:nth-child(2) {
+.homepage__wrapper--header-element:nth-child(2) {
   border-radius: 50px;
   height: 18px;
   width: 18px;
@@ -1211,165 +1215,56 @@ body {
   padding: 2px;
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.75);
 }
-.personal_folders__wrapper--header-element:nth-child(2):hover {
+.homepage__wrapper--header-element:nth-child(2):hover {
   border: 2px solid #333c44;
   transition: all 0.4s ease;
 }
-.personal_folders__wrapper--header-element:nth-child(3) {
+.homepage__wrapper--header-element:last-child {
   margin-left: auto;
   text-decoration: none;
   font-size: 14px;
   color: #579dff;
+  border-radius: 0;
+  height: auto;
+  width: auto;
+  border: none;
+  box-shadow: none;
+  padding: 0;
 }
-.personal_folders__wrapper--folders {
-  display: flex;
-  flex-wrap: wrap;
+.homepage__wrapper--header-element:only-child {
+  font-size: 22px;
+  color: #b6c2cf;
+  margin-left: 0;
+}
+.homepage__wrapper--folders {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
 }
-@media screen and (max-width: 576px) {
-  .personal_folders__wrapper--folders {
-    justify-content: center;
-  }
-}
-.personal_folders__wrapper--folders-empty-msj {
-  opacity: 0.4;
-  font-size: 18px;
-}
-.personal_folders__wrapper--folders-folder {
-  position: relative;
-  box-sizing: border-box;
-  width: 208px;
-  height: 124px;
-  border-radius: 3px;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #333c44;
-  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.75);
-  font-family: "Ubuntu Regular", serif;
-  color: #b6c2cf;
-}
-.personal_folders__wrapper--folders-folder:hover {
-  border: 1px solid #91979e;
-  transition: all 0.4s ease;
-}
-.personal_folders__wrapper--folders-folder--top {
-  width: 100%;
-  height: 48px;
-  background: #2c333a;
-}
-.personal_folders__wrapper--folders--info-ctn {
-  box-sizing: border-box;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  padding: 32px 16px 0 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-.personal_folders__wrapper--folders--info-ctn--img {
-  width: 36px;
-  height: 36px;
-  box-sizing: border-box;
-  border: 4px solid #282e33;
-  border-radius: 3px;
-}
-.personal_folders__wrapper--folders--info-ctn--img img {
-  width: 100%;
-  height: 100%;
-}
-.personal_folders__wrapper--folders--info-ctn--main {
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-}
-.personal_folders__wrapper--folders--info-ctn--main img {
-  height: 25px;
-  width: 25px;
-  margin-left: auto;
-  position: relative;
-}
-.personal_folders__wrapper--folders--info-ctn--main--folder-visibility {
-  background: #b6c2cf;
-  font-size: 12px;
-  padding: 0 5px;
-  color: #000;
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  border-radius: 3px;
-  z-index: 2;
-  display: none;
-}
-.personal_folders__wrapper--folders--info-ctn--description {
-  font-size: 10px;
-}
-
-.shared_folders {
-  display: flex;
-  justify-content: center;
-  padding: 40px 20px;
-}
 @media screen and (max-width: 1024px) {
-  .shared_folders {
-    padding: 30px 20px;
+  .homepage__wrapper--folders {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 @media screen and (max-width: 768px) {
-  .shared_folders {
-    padding: 20px 10px;
+  .homepage__wrapper--folders {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 @media screen and (max-width: 576px) {
-  .shared_folders {
-    padding: 10px;
-  }
-}
-.shared_folders__wrapper {
-  display: flex;
-  max-width: 1440px;
-  width: 100%;
-  flex-direction: column;
-  gap: 30px;
-}
-.shared_folders__wrapper--header {
-  display: flex;
-  width: 100%;
-  gap: 10px;
-}
-.shared_folders__wrapper--header-element {
-  margin: 0;
-  color: #b6c2cf;
-  font-family: "Ubuntu Regular", serif;
-}
-.shared_folders__wrapper--header-element:nth-child(1) {
-  font-size: 22px;
-}
-.shared_folders__wrapper--header-element:nth-child(2) {
-  margin-left: auto;
-  text-decoration: none;
-  font-size: 14px;
-  color: #579dff;
-}
-.shared_folders__wrapper--folders {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-@media screen and (max-width: 576px) {
-  .shared_folders__wrapper--folders {
+  .homepage__wrapper--folders {
     justify-content: center;
+    grid-template-columns: repeat(1, 250px);
   }
 }
-.shared_folders__wrapper--folders-empty-msj {
+.homepage__wrapper--folders-empty-msj {
   opacity: 0.4;
   font-size: 18px;
 }
-.shared_folders__wrapper--folders-folder {
+.homepage__wrapper--folders-folder {
   position: relative;
   box-sizing: border-box;
-  width: 208px;
-  height: 124px;
+  height: 155px;
   border-radius: 3px;
   display: flex;
   flex-direction: column;
@@ -1378,16 +1273,16 @@ body {
   font-family: "Ubuntu Regular", serif;
   color: #b6c2cf;
 }
-.shared_folders__wrapper--folders-folder:hover {
+.homepage__wrapper--folders-folder:hover {
   border: 1px solid #91979e;
   transition: all 0.4s ease;
 }
-.shared_folders__wrapper--folders-folder--top {
+.homepage__wrapper--folders-folder--top {
   width: 100%;
   height: 48px;
   background: #2c333a;
 }
-.shared_folders__wrapper--folders--info-ctn {
+.homepage__wrapper--folders--info-ctn {
   box-sizing: border-box;
   position: absolute;
   width: 100%;
@@ -1397,29 +1292,29 @@ body {
   flex-direction: column;
   gap: 5px;
 }
-.shared_folders__wrapper--folders--info-ctn--img {
+.homepage__wrapper--folders--info-ctn--img {
   width: 36px;
   height: 36px;
   box-sizing: border-box;
   border: 4px solid #282e33;
   border-radius: 3px;
 }
-.shared_folders__wrapper--folders--info-ctn--img img {
+.homepage__wrapper--folders--info-ctn--img img {
   width: 100%;
   height: 100%;
 }
-.shared_folders__wrapper--folders--info-ctn--main {
+.homepage__wrapper--folders--info-ctn--main {
   font-size: 14px;
   display: flex;
   align-items: center;
 }
-.shared_folders__wrapper--folders--info-ctn--main img {
+.homepage__wrapper--folders--info-ctn--main img {
   height: 25px;
   width: 25px;
   margin-left: auto;
   position: relative;
 }
-.shared_folders__wrapper--folders--info-ctn--main--folder-visibility {
+.homepage__wrapper--folders--info-ctn--main--folder-visibility {
   background: #b6c2cf;
   font-size: 12px;
   padding: 0 5px;
@@ -1431,13 +1326,41 @@ body {
   z-index: 2;
   display: none;
 }
-.shared_folders__wrapper--folders--info-ctn--description {
+.homepage__wrapper--folders--info-ctn--description {
   font-size: 10px;
+}
+.homepage__wrapper--folders--info-ctn--collaborators {
+  width: 100%;
+}
+.homepage__wrapper--folders--info-ctn--collaborators img:nth-child(n+1) {
+  z-index: 4;
+}
+.homepage__wrapper--folders--info-ctn--collaborators img:nth-child(n+2) {
+  z-index: 3;
+}
+.homepage__wrapper--folders--info-ctn--collaborators img:nth-child(n+3) {
+  z-index: 2;
+}
+.homepage__wrapper--folders--info-ctn--collaborators img:nth-child(n+4) {
+  z-index: 1;
+}
+.homepage__wrapper--folders--info-ctn--collaborators img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #b6c2cf;
+  margin-left: -10px;
+  position: relative;
+}
+.homepage__wrapper--folders--info-ctn--collaborators img:first-child {
+  margin-left: 0;
 }
 
 .create-folder {
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 90%;
   padding: 40px 20px;
 }
 @media screen and (max-width: 1024px) {

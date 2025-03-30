@@ -9,10 +9,9 @@ body {
 .register {
   display: flex;
   justify-content: center;
-  align-items: self-start;
+  align-items: center;
   padding-top: 10px;
-
-  height: 100vh;
+  height: 90vh;
 
   &__wrapper {
     display: flex;

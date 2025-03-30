@@ -470,10 +470,6 @@ document.addEventListener("DOMContentLoaded", () => {
               if (folderElement) {
                 setTimeout(() => {
                   folderElement.classList.remove("hide-elements");
-                  let linksQty = folderElement.querySelector("#linksQty");
-                  linksQty.innerText = `${result.folder.linksQty} ${
-                    result.folder.linksQty > 1 ? "Links" : "Link"
-                  }`;
                 }, 600);
               }
 

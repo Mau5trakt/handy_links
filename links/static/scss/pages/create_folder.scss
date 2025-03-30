@@ -3,6 +3,8 @@
 .create-folder {
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 90%;
   padding: 40px 20px;
 
   @include mquery($bp-lg) {

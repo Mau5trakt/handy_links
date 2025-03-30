@@ -29,7 +29,7 @@ class Folder(models.Model):
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="Folder_Owner", verbose_name="Owner")
     public = models.BooleanField('Available to everyone?', default=False)
     collaborators = models.ManyToManyField(CustomUser, related_name='collaborated_folders', blank=True, verbose_name='Collaborators List')
-    watchers = models.ManyToManyField(CustomUser, related_name='watchers_folders', blank=True, verbose_name='Collaborators Watchers')
+    watchers = models.ManyToManyField(CustomUser, related_name='watchers_folders', blank=True, verbose_name='Watchers List')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=1,choices=Status,default=Status.ACTIVE)
@@ -54,6 +54,21 @@ class Folder(models.Model):
     def get_absolute_url(self):
         """Return the absolute URL for the folder."""
         return reverse('folder_detail', kwargs={'uuid': self.id})
+
+    def show_collaborators(self):
+        avatars = [{
+            "avatar": self.owner.avatar,
+            "username": self.owner.username
+        }]
+
+        for c in self.collaborators.all():
+            avatars.append({
+                "avatar": c.avatar,
+                "username": c.username
+            })
+
+        return avatars[:3]
+
 
     def get_link_qty(self):
         return self.Links.count()
