@@ -17,7 +17,7 @@ from urllib.parse import urlparse
 from django.urls import reverse_lazy
 from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
-
+from decouple import config
 
 
 load_dotenv()
@@ -38,12 +38,13 @@ SECRET_KEY = 'django-insecure-r+kuxv(dmle5$w(!c#(kg7jk-ej$#5_2p*+=yjorzy=1lx2(1%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'social_django',
     'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -160,6 +161,11 @@ INTERNAL_IPS = ['127.0.0.1', '10.0.2.2']
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.google.GoogleOAuth2'
+]
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -183,7 +189,10 @@ AUTH_USER_MODEL = 'links.CustomUser'
 LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL =  '/'
 STATIC_ROOT = 'links/static'
+LOGIN_REDIRECT_URL =  '/'
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('GOOGLE_OAUTH2_SECRET')
 
 UNFOLD = {
     "SITE_FAVICONS":[
