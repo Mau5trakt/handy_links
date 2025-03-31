@@ -1,10 +1,18 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import CustomUser, Folder, Link
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from unfold.admin import ModelAdmin
+from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
+
 
 
 @admin.register(CustomUser)
-class CustomUserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(BaseUserAdmin, ModelAdmin):
+    form = UserChangeForm
+    add_form = UserCreationForm
+    change_password_form = AdminPasswordChangeForm
+
     list_display = (
         'id',
         'username',
@@ -33,7 +41,9 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 
 @admin.register(Folder)
-class FolderAdmin(admin.ModelAdmin):
+class FolderAdmin(ModelAdmin):
+
+
     list_display = (
         'id',
         'title',
@@ -45,11 +55,11 @@ class FolderAdmin(admin.ModelAdmin):
     )
     list_filter = ('owner', 'public', 'created_at', 'updated_at', 'status')
     raw_id_fields = ('collaborators', 'watchers')
-    date_hierarchy = 'created_at'
+    #date_hierarchy = 'created_at'
 
 
 @admin.register(Link)
-class LinkAdmin(admin.ModelAdmin):
+class LinkAdmin(ModelAdmin):
     list_display = (
         'id',
         'folder',

@@ -14,6 +14,9 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 from urllib.parse import urlparse
+from django.urls import reverse_lazy
+from django.templatetags.static import static
+from django.utils.translation import gettext_lazy as _
 
 
 
@@ -43,8 +46,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'dal',
     'dal_select2',
-    "jet.dashboard",
-    "jet",
+    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -186,5 +188,21 @@ LOGOUT_REDIRECT_URL =  '/'
 STATIC_ROOT = 'links/static'
 
 
-JET_SIDE_MENU_COMPACT = True
-JET_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
+UNFOLD = {
+    "SITE_FAVICONS":[
+        {
+            "rel": "icon",
+            "sizes": "32x32",
+            "type": "image/ico",
+            "href": lambda request: static("media/img/Handy.ico")
+        }
+    ],
+    "SITE_DROPDOWN": [
+        {
+            "icon": "Dashboard",
+            "title": _("Dashboard"),
+            "link": reverse_lazy("admin:index"),
+        },
+    ],
+    "SITE_SYMBOL": "code"
+}
