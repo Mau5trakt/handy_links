@@ -49,36 +49,7 @@
                             </div>
                         </div>
 
-                        {% comment %}
 
-
-                        <div class="create-folder__wrapper--form-ctn__content__form--field">
-                            <div class="create-folder__wrapper--form-ctn__content__form--field--label-ctn">
-                                <label for="collaborators"
-                                       class="create-folder__wrapper--form-ctn__content__form--field--label-ctn__element">
-                                    Add Colaborators</label>
-                            </div>
-
-                            <div class="create-folder__wrapper--form-ctn__content__form--field--input-ctn">
-                                {% render_field form.collaborators|add_class:"create-folder__wrapper--form-ctn__content__form--field--input-ctn__element" %}
-                                <span class="create-folder__wrapper--form-ctn__content__form--field--input-ctn__help-text"> Select a list of users who can add, edit or delete links in your folder </span>
-                            </div>
-                        </div>
-
-                        <div class="create-folder__wrapper--form-ctn__content__form--field" id="watchersField">
-                            <div class="create-folder__wrapper--form-ctn__content__form--field--label-ctn">
-                                <label for="collaborators"
-                                       class="create-folder__wrapper--form-ctn__content__form--field--label-ctn__element">
-                                    Add Watchers</label>
-                            </div>
-
-                            <div class="create-folder__wrapper--form-ctn__content__form--field--input-ctn">
-                                {% render_field form.watchers|add_class:"create-folder__wrapper--form-ctn__content__form--field--input-ctn__element" %}
-                                <span class="create-folder__wrapper--form-ctn__content__form--field--input-ctn__help-text"> Select a list of users who can watch the links in your folder </span>
-
-                            </div>
-                        </div>
-                        {% endcomment %}
 
                         <div class="create-folder__wrapper--form-ctn__content__form--field-submit">
                             <input type="submit" value="Create"
@@ -99,25 +70,7 @@
 
 {% endblock content %}
 
-{% block extrajs %}
-        <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
-        {{ form.media }}
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
 
-                let watchers = document.querySelector('#watchersField');
-
-                document.querySelector("#publicCheckbox").addEventListener('change', event => {
-                    if (event.target.checked) {
-                        watchers.style.display = 'none';
-                    } else {
-                        watchers.style.display = 'flex';
-                    }
-                });
-            })
-        </script>
-
-    {% endblock extrajs %}
 
 
 

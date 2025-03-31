@@ -14,7 +14,7 @@ from links.models import CustomUser, Folder, Link
 from links.forms import RegisterForm, FolderCreationForm
 from links.avatar_generation import generate_avatar
 from django.urls import reverse_lazy
-from dal import autocomplete
+
 
 
 class FolderAccessMixin:
@@ -84,16 +84,6 @@ def logoutuser(request):
     return redirect('login')
 
 
-class UsersAutocomplete(autocomplete.Select2QuerySetView):
-    def get_queryset(self):
-        if not self.request.user.is_authenticated:
-            return CustomUser.objects.none()
-
-        qs = CustomUser.objects.all().exclude(id=self.request.user.id)
-        if self.q:
-            qs = qs.filter(username__istartswith=self.q)[:5]
-
-        return qs
 
 
 class FolderCreationView(LoginRequiredMixin, CreateView):

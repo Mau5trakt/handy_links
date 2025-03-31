@@ -44,8 +44,6 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'dal',
-    'dal_select2',
     'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -57,7 +55,6 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'debug_toolbar',
     'django_extensions',
-    'easy_select2',
 ]
 
 
