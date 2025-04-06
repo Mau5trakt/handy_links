@@ -1,37 +1,20 @@
 import json
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
-from django.views.generic import CreateView, TemplateView, ListView
+from django.views.generic import CreateView, TemplateView, ListView, RedirectView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from links.models import CustomUser, Folder, Link
 from links.forms import RegisterForm, FolderCreationForm
 from links.avatar_generation import generate_avatar
-from django.urls import reverse_lazy
-
-
-
-class FolderAccessMixin:
-    permission_denied_url = '/not-access'
-
-    def dispatch(self, request, *args, **kwargs):
-        folder = get_object_or_404(Folder, id=kwargs.get('uuid'))
-        if not self.has_access(request.user, folder):
-            raise PermissionDenied('You dont have access to this folder')
-        return super().dispatch(request, *args, **kwargs)
-
-    def has_access(self, user, folder):
-        if folder.owner == user or folder.public or user.username in folder.get_collaborators() or user.username in folder.get_watchers():
-            return True
-        return False
-
-
+from links.mixins import SocialRegistrationAuthMixin, FolderAccessMixin
+from django.urls import reverse_lazy, reverse
+from django.utils import timezone
 
 class RegisterUserView(CreateView):
     model = CustomUser
@@ -66,7 +49,7 @@ class MyLoginView(LoginView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
-class Home(LoginRequiredMixin, TemplateView):
+class Home(LoginRequiredMixin, SocialRegistrationAuthMixin, TemplateView):
     template_name = 'links/homepage.html'
 
     def get_context_data(self, **kwargs):
@@ -86,7 +69,7 @@ def logoutuser(request):
 
 
 
-class FolderCreationView(LoginRequiredMixin, CreateView):
+class FolderCreationView(LoginRequiredMixin, SocialRegistrationAuthMixin, CreateView):
     model = Folder
     form_class = FolderCreationForm
     template_name = 'links/create_folder.html'
@@ -148,6 +131,15 @@ def get_user(request):
             return JsonResponse({"status": "success", "username": user.username})
         return JsonResponse({"status": "failed",  "message": f"this user is already a {action}" })
     return JsonResponse({"status": "failed", "message": "this user doesn't exists"})
+
+@login_required
+@require_POST
+def lookup_username(request):
+    data = json.load(request)
+    request_user = data['username']
+    if not CustomUser.objects.filter(username__iexact=request_user).exists():
+        return JsonResponse({"status": "success", "message": "This username is available"})
+    return JsonResponse({"status": "failed", "message": "This username is being used"})
 
 @login_required
 @require_POST
@@ -272,7 +264,7 @@ def get_user_folders(request):
 
 @login_required
 @require_POST
-def folder_privacity(request):
+def folder_privacy(request):
     data = json.load(request)
     user = request.user
     folder = Folder.objects.get(pk=data["folder"])
@@ -285,4 +277,16 @@ def folder_privacity(request):
 
 
 
-    
+class ChooseUsername(LoginRequiredMixin, TemplateView):
+    template_name = "links/choose_username.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+@require_POST
+def validate_username(request):
+    data = json.load(request)
+
+    return JsonResponse({"status": "success"})
+
+

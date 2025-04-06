@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let deleteUserParticipation = (event) => {
     userToremove = event.target.parentNode.parentNode;
     actionToSend = userToremove.parentNode.parentNode.dataset.modal;
-    // deletes a user from the collaborator or watchers list from a folder
+
     let container = event.target.parentNode.parentNode;
     let username = container.querySelector("#username").textContent;
 
@@ -354,7 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   let addLink = () => {
-    //verify if comes from a folder or any other page
+
     let modal = event.target.parentNode.parentNode.parentNode;
     let alertSpan = modal.querySelector("#alertSpan");
     alertSpan.classList.add("hide");
@@ -577,7 +577,7 @@ document.addEventListener("DOMContentLoaded", () => {
           addBtn.setAttribute("disabled", "");
 
           setTimeout(() => {
-            div.classList.remove("new-item"); //delete animation class when it ends
+            div.classList.remove("new-item");
           }, 1300);
 
           if (result.changeStatus) {
@@ -832,7 +832,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let toast = document.querySelector("#toast");
     let messageCtn = toast.querySelector("#toastMsj");
 
-    fetch("/folder-privacity",{
+    fetch("/folder-privacy",{
       method: "POST",
       headers: headers,
       body: JSON.stringify({
@@ -845,7 +845,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .then((result) =>{
       toast.classList.add("toast-active", "toast-success");
-      messageCtn.innerText = "The privacity of your folder has been updated";
+      messageCtn.innerText = "The privacy of your folder has been updated";
       let span = element.querySelector("span");
       span.classList.add("opacity-f");
       setTimeout(() =>{
@@ -869,6 +869,87 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
+
+
+  let validateAvailableUsername = event =>{
+    if (timeoutId){
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() =>{
+      let username = event.target.value;
+      let actionBtn = returnNthParent(event.target, 1).querySelector('button');
+      let spanCtn = document.querySelector('#spanCtn');
+      let spanElement = document.querySelector('#alertSpan');
+      const emptySpaceRegex = /\s/;
+      const invalidCharRegex = /^[a-zA-Z0-9@.+_-]+$/
+
+      if (username.length > 3){
+
+        if (emptySpaceRegex.test(username)){
+          spanCtn.classList.add("show-span");
+          actionBtn.setAttribute('disabled',  '');
+          spanElement.innerText = "Username can't have white spaces";
+          spanElement.classList.add("msg-show-error");
+          spanElement.classList.remove("msg-show-success");
+          return;
+        }
+        if (!invalidCharRegex.test(username)){
+          spanCtn.classList.add("show-span");
+          actionBtn.setAttribute('disabled',  '');
+          spanElement.innerText = "Allowed chars @ . + - and _";
+          spanElement.classList.add("msg-show-error");
+          spanElement.classList.remove("msg-show-success");
+          return;
+        }
+
+        //Do the fetch then change the username and generate the avatar to redirect :)
+
+
+        fetch("/lookup-username", {
+          method: "POST",
+          headers: headers,
+          body : JSON.stringify({username: username})
+        }).then( response => {return response.json()})
+            .then( result =>{
+                  if (result.status === "success"){
+                    actionBtn.removeAttribute('disabled');
+                    spanCtn.classList.add("show-span");
+                    spanElement.innerText = result.message;
+                    spanElement.classList.add("msg-show-success");
+                    spanElement.classList.remove("msg-show-error");
+                    submitUsername(username);
+                    return;
+                  }
+                  spanCtn.classList.add("show-span");
+                  actionBtn.setAttribute('disabled',  '');
+                  spanElement.innerText = result.message;
+                  spanElement.classList.add("msg-show-error");
+                  spanElement.classList.remove("msg-show-success");
+            });
+        return;
+      }
+        actionBtn.setAttribute('disabled',  '');
+        spanCtn.classList.remove("show-span");
+    }, 500)
+
+
+  };
+
+  let submitUsername = username =>{
+    fetch('/submit-username',{
+      method:"POST",
+      headers: headers,
+      body: JSON.stringify({username: username})
+    }).then(response => {return response.json()})
+        .then(result =>{
+          window.location.href = '/';
+        })
+        .catch(() =>{
+
+
+        })
+  }
+
   document.addEventListener("input", (event) => {
     if (
       event.target.closest("#addcollaborator") ||
@@ -885,6 +966,11 @@ document.addEventListener("DOMContentLoaded", () => {
       event.target.closest("#descriptionInput")
     ) {
       validateLength(event);
+    }
+    else if (
+        event.target.closest("#searchUsername")
+    ) {
+      validateAvailableUsername(event);
     }
   });
 

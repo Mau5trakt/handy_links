@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Choose a Username
+{% endblock %}
+
+{% block content %}
+	{% include 'partials/_header.html' with loged=False %}
+
+    <section class="choose-username container_wrapper">
+        <div class="choose-username__wrapper">
+            <div class="choose-username__wrapper--field">
+                <h1 class="choose-username__wrapper--field-title"> Choose a username </h1>
+                <span class="choose-username__wrapper--field-sub">That's how everyone else is going to look at you</span>
+
+                <div class="choose-username__wrapper--field-input-ctn"  id="spanCtn">
+                    <span id="alertSpan" class="choose-username__wrapper--field-input-ctn-span"></span>
+                    <input type="text" class="choose-username__wrapper--field-input-ctn-input" id="searchUsername">
+                    <button class="choose-username__wrapper--field-input-ctn-btn" disabled> Save </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+{% endblock %}
