@@ -6,6 +6,25 @@ document.addEventListener("DOMContentLoaded", () => {
   let linkId;
   let hasEvent = false;
   let linkElement;
+
+  let showToast = (message, status, duration=1500) =>{
+
+    let classNames = {
+      success: 'toast-success',
+      error: 'toast-error'
+    }
+    let toast = document.querySelector('#toast');
+    let msjCtn = toast.querySelector('#toastMsj');
+    toast.classList.remove('toast-active', 'toast-error', 'toast-success');
+
+    msjCtn.innerHTML = message;
+    toast.classList.add('toast-active', classNames[status]);
+
+    setTimeout(() =>{
+      toast.classList.remove('toast-active', 'toast-error', 'toast-success');
+    }, duration)
+  }
+
   let toggleAddButton = () => {
     document
       .querySelector("#add-btn-dropdown")
@@ -917,7 +936,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     spanElement.innerText = result.message;
                     spanElement.classList.add("msg-show-success");
                     spanElement.classList.remove("msg-show-error");
-                    submitUsername(username);
                     return;
                   }
                   spanCtn.classList.add("show-span");
@@ -935,20 +953,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
   };
 
-  let submitUsername = username =>{
-    fetch('/submit-username',{
-      method:"POST",
+  let setUsername = event => {
+    let username;
+    if(event.target.id==="setUsernameBtn"){
+      username = document.querySelector("#searchUsername").value;
+    }
+
+    fetch('/set-username',{
+      method: "POST",
       headers: headers,
-      body: JSON.stringify({username: username})
+      body: JSON.stringify({username:username})
     }).then(response => {return response.json()})
-        .then(result =>{
-          window.location.href = '/';
-        })
-        .catch(() =>{
+        .then( result =>{
+          console.log(result);
+          if (result.status === 'success'){
+            window.location.href = `${window.location.protocol}//${window.location.host}`;
+          }
+          else{
+            showToast(
+              'There was an error during this action, please try later',
+              'error',
+              );
+          }
+
+        }).catch((err) =>{
+          console.error(err);
+          showToast(
+              'There was an error during this action, please try later',
+              'error',
+              );
 
 
-        })
+
+    })
+
   }
+
 
   document.addEventListener("input", (event) => {
     if (
@@ -1006,6 +1046,8 @@ document.addEventListener("DOMContentLoaded", () => {
       deleteLinkDialog(event);
     } else if (event.target.closest("#privacityLinkBtn")){
       changeVisibilityBtn(event);
+    } else if (event.target.closest("#setUsernameBtn")){
+      setUsername(event);
     }
 
   });

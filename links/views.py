@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views import View
 from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, TemplateView, ListView, RedirectView
 from django.contrib.auth.views import LoginView, LogoutView
@@ -15,7 +16,7 @@ from links.avatar_generation import generate_avatar
 from links.mixins import SocialRegistrationAuthMixin, FolderAccessMixin
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
-
+from braces.views import JsonRequestResponseMixin
 class RegisterUserView(CreateView):
     model = CustomUser
     form_class = RegisterForm
@@ -289,4 +290,22 @@ def validate_username(request):
 
     return JsonResponse({"status": "success"})
 
+
+class SetUsername(JsonRequestResponseMixin, View):
+    def post(self, request, *args, **kwargs):
+        try:
+            data = self.request_json
+            user = CustomUser.objects.get(username=request.user.username)
+            user.username = data['username']
+            user.avatar = generate_avatar()
+            user.save()
+            return self.render_json_response({
+                'status': 'success'
+            })
+        except Exception as e:
+            print(e)
+
+            return self.render_json_response({
+                'status': 'error',
+            }, status=400)
 

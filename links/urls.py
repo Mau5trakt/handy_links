@@ -19,6 +19,7 @@ urlpatterns = [
     path('get-user-folders', views.get_user_folders, name='get_folders'),
     path('folder-privacy', views.folder_privacy, name="folder_privacy"),
     path('choose-username/', views.ChooseUsername.as_view(), name='choose_username'),
-    path('lookup-username', views.lookup_username, name='lookup_username')
+    path('lookup-username', views.lookup_username, name='lookup_username'),
+    path('set-username', views.SetUsername.as_view(), name='set_username'),
 
 ]

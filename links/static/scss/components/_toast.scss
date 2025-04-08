@@ -3,7 +3,9 @@
 .toast {
   box-sizing: border-box;
   width: 300px;
-  height: 50px;
+
+  height: fit-content;
+  min-height: 50px;
   background-color: #262c36;
   position: fixed;
   bottom: 5px;
@@ -14,7 +16,7 @@
   align-items: center;
   padding: 8px;
   border-radius: 3px;
-  transform: translateY(70px);
+  transform: translateY(90px);
 
   @include mquery($bp-sm){
     width: 100%;
