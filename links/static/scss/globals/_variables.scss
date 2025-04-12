@@ -23,28 +23,5 @@ $font: "Absolut Pro 1", serif;
 $font-alternative: "Absolut Pro 2", serif;
 $font3: "Ubuntu Regular", serif;
 
-.tab_active {
-  background: $blue !important;
-  color: $bg-principal !important;
-}
+$br-default: 5px;
 
-.opacity-f {
-  opacity: 0;
-}
-
-.box-shadow {
-  box-shadow: 0 0 30px 0 rgba(160, 160, 160, 0.32);
-  transition: all 1000ms linear !important;
-}
-
-.hide {
-  display: none !important;
-}
-
-.msg-show-error {
-  color: $red;
-}
-
-.msg-show-success {
-  color: $success;
-}

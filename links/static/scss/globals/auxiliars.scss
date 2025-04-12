@@ -34,6 +34,43 @@
   z-index: 999;
 }
 
+.tab_active {
+  background: $blue !important;
+  color: $bg-principal !important;
+}
+
+.opacity-f {
+  opacity: 0;
+}
+
+.box-shadow {
+  box-shadow: 0 0 30px 0 rgba(160, 160, 160, 0.32);
+  transition: all 1000ms linear !important;
+}
+
+.hide {
+  display: none !important;
+}
+
+.msg-show-error {
+  color: $red !important;
+}
+
+.msg-show-success {
+  color: $success !important;
+}
+
+.show-span{
+  margin-top: 25px;
+
+  span{
+    top: -30px;
+    color: $text;
+    transition: top 800ms cubic-bezier(.5,0,.5,1.48), color 400ms ease-in-out;
+  }
+}
+
+
 
 /*
                     .-"""-.

@@ -14,7 +14,11 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 from urllib.parse import urlparse
-
+from django.urls import reverse_lazy
+from django.templatetags.static import static
+from django.utils.translation import gettext_lazy as _
+from decouple import config
+from django.urls import reverse
 
 
 load_dotenv()
@@ -35,16 +39,14 @@ SECRET_KEY = 'django-insecure-r+kuxv(dmle5$w(!c#(kg7jk-ej$#5_2p*+=yjorzy=1lx2(1%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'dal',
-    'dal_select2',
-    "jet.dashboard",
-    "jet",
+    'social_django',
+    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -160,6 +162,11 @@ INTERNAL_IPS = ['127.0.0.1', '10.0.2.2']
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.google.GoogleOAuth2'
+]
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -183,7 +190,37 @@ AUTH_USER_MODEL = 'links.CustomUser'
 LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL =  '/'
 STATIC_ROOT = 'links/static'
+LOGIN_REDIRECT_URL =  "/"
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('GOOGLE_OAUTH2_SECRET')
 
-JET_SIDE_MENU_COMPACT = True
-JET_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
+UNFOLD = {
+    "SITE_FAVICONS":[
+        {
+            "rel": "icon",
+            "sizes": "32x32",
+            "type": "image/ico",
+            "href": lambda request: static("media/img/Handy.ico")
+        }
+    ],
+    "SITE_DROPDOWN": [
+        {
+            "icon": "Dashboard",
+            "title": _("Dashboard"),
+            "link": reverse_lazy("admin:index"),
+        },
+    ],
+    "SITE_SYMBOL": "code"
+}
+SOCIAL_AUTH_PIPELINE = [
+'social_core.pipeline.social_auth.social_details',
+'social_core.pipeline.social_auth.social_uid',
+'social_core.pipeline.social_auth.auth_allowed',
+'social_core.pipeline.social_auth.social_user',
+'social_core.pipeline.user.get_username',
+'social_core.pipeline.user.create_user',
+'social_core.pipeline.social_auth.associate_user',
+'social_core.pipeline.social_auth.load_extra_data',
+'social_core.pipeline.user.user_details',
+]

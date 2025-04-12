@@ -1,38 +1,23 @@
 import json
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views import View
 from django.views.decorators.http import require_POST
-from django.views.generic import CreateView, TemplateView, ListView
+from django.views.generic import CreateView, TemplateView, ListView, RedirectView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
+from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from links.models import CustomUser, Folder, Link
 from links.forms import RegisterForm, FolderCreationForm
 from links.avatar_generation import generate_avatar
-from django.urls import reverse_lazy
-from dal import autocomplete
-
-
-class FolderAccessMixin:
-    permission_denied_url = '/not-access'
-
-    def dispatch(self, request, *args, **kwargs):
-        folder = get_object_or_404(Folder, id=kwargs.get('uuid'))
-        if not self.has_access(request.user, folder):
-            raise PermissionDenied('You dont have access to this folder')
-        return super().dispatch(request, *args, **kwargs)
-
-    def has_access(self, user, folder):
-        if folder.owner == user or folder.public or user.username in folder.get_collaborators() or user.username in folder.get_watchers():
-            return True
-        return False
-
-
-
+from links.mixins import SocialRegistrationAuthMixin, FolderAccessMixin
+from django.urls import reverse_lazy, reverse
+from django.utils import timezone
+from braces.views import JsonRequestResponseMixin
 class RegisterUserView(CreateView):
     model = CustomUser
     form_class = RegisterForm
@@ -48,8 +33,17 @@ class RegisterUserView(CreateView):
         self.object = form.save(commit=False)
         self.object.set_password(form.cleaned_data['password'])
         self.object.avatar = generate_avatar()
-
         self.object.save()
+        Folder.objects.create(
+            title=f"{self.object.username}'s folder",
+            owner=self.object
+        )
+        user = authenticate(
+            request=self.request,
+            username=self.object.username,
+            password=form.cleaned_data['password']
+        )
+        login(self.request, user)
 
         return super().form_valid(form)
 
@@ -65,8 +59,32 @@ class MyLoginView(LoginView):
         messages.error(self.request, "Username or passsword incorrect")
         return self.render_to_response(self.get_context_data(form=form))
 
+    def form_valid(self, form):
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
 
-class Home(LoginRequiredMixin, TemplateView):
+        try:
+            user = CustomUser.objects.get(username__iexact=username)
+        except CustomUser.DoesNotExist:
+            return self.form_invalid(form)
+
+            # Autenticar con el username real (case-sensitive)
+        auth_user = authenticate(
+            request=self.request,
+            username=user.username,  # Usamos el username exacto de la BD
+            password=password
+        )
+
+        if auth_user is not None:
+            # Si la autenticación es exitosa
+            from django.contrib.auth import login
+            login(self.request, auth_user)
+            return super().form_valid(form)
+
+        return self.form_invalid(form)
+
+
+class Home(LoginRequiredMixin, SocialRegistrationAuthMixin, TemplateView):
     template_name = 'links/homepage.html'
 
     def get_context_data(self, **kwargs):
@@ -84,19 +102,9 @@ def logoutuser(request):
     return redirect('login')
 
 
-class UsersAutocomplete(autocomplete.Select2QuerySetView):
-    def get_queryset(self):
-        if not self.request.user.is_authenticated:
-            return CustomUser.objects.none()
-
-        qs = CustomUser.objects.all().exclude(id=self.request.user.id)
-        if self.q:
-            qs = qs.filter(username__istartswith=self.q)[:5]
-
-        return qs
 
 
-class FolderCreationView(LoginRequiredMixin, CreateView):
+class FolderCreationView(LoginRequiredMixin, SocialRegistrationAuthMixin, CreateView):
     model = Folder
     form_class = FolderCreationForm
     template_name = 'links/create_folder.html'
@@ -161,6 +169,15 @@ def get_user(request):
 
 @login_required
 @require_POST
+def lookup_username(request):
+    data = json.load(request)
+    request_user = data['username']
+    if not CustomUser.objects.filter(username__iexact=request_user).exists():
+        return JsonResponse({"status": "success", "message": "This username is available"})
+    return JsonResponse({"status": "failed", "message": "This username is being used"})
+
+@login_required
+@require_POST
 def add_user(request):
     data = json.load(request)
 
@@ -174,15 +191,15 @@ def add_user(request):
             return JsonResponse({'status': 'failed', 'message': "This user is already a collaborator"})
         elif data['action'] == 'watcher' and user.username not in folder.get_watchers():
             folder.watchers.add(user)
-            return JsonResponse({'status': 'success', "username": user.username, "avatar": user.avatar})
+            return JsonResponse({'status': 'success', "username": user.username, "avatar": user.get_avatar()})
         elif data['action'] == 'collaborator' and user.username in folder.get_watchers():
             folder.watchers.remove(user)
             folder.collaborators.add(user)
             folder.save()
-            return JsonResponse({'status': 'success', 'changeStatus': True, "username": user.username, "avatar": user.avatar})
+            return JsonResponse({'status': 'success', 'changeStatus': True, "username": user.username, "avatar": user.get_avatar()})
         elif data['action'] == 'collaborator' and user.username not in folder.get_collaborators():
             folder.collaborators.add(user)
-            return JsonResponse({'status': 'success', "username": user.username, "avatar": user.avatar})
+            return JsonResponse({'status': 'success', "username": user.username, "avatar": user.get_avatar()})
     return JsonResponse({'status': 'failed', 'message': 'There was an error doing this request.'})
 
 @login_required
@@ -223,7 +240,7 @@ def add_link(request):
     'status': 'success', 
     'user': {
         'username': request.user.username,
-        'avatar': request.user.avatar  
+        'avatar': request.user.get_avatar()
     },
     'link': {
         'url': data['url'],
@@ -278,3 +295,55 @@ def get_user_folders(request):
         folders.append(element)
 
     return JsonResponse({"status": "success", "folders": folders})
+
+
+@login_required
+@require_POST
+def folder_privacy(request):
+    data = json.load(request)
+    user = request.user
+    folder = Folder.objects.get(pk=data["folder"])
+    if folder.owner == user:
+        folder.public = not folder.public
+        folder.save()
+        return JsonResponse({"status": "success", "message": "Public" if folder.public else "Private"})
+    return JsonResponse({"status": "failed", "message": "There was an error changing the privacity of your folder."})
+    
+
+
+
+class ChooseUsername(LoginRequiredMixin, TemplateView):
+    template_name = "links/choose_username.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+@require_POST
+def validate_username(request):
+    data = json.load(request)
+
+    return JsonResponse({"status": "success"})
+
+
+class SetUsername(JsonRequestResponseMixin, View):
+    def post(self, request, *args, **kwargs):
+        try:
+            data = self.request_json
+            user = CustomUser.objects.get(username=request.user.username)
+            user.username = data['username']
+            user.avatar = generate_avatar()
+            user.save()
+
+            Folder.objects.create(
+                title=f"{data["username"]}'s folder",
+                owner = user
+            )
+
+            return self.render_json_response({
+                'status': 'success'
+            })
+        except Exception as e:
+            return self.render_json_response({
+                'status': 'error',
+            }, status=400)
+

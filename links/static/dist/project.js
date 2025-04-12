@@ -6,6 +6,25 @@ document.addEventListener("DOMContentLoaded", () => {
   let linkId;
   let hasEvent = false;
   let linkElement;
+
+  let showToast = (message, status, duration=1500) =>{
+
+    let classNames = {
+      success: 'toast-success',
+      error: 'toast-error'
+    }
+    let toast = document.querySelector('#toast');
+    let msjCtn = toast.querySelector('#toastMsj');
+    toast.classList.remove('toast-active', 'toast-error', 'toast-success');
+
+    msjCtn.innerHTML = message;
+    toast.classList.add('toast-active', classNames[status]);
+
+    setTimeout(() =>{
+      toast.classList.remove('toast-active', 'toast-error', 'toast-success');
+    }, duration)
+  }
+
   let toggleAddButton = () => {
     document
       .querySelector("#add-btn-dropdown")
@@ -93,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let deleteUserParticipation = (event) => {
     userToremove = event.target.parentNode.parentNode;
     actionToSend = userToremove.parentNode.parentNode.dataset.modal;
-    // deletes a user from the collaborator or watchers list from a folder
+
     let container = event.target.parentNode.parentNode;
     let username = container.querySelector("#username").textContent;
 
@@ -354,7 +373,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   let addLink = () => {
-    //verify if comes from a folder or any other page
+
     let modal = event.target.parentNode.parentNode.parentNode;
     let alertSpan = modal.querySelector("#alertSpan");
     alertSpan.classList.add("hide");
@@ -470,10 +489,6 @@ document.addEventListener("DOMContentLoaded", () => {
               if (folderElement) {
                 setTimeout(() => {
                   folderElement.classList.remove("hide-elements");
-                  let linksQty = folderElement.querySelector("#linksQty");
-                  linksQty.innerText = `${result.folder.linksQty} ${
-                    result.folder.linksQty > 1 ? "Links" : "Link"
-                  }`;
                 }, 600);
               }
 
@@ -488,7 +503,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             modal.close();
           }
+        })
+        .catch((err) =>{
+            alertSpan.innerText = "There was an error adding your link"          
+            alertSpan.classList.remove("hide");
+            alertSpan.classList.add("msg-show-error");
         });
+        
+        
+
     } else {
       alertSpan.innerText = "Enter a valid link";
       alertSpan.classList.remove("hide");
@@ -573,7 +596,7 @@ document.addEventListener("DOMContentLoaded", () => {
           addBtn.setAttribute("disabled", "");
 
           setTimeout(() => {
-            div.classList.remove("new-item"); //delete animation class when it ends
+            div.classList.remove("new-item");
           }, 1300);
 
           if (result.changeStatus) {
@@ -812,6 +835,160 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  let changeVisibilityBtn = event =>{
+    let element;
+    if (event.target.localName === "span" ){
+       element = event.target.parentNode
+    }
+    else{
+      element = event.target;
+    }
+    element.setAttribute("disabled", "");
+    setTimeout(() =>{
+      element.removeAttribute("disabled");
+    }, 3000)
+
+    let toast = document.querySelector("#toast");
+    let messageCtn = toast.querySelector("#toastMsj");
+
+    fetch("/folder-privacy",{
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify({
+        folder: document.querySelector("#folder_uuid").value,
+      })
+
+    })
+    .then((response) =>{
+      return response.json();
+    })
+    .then((result) =>{
+      toast.classList.add("toast-active", "toast-success");
+      messageCtn.innerText = "The privacy of your folder has been updated";
+      let span = element.querySelector("span");
+      span.classList.add("opacity-f");
+      setTimeout(() =>{
+        span.innerText = result.message;
+        span.classList.remove("opacity-f");
+      },400);
+      
+
+      setTimeout(() =>{
+        toast.classList.remove("toast-active", "toast-success", "toast-error");
+      },1500)
+      
+      
+    })
+    .catch((err) =>{
+      toast.classList.add("toast-active", "toast-error");
+      messageCtn.innerText = "There was an error please try later";
+      setTimeout(() =>{
+        toast.classList.remove("toast-active", "toast-success", "toast-error");
+      },1500)
+    })
+  }
+
+
+
+  let validateAvailableUsername = event =>{
+    if (timeoutId){
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() =>{
+      let username = event.target.value;
+      let actionBtn = returnNthParent(event.target, 1).querySelector('button');
+      let spanCtn = document.querySelector('#spanCtn');
+      let spanElement = document.querySelector('#alertSpan');
+      const emptySpaceRegex = /\s/;
+      const invalidCharRegex = /^[a-zA-Z0-9@.+_-]+$/
+
+      if (username.length > 3){
+
+        if (emptySpaceRegex.test(username)){
+          spanCtn.classList.add("show-span");
+          actionBtn.setAttribute('disabled',  '');
+          spanElement.innerText = "Username can't have white spaces";
+          spanElement.classList.add("msg-show-error");
+          spanElement.classList.remove("msg-show-success");
+          return;
+        }
+        if (!invalidCharRegex.test(username)){
+          spanCtn.classList.add("show-span");
+          actionBtn.setAttribute('disabled',  '');
+          spanElement.innerText = "Allowed chars @ . + - and _";
+          spanElement.classList.add("msg-show-error");
+          spanElement.classList.remove("msg-show-success");
+          return;
+        }
+
+        //Do the fetch then change the username and generate the avatar to redirect :)
+
+
+        fetch("/lookup-username", {
+          method: "POST",
+          headers: headers,
+          body : JSON.stringify({username: username})
+        }).then( response => {return response.json()})
+            .then( result =>{
+                  if (result.status === "success"){
+                    actionBtn.removeAttribute('disabled');
+                    spanCtn.classList.add("show-span");
+                    spanElement.innerText = result.message;
+                    spanElement.classList.add("msg-show-success");
+                    spanElement.classList.remove("msg-show-error");
+                    return;
+                  }
+                  spanCtn.classList.add("show-span");
+                  actionBtn.setAttribute('disabled',  '');
+                  spanElement.innerText = result.message;
+                  spanElement.classList.add("msg-show-error");
+                  spanElement.classList.remove("msg-show-success");
+            });
+        return;
+      }
+        actionBtn.setAttribute('disabled',  '');
+        spanCtn.classList.remove("show-span");
+    }, 500)
+
+
+  };
+
+  let setUsername = event => {
+    let username;
+    if(event.target.id==="setUsernameBtn"){
+      username = document.querySelector("#searchUsername").value;
+    }
+
+    fetch('/set-username',{
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify({username:username})
+    }).then(response => {return response.json()})
+        .then( result =>{
+          console.log(result);
+          if (result.status === 'success'){
+            window.location.href = `${window.location.protocol}//${window.location.host}`;
+          }
+          else{
+            showToast(
+              'There was an error during this action, please try later',
+              'error',
+              );
+          }
+
+        }).catch((err) =>{
+          showToast(
+              'There was an error during this action, please try later',
+              'error',
+              );
+
+
+
+    })
+
+  }
+
+
   document.addEventListener("input", (event) => {
     if (
       event.target.closest("#addcollaborator") ||
@@ -828,6 +1005,11 @@ document.addEventListener("DOMContentLoaded", () => {
       event.target.closest("#descriptionInput")
     ) {
       validateLength(event);
+    }
+    else if (
+        event.target.closest("#searchUsername")
+    ) {
+      validateAvailableUsername(event);
     }
   });
 
@@ -861,6 +1043,11 @@ document.addEventListener("DOMContentLoaded", () => {
       editLinkDialog(event);
     } else if (event.target.closest("#deleteLink")) {
       deleteLinkDialog(event);
+    } else if (event.target.closest("#privacityLinkBtn")){
+      changeVisibilityBtn(event);
+    } else if (event.target.closest("#setUsernameBtn")){
+      setUsername(event);
     }
+
   });
 });

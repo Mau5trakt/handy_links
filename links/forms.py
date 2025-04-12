@@ -1,6 +1,5 @@
 from django import forms
 from links.models import CustomUser, Folder, Link
-from dal import autocomplete
 
 
 class RegisterForm(forms.ModelForm):
@@ -48,13 +47,4 @@ class LoginForm(forms.ModelForm):
 class FolderCreationForm(forms.ModelForm):
     class Meta:
         model = Folder
-        fields = ['title', 'public', 'collaborators', 'watchers']
-        widgets = {
-            'collaborators': autocomplete.ModelSelect2Multiple(url='user-autocomplete'),
-            'watchers': autocomplete.ModelSelect2Multiple(url='user-autocomplete'),
-
-        }
-
-
-
-
+        fields = ['title', 'public',]

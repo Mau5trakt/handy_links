@@ -7,6 +7,7 @@
     width: 100%;
     flex-direction: column;
     gap: 20px;
+
     &--header {
       display: flex;
       justify-content: space-between;
@@ -48,6 +49,7 @@
         }
       }
     }
+
     &--tabs {
       background: #262c36;
       border-radius: 2px;
@@ -78,6 +80,7 @@
         }
       }
     }
+
     &--links {
       width: 100%;
       display: grid;
@@ -232,11 +235,13 @@
                 }
               }
             }
+
             &-user-avatar {
               width: 40px;
               height: 40px;
               cursor: pointer;
             }
+
             &-remove-btn {
               display: none;
               background: $red;
@@ -256,6 +261,7 @@
           font-family: $font3;
           font-size: 16px;
         }
+
         &-action-btn {
           background-color: $red;
           outline: none;
@@ -274,6 +280,14 @@
           }
         }
 
+        &-privacity-btn {
+          box-sizing: border-box;
+          padding: 6px 12px;
+          font-size: 16px;
+          border-radius: 3px;
+          cursor: pointer;
+          width: 80px;
+        }
         &-add-people {
           display: flex;
           flex-direction: column;
@@ -334,6 +348,7 @@
               }
             }
           }
+
           &-msg {
             font-size: 14px;
             margin-left: 5px;
@@ -347,7 +362,6 @@
     }
   }
 
-  
 
   @keyframes slideIn {
     to {
@@ -368,12 +382,45 @@
   border-radius: 4px;
 }
 
-.hide-elements{
-  *{
+.hide-elements {
+  * {
     opacity: 0;
   }
 }
 
-.hide-card{
+.hide-card {
   opacity: 0;
 }
+
+.public-btn {
+  background: $blue;
+  border: 1px solid $blue;
+  color: $bg-principal;
+
+  &:hover {
+    opacity: 0.6;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+  }
+
+
+}
+
+.private-btn {
+  border: 1px solid $blue;
+  background: $bg-principal;
+  color: $blue;
+
+  &:hover {
+    opacity: 0.6;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+  }
+
+
+}
+

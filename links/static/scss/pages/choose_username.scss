@@ -1,0 +1,73 @@
+@use "../globals" as *;
+
+.choose-username {
+  &__wrapper {
+    display: flex;
+    max-width: 1440px;
+    width: 100%;
+    flex-direction: column;
+    gap: 20px;
+    &--field {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid $border;
+      border-radius: 8px;
+      padding: 16px;
+      gap: 10px;
+      &-title {
+        font-size: 18px;
+        color: $blue;
+      }
+      &-sub {
+        font-size: 16px;
+      }
+      &-input-ctn {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        position: relative;
+        input, button {
+          box-sizing: border-box;
+          height: 32px;
+          padding: 0 10px;
+        }
+        &-input {
+          background: #22272b;
+          border: 1px solid $border-input;
+          border-radius: 4px;
+          max-width: 220px;
+          z-index: 1;
+          @include mquery($bp-sm) {
+            width: 100%;
+          }
+          &:focus {
+            outline: none;
+            border: 1px solid $blue;
+          }
+        }
+        &-btn {
+          outline: none;
+          border: 1px solid $blue;
+          background: $blue;
+          border-radius: 4px;
+          color: $bg-principal;
+          cursor: pointer;
+          &:hover {
+            opacity: 0.6;
+          }
+          &:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+          }
+        }
+        &-span{
+          position: absolute;
+          top: 0;
+          z-index: 0;
+          color: $bg-principal;
+        }
+      }
+    }
+  }
+}

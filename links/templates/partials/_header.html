@@ -55,7 +55,7 @@
                 </div>
                 <div class="header__wrapper--div-icons">
                     <img src="{% static 'media/img/settings-svgrepo-com.svg' %}" alt="" height="100px" width="100px">
-                    <a href="/logout/"> <img src="{{ user.avatar }}" alt="" height="100px" width="100px" id="userAvatar"></a>
+                    <a href="/logout/"> <img src="{{ user.get_avatar }}" alt="" height="100px" width="100px" id="userAvatar"></a>
                 </div>
             </div>
         {% endif %}

@@ -1,7 +1,7 @@
 @use "../globals" as *;
+@use "sass:math";
 
-
-.personal_folders {
+.homepage {
 
   display: flex;
   justify-content: center;
@@ -34,15 +34,12 @@
       width: 100%;
       gap: 10px;
 
-      &:last-child {
-
-      }
-
 
       &-element {
         margin: 0;
         color: $text;
         font-family: $font3;
+
 
         &:nth-child(1) {
           font-size: 22px;
@@ -66,182 +63,24 @@
 
         }
 
-        &:nth-child(3) {
+        &:last-child {
           margin-left: auto;
           text-decoration: none;
           font-size: 14px;
           color: $blue;
+          border-radius: 0;
+          height: auto;
+          width: auto;
+          border: none;
+          box-shadow: none;
+          padding: 0;
 
         }
 
-      }
-
-
-    }
-
-    &--folders {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-
-      @include mquery($bp-sm){
-        justify-content: center;
-      }
-
-      &-empty-msj{
-        opacity: 0.4;
-        font-size: 18px;
-
-      }
-
-      &-folder {
-        position: relative;
-
-        box-sizing: border-box;
-        width: 208px;
-        height: 124px;
-        border-radius: 3px;
-        display: flex;
-        flex-direction: column;
-        border: 1px solid $border;
-        box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.75);
-        font-family: $font3;
-        color: $text;
-
-
-        &:hover {
-          border: 1px solid #91979e;;
-          transition: all 0.4s ease;
-        }
-
-        &--top {
-          width: 100%;
-          height: 48px;
-          background: #2c333a;
-
-        }
-      }
-
-      &--info-ctn{
-        box-sizing: border-box;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        padding: 32px 16px 0 16px;
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        &--img{
-          width: 36px;
-          height: 36px;
-          box-sizing: border-box;
-          border: 4px solid #282e33;
-          border-radius: 3px;
-
-          img{
-            width: 100%;
-            height: 100%;
-
-          }
-        }
-        &--main{
-          font-size: 14px;
-          display: flex;
-          align-items: center;
-
-
-          img{
-            height: 25px;
-            width: 25px;
-            margin-left: auto;
-            position: relative;
-
-
-          }
-
-          &--folder-visibility{
-            background: #b6c2cf;
-            font-size: 12px;
-            padding: 0 5px;
-            color: #000;
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            border-radius: 3px;
-            z-index: 2;
-            display: none;
-
-
-
-          }
-
-        }
-        &--description{
-          font-size: 10px;
-        }
-
-
-      }
-    }
-
-  }
-
-
-}
-
-.shared_folders {
-
-  display: flex;
-  justify-content: center;
-
-  padding: 40px 20px;
-
-
-  @include mquery($bp-lg) {
-    padding: 30px 20px;
-  }
-
-  @include mquery($bp-md) {
-    padding: 20px 10px;
-  }
-
-  @include mquery($bp-sm) {
-    padding: 10px;
-  }
-
-
-  &__wrapper {
-    display: flex;
-    max-width: 1440px;
-    width: 100%;
-    flex-direction: column;
-    gap: 30px;
-
-    &--header {
-      display: flex;
-      width: 100%;
-      gap: 10px;
-
-      &:last-child {
-
-      }
-
-
-      &-element {
-        margin: 0;
-        color: $text;
-        font-family: $font3;
-
-        &:nth-child(1) {
+        &:only-child {
           font-size: 22px;
-        }
-
-        &:nth-child(2) {
-          margin-left: auto;
-          text-decoration: none;
-          font-size: 14px;
-          color: $blue;
-
+          color: $text;
+          margin-left: 0;
         }
 
       }
@@ -250,26 +89,33 @@
     }
 
     &--folders {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
       gap: 10px;
 
-      @include mquery($bp-sm){
-        justify-content: center;
+      @include mquery($bp-lg) {
+        grid-template-columns: repeat(3, 1fr);
       }
 
-      &-empty-msj{
+      @include mquery($bp-md) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @include mquery($bp-sm) {
+        justify-content: center;
+        grid-template-columns: repeat(1, 250px);
+      }
+
+
+      &-empty-msj {
         opacity: 0.4;
         font-size: 18px;
-
+        grid-column: span 2;
       }
 
       &-folder {
         position: relative;
-
         box-sizing: border-box;
-        width: 208px;
-        height: 124px;
+        height: 155px;
         border-radius: 3px;
         display: flex;
         flex-direction: column;
@@ -277,7 +123,6 @@
         box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.75);
         font-family: $font3;
         color: $text;
-
 
         &:hover {
           border: 1px solid #91979e;;
@@ -292,7 +137,7 @@
         }
       }
 
-      &--info-ctn{
+      &--info-ctn {
         box-sizing: border-box;
         position: absolute;
         width: 100%;
@@ -301,26 +146,28 @@
         display: flex;
         flex-direction: column;
         gap: 5px;
-        &--img{
+
+        &--img {
           width: 36px;
           height: 36px;
           box-sizing: border-box;
           border: 4px solid #282e33;
           border-radius: 3px;
 
-          img{
+          img {
             width: 100%;
             height: 100%;
 
           }
         }
-        &--main{
+
+        &--main {
           font-size: 14px;
           display: flex;
           align-items: center;
 
 
-          img{
+          img {
             height: 25px;
             width: 25px;
             margin-left: auto;
@@ -329,7 +176,7 @@
 
           }
 
-          &--folder-visibility{
+          &--folder-visibility {
             background: #b6c2cf;
             font-size: 12px;
             padding: 0 5px;
@@ -340,22 +187,31 @@
             border-radius: 3px;
             z-index: 2;
             display: none;
-
-
-
           }
-
         }
-        &--description{
+        &--description {
           font-size: 10px;
         }
-
-
+        &--collaborators {
+          width: 100%;
+          @for $i from 1 through 4 {
+            img:nth-child(n+#{$i}) {
+              z-index: math.max(1, (4+1) - $i);
+            }
+          }
+          img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid $text;
+            margin-left: -10px;
+            position: relative;
+          }
+          img:first-child {
+            margin-left: 0;
+          }
+        }
       }
     }
-
   }
-
-
 }
-

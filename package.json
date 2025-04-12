@@ -9,6 +9,7 @@
   "author": "Enrique Alemany",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "sass": "^1.83.0"
   },
   "dependencies": {
