@@ -18,6 +18,22 @@ class CustomUser(AbstractUser):
     avatar = models.URLField("Avatar", max_length=400)
     is_premium = models.BooleanField(default=False)
 
+
+
+
+    """@classmethod
+    def create(cls, username):
+        Folder.objects.create(
+            title=f'{username} personal Folder',
+            owner=username
+        )
+        return """
+
+    def get_avatar(self):
+        if len(self.avatar) > 0:
+            return self.avatar
+        return "https://api.dicebear.com/9.x/thumbs/svg?flip=true&rotate=0&backgroundColor=5099D9&translateX=4&eyes=variant7W16&face=variant2&faceOffsetX=10&faceOffsetY=-1&mouth=variant2&shapeColor=1A11A2&radius=50"
+
 class Folder(models.Model):
     class Status(models.TextChoices):
         ACTIVE = 'A', 'Active'
@@ -40,6 +56,7 @@ class Folder(models.Model):
     class Meta:
         verbose_name = 'Folder'
         verbose_name_plural = 'Folders'
+        ordering = ['-created_at']
 
     def __str__(self):
         return f'Folder {self.title} by {self.owner}'
@@ -57,13 +74,13 @@ class Folder(models.Model):
 
     def show_collaborators(self):
         avatars = [{
-            "avatar": self.owner.avatar,
+            "avatar": self.owner.get_avatar(),
             "username": self.owner.username
         }]
 
         for c in self.collaborators.all():
             avatars.append({
-                "avatar": c.avatar,
+                "avatar": c.get_avatar(),
                 "username": c.username
             })
 

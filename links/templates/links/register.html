@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load widget_tweaks %}
+{% load widget_tweaks static %}
 
 {% block title %}
     Register
@@ -17,7 +17,7 @@
             <div class="register__wrapper--ctn">
                 <div class="register__wrapper--ctn-header">
                     <h1> Register </h1>
-                    <span> Having an account? <a href="{% url 'login' %}"> Sign In </a> </span>
+                    <span> Having an account? <a href="{% url 'login' %}"> Login </a> </span>
                 </div>
                 <div class="register__wrapper--ctn-middle">
                     <form class="register__wrapper--ctn-middle--form" method="POST">
@@ -64,9 +64,17 @@
 
 
                         <div class="register__wrapper--ctn-middle--form--container-v2">
-                            <input type="submit" value="Sign In"
+                            <input type="submit" value="Sign Up"
                                    class="register__wrapper--ctn-middle--form--container-v2-submit">
                         </div>
+
+
+                            <a href="{% url "social:begin" "google-oauth2" %}" class="register__wrapper--ctn-middle--form--container-v3">
+                                Sign up with Google
+                                {% include 'icons/icons8-google.svg' %}
+                            </a>
+
+
 
                     </form>
 

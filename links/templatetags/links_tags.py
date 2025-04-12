@@ -9,6 +9,6 @@ def pluralize_links(count):
 @register.filter
 def get_user_avatar(username):
     '''Given a string with a username, lookup for his avatar url'''
-    return CustomUser.objects.get(username=username).avatar
+    return CustomUser.objects.get(username=username).get_avatar()
 
 

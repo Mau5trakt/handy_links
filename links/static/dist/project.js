@@ -977,7 +977,6 @@ document.addEventListener("DOMContentLoaded", () => {
           }
 
         }).catch((err) =>{
-          console.error(err);
           showToast(
               'There was an error during this action, please try later',
               'error',

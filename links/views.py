@@ -1,5 +1,5 @@
 import json
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import JsonResponse
@@ -9,6 +9,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, TemplateView, ListView, RedirectView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
+from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from links.models import CustomUser, Folder, Link
 from links.forms import RegisterForm, FolderCreationForm
@@ -32,8 +33,17 @@ class RegisterUserView(CreateView):
         self.object = form.save(commit=False)
         self.object.set_password(form.cleaned_data['password'])
         self.object.avatar = generate_avatar()
-
         self.object.save()
+        Folder.objects.create(
+            title=f"{self.object.username}'s folder",
+            owner=self.object
+        )
+        user = authenticate(
+            request=self.request,
+            username=self.object.username,
+            password=form.cleaned_data['password']
+        )
+        login(self.request, user)
 
         return super().form_valid(form)
 
@@ -48,6 +58,30 @@ class MyLoginView(LoginView):
     def form_invalid(self, form):
         messages.error(self.request, "Username or passsword incorrect")
         return self.render_to_response(self.get_context_data(form=form))
+
+    def form_valid(self, form):
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+
+        try:
+            user = CustomUser.objects.get(username__iexact=username)
+        except CustomUser.DoesNotExist:
+            return self.form_invalid(form)
+
+            # Autenticar con el username real (case-sensitive)
+        auth_user = authenticate(
+            request=self.request,
+            username=user.username,  # Usamos el username exacto de la BD
+            password=password
+        )
+
+        if auth_user is not None:
+            # Si la autenticación es exitosa
+            from django.contrib.auth import login
+            login(self.request, auth_user)
+            return super().form_valid(form)
+
+        return self.form_invalid(form)
 
 
 class Home(LoginRequiredMixin, SocialRegistrationAuthMixin, TemplateView):
@@ -157,15 +191,15 @@ def add_user(request):
             return JsonResponse({'status': 'failed', 'message': "This user is already a collaborator"})
         elif data['action'] == 'watcher' and user.username not in folder.get_watchers():
             folder.watchers.add(user)
-            return JsonResponse({'status': 'success', "username": user.username, "avatar": user.avatar})
+            return JsonResponse({'status': 'success', "username": user.username, "avatar": user.get_avatar()})
         elif data['action'] == 'collaborator' and user.username in folder.get_watchers():
             folder.watchers.remove(user)
             folder.collaborators.add(user)
             folder.save()
-            return JsonResponse({'status': 'success', 'changeStatus': True, "username": user.username, "avatar": user.avatar})
+            return JsonResponse({'status': 'success', 'changeStatus': True, "username": user.username, "avatar": user.get_avatar()})
         elif data['action'] == 'collaborator' and user.username not in folder.get_collaborators():
             folder.collaborators.add(user)
-            return JsonResponse({'status': 'success', "username": user.username, "avatar": user.avatar})
+            return JsonResponse({'status': 'success', "username": user.username, "avatar": user.get_avatar()})
     return JsonResponse({'status': 'failed', 'message': 'There was an error doing this request.'})
 
 @login_required
@@ -206,7 +240,7 @@ def add_link(request):
     'status': 'success', 
     'user': {
         'username': request.user.username,
-        'avatar': request.user.avatar  
+        'avatar': request.user.get_avatar()
     },
     'link': {
         'url': data['url'],
@@ -299,12 +333,16 @@ class SetUsername(JsonRequestResponseMixin, View):
             user.username = data['username']
             user.avatar = generate_avatar()
             user.save()
+
+            Folder.objects.create(
+                title=f"{data["username"]}'s folder",
+                owner = user
+            )
+
             return self.render_json_response({
                 'status': 'success'
             })
         except Exception as e:
-            print(e)
-
             return self.render_json_response({
                 'status': 'error',
             }, status=400)

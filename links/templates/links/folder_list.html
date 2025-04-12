@@ -38,7 +38,7 @@
                 <div class="folders-detail__wrapper--links-element" data-link_id="{{link.id}}">
                     {% if folder.get_collaborators|length > 0  and request.user.is_authenticated %}
                     <div class="folders-detail__wrapper--links-element--header"> 
-                        <img src="{{link.owner.avatar}}" alt="{{link.owner}} avatar" class="folders-detail__wrapper--links-element--header-image">
+                        <img src="{{link.owner.get_avatar}}" alt="{{link.owner}} avatar" class="folders-detail__wrapper--links-element--header-image">
                         <span class="folders-detail__wrapper--links-element--header-user"> {% if link.owner == request.user %}  You {% else %} {{link.owner}} {% endif %}</span>
                     </div>
                     {% endif %}

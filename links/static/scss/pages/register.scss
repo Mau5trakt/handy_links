@@ -24,7 +24,7 @@ body {
     &--ctn {
       border: 2px solid $border;
       width: 400px;
-      color: white;
+      color: $contrast;
 
       @include mquery($bp-sm) {
         width: 100%;
@@ -105,7 +105,7 @@ body {
               width: 320px;
               height: 36px;
               background-color: $bg-principal;
-              color: white;
+              color: $contrast;
               outline: none;
               border: none;
               border-bottom: 3px solid #2c333a;
@@ -123,6 +123,9 @@ body {
             &-v2 {
               width: 100%;
 
+              &:hover{
+                opacity: 0.7;
+              }
               &-submit {
                 color: #fff;
                 background-color: $blue;
@@ -140,10 +143,31 @@ body {
 
 
               }
+
+
+
+            }
+            &-v3{
+              width: 100%;
+              display: flex;
+              height: 36px;
+              justify-content: center;
+              align-items: center;
+              background: #262c36;
+              gap: 5px;
+              border-radius: 3px;
+              color: $contrast;
+              &:hover{
+                cursor: pointer;
+                opacity: 0.7;
+              }
+              svg{
+                fill: $contrast;
+                width: 32px;
+                height: 32px;
+              }
             }
           }
-
-
         }
       }
     }
