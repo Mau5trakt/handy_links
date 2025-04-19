@@ -47,15 +47,30 @@
         {% if loged %}
             <div class="header__wrapper--div">
                 <div class="header__wrapper--div-search">
-                    <form action="" class="header__wrapper--div-search-form">
+                    <form action="{% url 'search_form' %}" class="header__wrapper--div-search-form">
                         <input type="text" autocomplete="off" class="header__wrapper--div-search-form--input"
-                               placeholder="Search">
+                               placeholder="Search" name="q">
                     </form>
 
                 </div>
                 <div class="header__wrapper--div-icons">
-                    <img src="{% static 'media/img/settings-svgrepo-com.svg' %}" alt="" height="100px" width="100px">
-                    <a href="/logout/"> <img src="{{ user.get_avatar }}" alt="" height="100px" width="100px" id="userAvatar"></a>
+                    <nav class="header__wrapper--div-icons--dropdown" id="userDropdown">
+                            <ul class="header__wrapper--div-icons--dropdown--list">
+                                <li class="header__wrapper--div-icons--dropdown--list-element">
+                                    <strong class="header__wrapper--div-icons--dropdown--list-element-username">{{user.username}}</strong>
+                                    {#   <span class="header__wrapper--div-icons--dropdown--list-element-description"> Go to settings </span> #}
+                                </li>
+                               {#    <li><a> Upgrade to pro </a>  </li> #}
+                                <li class="header__wrapper--div-icons--dropdown--list-element">
+                                    <a href="{% url 'get_folders' %}" class="header__wrapper--div-icons--dropdown--list-element-link">All My Folders </a>
+                                </li>
+                                <li class="header__wrapper--div-icons--dropdown--list-element">
+                                    <a href="/logout/" class="header__wrapper--div-icons--dropdown--list-element-link msg-show-error"> Logout </a>
+                                </li>
+                            </ul>
+
+                    </nav>
+                     <img src="{{ user.get_avatar }}" alt="" height="100px" width="100px" id="userAvatar">
                 </div>
             </div>
         {% endif %}
