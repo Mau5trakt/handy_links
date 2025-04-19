@@ -10,14 +10,14 @@
     gap: 20px;
     margin-bottom: 20px;
 
-    &--header{
-      &-text{
+    &--header {
+      &-text {
         font-size: 20px;
       }
 
     }
 
-    &--results{
+    &--results {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
@@ -33,28 +33,28 @@
         justify-content: center;
         grid-template-columns: repeat(1, 250px);
       }
-      @include  mquery(300px) {
+      @include mquery(300px) {
         grid-template-columns: repeat(1, 1fr);
 
       }
 
-      &-empty-msj{
+      &-empty-msj {
         opacity: 0.4;
         font-size: 18px;
         grid-column: span 2;
 
-        &:not(:only-child){
+        &:not(:only-child) {
           display: none;
         }
 
-        &:only-child{
+        &:only-child {
           display: block;
         }
 
 
       }
 
-      &-element{
+      &-element {
         position: relative;
         box-sizing: border-box;
         height: 155px;
@@ -66,7 +66,7 @@
         font-family: $font3;
         color: $text;
 
-         &:hover {
+        &:hover {
           border: 1px solid #91979e;;
           transition: all 0.4s ease;
         }
@@ -79,7 +79,7 @@
 
       }
 
-      &--info-ctn{
+      &--info-ctn {
         box-sizing: border-box;
         position: absolute;
         width: 100%;
@@ -131,9 +131,11 @@
             display: none;
           }
         }
+
         &--description {
           font-size: 10px;
         }
+
         &--collaborators {
           width: 100%;
           @for $i from 1 through 4 {
@@ -141,6 +143,7 @@
               z-index: math.max(1, (4+1) - $i);
             }
           }
+
           img {
             width: 30px;
             height: 30px;
@@ -149,6 +152,7 @@
             margin-left: -10px;
             position: relative;
           }
+
           img:first-child {
             margin-left: 0;
           }
