@@ -21,5 +21,8 @@ urlpatterns = [
     path('choose-username/', views.ChooseUsername.as_view(), name='choose_username'),
     path('lookup-username', views.lookup_username, name='lookup_username'),
     path('set-username', views.SetUsername.as_view(), name='set_username'),
+    path('search', views.SearchView.as_view(), name='search'),
+    path('folders', views.AllUserFolders.as_view(), name='get_folders'),
+    path("search-form", views.SearchRedirectView.as_view(), name="search_form"),
 
 ]
