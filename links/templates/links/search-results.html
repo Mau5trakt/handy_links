@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static links_tags %}
+
+{% block title %}
+	Search results
+{% endblock %}
+
+{% block content %}
+
+    {% include 'partials/_header.html' with loged=True %}
+
+    <section class="search-results container_wrapper">
+        <div class="search-results__wrapper">
+            <div class="search-results__wrapper--header">
+                <p class="search-results__wrapper--header-text">Search Results for:  {{ term }} </p>
+            </div>
+            <div class="search-results__wrapper--results">
+
+                <p class="search-results__wrapper--results-empty-msj"> There are no results for your search  </p>
+
+                {% for folder in folders %}
+                    <a href="{{ folder.get_absolute_url }}" class="search-results__wrapper--results-element" id="folderHomepage" data-folderId="{{folder.id}}">
+                        <div class="search-results__wrapper--results-element--top">
+
+                        </div>
+                    <div class="search-results__wrapper--results--info-ctn">
+                        <div class="search-results__wrapper--results--info-ctn--img">
+                            <img src="{{ folder_img }}" alt="Folder image">
+                        </div>
+                        <div class="search-results__wrapper--results--info-ctn--main" id="folderMainInfo">
+                            <span class="search-results__wrapper--results--info-ctn--main--title">{{ folder.title|truncatechars:21 }}</span>
+                        </div>
+                        <span class="search-results__wrapper--results--info-ctn--description" {% if folder.owner == user %} id="folderLinksQty"{% endif %}>
+                            {% if folder.owner == user %}
+                                <b>{{ folder.Links.count | pluralize_links }}</b>
+                            {% else %}
+                                Folder by {{ folder.owner }}
+                            {% endif %}
+                        </span>
+
+                        <div class="search-results__wrapper--results--info-ctn--collaborators">
+                            {% for collaborator in folder.show_collaborators %}
+                                <img src="{{ collaborator.avatar }}" alt="{{ collaborator.username|capfirst }}">
+                            {% endfor %}
+                            {% if folder.collaborators.count > 3 %}
+                                <img src="https://placehold.co/100x100/2c333a/579dff?text=%2B{{ folder.collaborators.count | add:-3  }}">
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    </a>
+                    
+
+                {% endfor %}
+                {% for result in  results %}
+                    {% include "partials/link_card.html" with link=result %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
