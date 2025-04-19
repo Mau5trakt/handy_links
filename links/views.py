@@ -1,7 +1,7 @@
 import json
 from django.contrib.auth import logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
@@ -11,6 +11,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.postgres.search import SearchVector, SearchQuery, TrigramSimilarity, TrigramWordSimilarity
 from links.models import CustomUser, Folder, Link
 from links.forms import RegisterForm, FolderCreationForm
 from links.avatar_generation import generate_avatar
@@ -18,6 +19,8 @@ from links.mixins import SocialRegistrationAuthMixin, FolderAccessMixin
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from braces.views import JsonRequestResponseMixin
+from urllib.parse import urlencode
+
 class RegisterUserView(CreateView):
     model = CustomUser
     form_class = RegisterForm
@@ -218,7 +221,7 @@ def remove_user(request):
             folder.watchers.remove(user)
             return JsonResponse({"status": "success"})
         
-    return JsonResponse({"status": "failed", "message": "There was an error removing this user, pleasy try again. "})
+    return JsonResponse({"status": "failed", "message": "There was an error removing this user, please try again. "})
 
 @login_required
 @require_POST
@@ -252,7 +255,7 @@ def add_link(request):
         'linksQty': folder.get_link_qty()
     }
 })
-    return JsonResponse({'status': 'failed', 'message': 'There was an error submiting yor link'})
+    return JsonResponse({'status': 'failed', 'message': 'There was an error submitting yor link'})
 
 @login_required
 @require_POST
@@ -307,7 +310,7 @@ def folder_privacy(request):
         folder.public = not folder.public
         folder.save()
         return JsonResponse({"status": "success", "message": "Public" if folder.public else "Private"})
-    return JsonResponse({"status": "failed", "message": "There was an error changing the privacity of your folder."})
+    return JsonResponse({"status": "failed", "message": "There was an error changing the privacy of your folder."})
     
 
 
@@ -325,7 +328,7 @@ def validate_username(request):
     return JsonResponse({"status": "success"})
 
 
-class SetUsername(JsonRequestResponseMixin, View):
+class SetUsername(LoginRequiredMixin ,JsonRequestResponseMixin, View):
     def post(self, request, *args, **kwargs):
         try:
             data = self.request_json
@@ -346,4 +349,70 @@ class SetUsername(JsonRequestResponseMixin, View):
             return self.render_json_response({
                 'status': 'error',
             }, status=400)
+
+class SearchView(LoginRequiredMixin, TemplateView):
+    template_name = 'links/search-results.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        term = self.request.GET.get('q', '')
+        user = self.request.user
+
+        user_folders = Folder.objects.filter(
+            Q(owner=user) |
+            Q(collaborators=user) |
+            Q(watchers=user)
+        ).distinct()
+
+        results = Link.objects.filter(
+            folder__in=user_folders
+        ).annotate(
+            search=SearchVector('description'),
+            similarity=TrigramSimilarity('url', term)
+        ).filter(
+            Q(search=SearchQuery(term)) | Q(similarity__gt=0.1)
+        )
+
+        folders = user_folders.annotate(
+            similarity=TrigramWordSimilarity(term, 'title')
+        ).filter(similarity__gt=0.3).order_by('-similarity')
+
+
+        context['results'] = results
+        context['folders'] = folders
+        context['term'] = term
+        return context
+
+
+class AllUserFolders(LoginRequiredMixin, ListView):
+
+    model = Folder
+    template_name = "links/folders.html"
+    context_object_name = "folders"
+
+
+    def get_queryset(self):
+        user = self.request.user
+
+        return  (Folder.objects.filter(
+            Q(owner=user) |
+            Q(collaborators=user) |
+            Q(watchers=user)
+        ).distinct().order_by("title"))
+
+
+
+class SearchRedirectView(LoginRequiredMixin, RedirectView):
+    pattern_name = "search"
+    def get_redirect_url(self, *args, **kwargs):
+        query = self.request.GET.get('q', '')
+        params = urlencode({
+            'q': query
+        })
+        return super().get_redirect_url(*args, **kwargs) + f'?{params}'
+
+class AsyncSearchView(LoginRequiredMixin ,View, JsonRequestResponseMixin):
+    def post(self):
+        data = self.request_json
+        print(data)
 
