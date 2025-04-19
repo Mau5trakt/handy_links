@@ -21,7 +21,7 @@
                     </a>
 
 
-                    <a class="homepage__wrapper--header-element" href="">View All</a>
+                    <a class="homepage__wrapper--header-element" href="{% url 'get_folders' %}">View All</a>
                 </div>
                 <div class="homepage__wrapper--folders">
 
@@ -33,7 +33,7 @@
 
                             <div class="homepage__wrapper--folders--info-ctn">
                                 <div class="homepage__wrapper--folders--info-ctn--img">
-                                    <img src="https://placehold.co/100x100/579dff/FFF?text=%3Ca%3E" alt="Folder Image">
+                                    <img src="{{ folder_img }}" alt="Folder Image">
                                 </div>
 
                                 <div class="homepage__wrapper--folders--info-ctn--main" id="folderMainInfo">
@@ -41,7 +41,7 @@
 
                                 </div>
 
-                                <span class="homepage__wrapper--folders--info-ctn--description"> {{ folder.Links.count | pluralize_links }}  </span>
+                                <span class="homepage__wrapper--folders--info-ctn--description" id="folderLinksQty"><b>{{ folder.Links.count | pluralize_links }}</b></span>
 
                                 <div  class="homepage__wrapper--folders--info-ctn--collaborators">
                                     {% for collaborator in folder.show_collaborators %}
@@ -68,7 +68,7 @@
             <div class="homepage__wrapper">
                 <div class="homepage__wrapper--header">
                     <h3 class="homepage__wrapper--header-element">Shared Folders</h3>
-                   {% if  shared_folders|length > 5 %} <a class="homepage__wrapper--header-element" href="">View All</a> {% endif %}
+                   {% if  shared_folders|length > 5 %} <a class="homepage__wrapper--header-element" href="{% url 'get_folders' %}">View All</a> {% endif %}
                 </div>
                 <div class="homepage__wrapper--folders">
 
@@ -81,7 +81,7 @@
 
                             <div class="homepage__wrapper--folders--info-ctn">
                                 <div class="homepage__wrapper--folders--info-ctn--img">
-                                    <img src="https://placehold.co/100x100/579dff/FFF?text=%3Ca%3E" alt="Folder Image">
+                                    <img src="{{ folder_img }}" alt="Folder Image">
                                 </div>
                                 <div class="homepage__wrapper--folders--info-ctn--main" id="folderMainInfo">
                                     <span class="homepage__wrapper--folders--info-ctn--main--title">{{ folder.title|truncatechars:21 }} </span>
