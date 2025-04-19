@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
     'links',
     'widget_tweaks',
     'debug_toolbar',
@@ -89,6 +90,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'links.context_processors.globals',
             ],
         },
     },
@@ -224,3 +226,5 @@ SOCIAL_AUTH_PIPELINE = [
 'social_core.pipeline.social_auth.load_extra_data',
 'social_core.pipeline.user.user_details',
 ]
+
+PROJECT_NAME = "Handy Links"

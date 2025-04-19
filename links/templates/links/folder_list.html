@@ -34,31 +34,12 @@
         </div>
 
         <div class="folders-detail__wrapper--links" id="links">
-                {% for link in links %}
-                <div class="folders-detail__wrapper--links-element" data-link_id="{{link.id}}">
-                    {% if folder.get_collaborators|length > 0  and request.user.is_authenticated %}
-                    <div class="folders-detail__wrapper--links-element--header"> 
-                        <img src="{{link.owner.get_avatar}}" alt="{{link.owner}} avatar" class="folders-detail__wrapper--links-element--header-image">
-                        <span class="folders-detail__wrapper--links-element--header-user"> {% if link.owner == request.user %}  You {% else %} {{link.owner}} {% endif %}</span>
-                    </div>
-                    {% endif %}
-                    
-                    <div class="folders-detail__wrapper--links-element--body">
-                        <a class="folders-detail__wrapper--links-element--body-link" href="{{link.url}}" target="_blank" title="{{link.description}}">{{link.url}}</a>
-                        <p class="folders-detail__wrapper--links-element--body-description">{{link.description}}</p>
-                    </div>
-                    <div class="folders-detail__wrapper--links-element--footer">
-                        <img src="{% static 'media/img/clip-attach-svgrepo-com.svg' %}" alt="clip icon" title="Copy to clipboard" id="copyLink">
-                        {% if request.user == link.owner or request.user == folder.owner %}
-                            <img src="{% static 'media/img/pencil-svgrepo-com.svg' %}" alt="edit icon" title="Edit this link" id="editLink"  data-origin="card-icon">
-                            <img src="{% static 'media/img/trash-can-svgrepo-com.svg' %}" alt="delete icon" title="Delete this link" id="deleteLink">
-                        {% endif %}
-                        
-    
-                    </div>
-    
-                </div>
-                {% endfor %}
+            {% for link in links %}
+                {% include "partials/link_card.html" with link=link %}
+            {% endfor %}
+            <p class="folders-detail__wrapper--links-empty-msj">
+                There are no links in this folder
+            </p>
         </div>
     
         <div class="folders-detail__wrapper--settings hide" id="settings">

@@ -93,6 +93,19 @@
       @include mquery($bp-sm) {
         grid-template-columns: repeat(1, 1fr);
       }
+      &-empty-msj{
+        opacity: 0.4;
+        font-size: 18px;
+        grid-column: span 2;
+
+        &:not(:only-child){
+          display: none;
+        }
+
+        &:only-child{
+          display: block;
+        }
+      }
 
       &-element {
         border: 1px solid $border;

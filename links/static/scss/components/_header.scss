@@ -290,10 +290,72 @@
         display: flex;
         gap: 10px;
         cursor: pointer;
+        position: relative;
 
         img {
           width: 30px;
           height: 30px;
+        }
+
+        &--dropdown{
+          position: absolute;
+          box-sizing: border-box;
+          top: 50px;
+          right: 0;
+          min-width: 120px;
+          width: fit-content;
+          padding: 10px 0;
+          height: fit-content;
+          z-index: 1;
+          background: #282e33;
+          border-radius: 4px;
+          border: 1px solid $border-input;
+          display: none;
+
+          &--list{
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+
+            white-space: nowrap;
+
+            &-element{
+              display: flex;
+              flex-direction: column;
+              gap: 3px;
+              padding: 10px 8px;
+
+              &:first-child{
+                cursor: default;
+              }
+
+              &:first-child:hover{
+                background: none;
+              }
+
+              &:hover{
+                background: #323940;
+              }
+
+              &-username{
+                color: $blue;
+                font-size: 14px;
+              }
+
+              &-description{
+                font-size: 12px;
+                color: #5a6169;
+              }
+
+              &-link{
+                color: $text;
+              }
+
+            }
+
+          }
+
+
         }
       }
     }

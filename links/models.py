@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 import uuid
 from django.urls import reverse
+from django.contrib.postgres.indexes import GinIndex
 
 # Create your models here.
 
@@ -17,17 +18,6 @@ class ActiveManager(models.Manager):
 class CustomUser(AbstractUser):
     avatar = models.URLField("Avatar", max_length=400)
     is_premium = models.BooleanField(default=False)
-
-
-
-
-    """@classmethod
-    def create(cls, username):
-        Folder.objects.create(
-            title=f'{username} personal Folder',
-            owner=username
-        )
-        return """
 
     def get_avatar(self):
         if len(self.avatar) > 0:
@@ -57,6 +47,13 @@ class Folder(models.Model):
         verbose_name = 'Folder'
         verbose_name_plural = 'Folders'
         ordering = ['-created_at']
+        indexes = [
+            GinIndex(
+                name="folder_trgm_idx",
+                fields=['title'],
+                opclasses=["gin_trgm_ops"]
+            )
+        ]
 
     def __str__(self):
         return f'Folder {self.title} by {self.owner}'
@@ -93,6 +90,17 @@ class Folder(models.Model):
 
 
 class Link(models.Model):
+    class Meta:
+        indexes = [
+            GinIndex(
+                name="url_trgm_idx",
+                fields=['url'],
+                opclasses=["gin_trgm_ops"]
+            )
+        ]
+
+
+
     folder = models.ForeignKey(Folder, on_delete=models.CASCADE, related_name='Links', verbose_name='Folder')
     title = models.CharField(max_length=50, blank=True)
     url = models.TextField('Link Url',max_length=1000)

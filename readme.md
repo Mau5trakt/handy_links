@@ -10,7 +10,7 @@ Django Based web app to save and share your links
 ## Access url
 
 > https://localhost:8000
-> https://mysite.com:8000/home/
+> https://mysite.com:8000
 
 ## Python version
     v3.13.0
