@@ -1,4 +1,6 @@
-from settings.base import *
+#from handy_links.settings.base import *
+from .base import *
+
 
 DEBUG=False
 

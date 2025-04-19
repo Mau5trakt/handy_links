@@ -16,9 +16,11 @@ django-extensions==3.2.3
 django-unfold==0.53.0
 django-widget-tweaks==1.5.0
 environ==1.0
+gunicorn==23.0.0
 idna==3.10
 MarkupSafe==3.0.2
 oauthlib==3.2.2
+packaging==24.2
 psycopg2-binary==2.9.10
 pycparser==2.22
 PyJWT==2.10.1

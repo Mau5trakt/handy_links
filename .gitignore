@@ -350,4 +350,11 @@ fabric.properties
 
 cert.crt
 cert.key
+
+
+links/static/admin/
+links/static/debug_toolbar/
+links/static/django_extensions/
+links/static/unfold/
+
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Sass,Node,Python,Django,PyCharm+all
