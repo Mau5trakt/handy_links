@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let linkId;
   let hasEvent = false;
   let linkElement;
+  let linkFolderUUID;
 
   let showToast = (message, status, duration=1500) =>{
 
@@ -78,6 +79,33 @@ document.addEventListener("DOMContentLoaded", () => {
         img.querySelector("#removeUser").classList.add("hide");
       });
     });
+  }
+
+  let profileAvatar = document.querySelector("#userAvatar");
+  if(profileAvatar){
+    let timeout = 750;
+
+    let dd = document.querySelector("#userDropdown");
+    profileAvatar.addEventListener("mouseenter", () =>{
+      clearTimeout(timeoutId);
+      dd.classList.add('show');
+    })
+    profileAvatar.addEventListener("mouseleave", () =>{
+      timeoutId = setTimeout(() =>{
+        dd.classList.remove('show')
+      }, timeout)
+    })
+    dd.addEventListener("mouseenter", ()=>{
+        clearTimeout(timeoutId);
+    })
+
+    dd.addEventListener("mouseleave",  () =>{
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() =>{
+        dd.classList.remove('show')
+      }, timeout)
+    })
+
   }
 
   let removeUser = (event) => {
@@ -259,7 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
       headers: headers,
       body: JSON.stringify({
         link: linkId,
-        folder: document.querySelector("#folder_uuid").value,
+        folder: linkFolderUUID,
       }),
     })
       .then((response) => {
@@ -277,6 +305,19 @@ document.addEventListener("DOMContentLoaded", () => {
             linkElement.classList.add("hide-card");
 
             linkElement.remove();
+            /*if(window.location.pathname === "/search" ){
+              let linkCtn = document.querySelector(".search-results__wrapper--results");
+              if (linkCtn.childElementCount === 0){
+                linkCtn.innerHTML =
+                    '<p class="search-results__wrapper--results-empty-msj"> There are no results for your search </p>';
+              }
+            else if(window.location.pathname.includes("folder-detail")){
+                linkCtn = document.querySelector("#links");
+                linkCtn.innerHTML =
+                    '<p class="search-results__wrapper--results-empty-msj"> There are no results for your search </p>';
+
+              }
+            }*/
           }, 1500);
         }
       })
@@ -296,11 +337,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let toast = document.querySelector("#toast");
     let toastMsj = toast.querySelector("#toastMsj");
     toast.classList.remove("toast-active", "toast-success", "toast-error");
-    let folder = document.querySelector("#folder_uuid").value;
-    let username = document.querySelector("#username").value;
-    if (!username) {
-      return;
-    }
     let urlInput = modal.querySelector("#urlInput").value;
     let descriptionInput = modal.querySelector("#descriptionInput").value;
 
@@ -320,7 +356,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      if (url === urlInput && description == descriptionInput) {
+      if (url === urlInput && description === descriptionInput) {
         alertSpan.innerText = "The url is the same";
         alertSpan.classList.remove("hide");
         alertSpan.classList.add("msg-show-error");
@@ -331,8 +367,7 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "POST",
         headers: headers,
         body: JSON.stringify({
-          username: username,
-          folder: folder,
+          folder: linkFolderUUID,
           url: urlInput,
           description: descriptionInput.trim(),
           link: linkId,
@@ -348,16 +383,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
           setTimeout(() => {
             linkElement.querySelector(
-              ".folders-detail__wrapper--links-element--body-link"
+              "#linkUrl"
             ).innerText = result.url;
             linkElement.querySelector(
-              ".folders-detail__wrapper--links-element--body-description"
+              "#linkDescription"
             ).innerText = result.description;
           }, 400);
 
           setTimeout(() => {
             linkElement.classList.remove("hide-elements");
-            toastMsj.innerText = "Link modifyed succesfully.";
+            toastMsj.innerText = "Link modified successfully.";
             toast.classList.add("toast-active", "toast-success");
             setTimeout(() => {
               linkElement.classList.remove("box-shadow");
@@ -427,30 +462,31 @@ document.addEventListener("DOMContentLoaded", () => {
             if (linksCtn) {
               let newCard = document.createElement("div");
               newCard.classList.add(
-                "folders-detail__wrapper--links-element",
+                "link-card",
                 "opacity-f"
               );
               newCard.setAttribute("data-link_id", result.link.id);
+              newCard.setAttribute("data-folder_uuid", result.folder.id);
               newCard.innerHTML = `
-                        <div class="folders-detail__wrapper--links-element--header"> 
+                        <div class="link-card__header"> 
                         <img src="${result.user.avatar}" alt="${
                 result.user.username
-              } avatar" class="folders-detail__wrapper--links-element--header-image">
-                        <span class="folders-detail__wrapper--links-element--header-user">   You </span>
+              } avatar" class="link-card__header-img">
+                        <span class="link-card__header-owner">You</span>
                     </div>
                     
                     
-                    <div class="folders-detail__wrapper--links-element--body">
-                        <a class="folders-detail__wrapper--links-element--body-link" href="${
+                    <div class="link-card__body">
+                        <a class="link-card__body-link" id="linkUrl" href="${
                           result.link.url
-                        }" target="_blank" title="El link del codespace">${
+                        }" target="_blank" title="${result.link.description}">${
                 result.link.url
               }</a>
-                        <p class="folders-detail__wrapper--links-element--body-description">${
+                        <p class="link-card__body-description" id="linkDescription">${
                           result.link.description || ""
                         }</p>
                     </div>
-                    <div class="folders-detail__wrapper--links-element--footer">
+                    <div class="link-card__footer">
                         <img src="/static/media/img/clip-attach-svgrepo-com.svg" alt="clip icon" title="Copy to clipboard" id="copyLink">
                         <img src="/static/media/img/pencil-svgrepo-com.svg" alt="edit icon" title="Edit this link" id="editLink" data-origin="card-icon">
                         <img src="/static/media/img/trash-can-svgrepo-com.svg" alt="delete icon" title="Delete this link" id="deleteLink">
@@ -483,6 +519,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (f.dataset.folderid === result.folder.id) {
                   folderElement = f;
                   folderElement.classList.add("hide-elements");
+                  let linkInfo = f.querySelector("b");
+                    if (linkInfo){
+                        setTimeout(() =>{
+                            linkInfo.textContent = `${result.folder.linksQty} ${result.folder.linksQty === 1 ? 'Link' : 'Links'}`;
+                        }, 250)
+
+                    }
+
                 }
               });
 
@@ -642,6 +686,7 @@ document.addEventListener("DOMContentLoaded", () => {
     modalHeaderText.innerText = "Delete Link";
 
     let parentDiv = returnNthParent(event.target, 2);
+    linkFolderUUID = parentDiv.dataset.folder_uuid;
     linkId = parentDiv.dataset.link_id;
     linkElement = parentDiv;
     modalBody.innerHTML = `<span> Would you like to delete this link? This action cannot be undone. </span>`;
@@ -674,11 +719,12 @@ document.addEventListener("DOMContentLoaded", () => {
     modalHeaderText.innerText = "Edit Link";
 
     let parentDiv = returnNthParent(event.target, 2);
+    linkFolderUUID = parentDiv.dataset.folder_uuid;
     let url = parentDiv.querySelector(
-      ".folders-detail__wrapper--links-element--body-link"
+      "#linkUrl"
     ).textContent;
     let description = parentDiv.querySelector(
-      ".folders-detail__wrapper--links-element--body-description"
+      "#linkDescription"
     ).textContent;
     linkId = parentDiv.dataset.link_id;
     linkElement = parentDiv;
@@ -965,7 +1011,6 @@ document.addEventListener("DOMContentLoaded", () => {
       body: JSON.stringify({username:username})
     }).then(response => {return response.json()})
         .then( result =>{
-          console.log(result);
           if (result.status === 'success'){
             window.location.href = `${window.location.protocol}//${window.location.host}`;
           }
@@ -981,13 +1026,9 @@ document.addEventListener("DOMContentLoaded", () => {
               'There was an error during this action, please try later',
               'error',
               );
-
-
-
     })
 
   }
-
 
   document.addEventListener("input", (event) => {
     if (
