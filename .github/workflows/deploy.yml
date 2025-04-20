@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Paso 1: Configurar SSH
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh
@@ -22,28 +21,17 @@ jobs:
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
-      # Paso 2: Ejecutar todos los comandos en el servidor remoto
       - name: Execute Remote Deployment
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-          # 1. Navegar al directorio del proyecto
           cd /home/ubuntu/handy_links
-          
-          # 2. Actualizar código
           git fetch origin
           git reset --hard origin/master
-          
           pyenv activate links
-          
-          
           pip install -r /home/ubuntu/handy_links/requirements.txt
-          
-          # 5. Ejecutar comandos Django
           npm install
           npm run build
           python manage.py migrate
           python manage.py collectstatic --no-input
-          
-          # 6. Reiniciar servicios
           sudo supervisorctl restart all
           EOF

@@ -23,7 +23,7 @@ from django.urls import reverse
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-PROJECT_NAME = "Another name"
+PROJECT_NAME = "Handy Links"
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
