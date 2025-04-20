@@ -1,35 +1,56 @@
+name: Deploy Application
+
 on:
   push:
     branches:
       - master
 
 jobs:
-  run_deploy:
-    name: run deploy
+  deploy:
+    name: Deploy to Production
     environment: ovh-deploy
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - name: install ssh keys
+      # Paso 1: Configurar SSH
+      - name: Configure SSH
         run: |
-          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
 
-      - name: Set up python
+      # Paso 2: Instalar dependencias en el runner (opcional, solo si necesitas procesar algo localmente)
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.13"
           cache: "pip"
-      - name: create and activate venv
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-          pip install -r requirements.txt
 
-      - name: connect and pull
+      # Paso 3: Ejecutar comandos remotos via SSH
+      - name: Execute Remote Deployment
         run: |
-              ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
-              
-              "
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          # 1. Actualizar código
+          cd /home/ubuntu/handy_links
+          git fetch origin
+          git reset --hard origin/master
+          
+          # 2. Configurar entorno Python
+          if [ ! -d "/home/ubuntu/venvs/links" ]; then
+              python3.13 -m venv /home/ubuntu/venvs/links
+          fi
+          source /home/ubuntu/venvs/links/bin/activate
+          
+          # 3. Instalar dependencias
+          pip install -r requirements.txt
+          
+          # 4. Ejecutar comandos Django
+          python manage.py migrate
+          python manage.py collectstatic --no-input
+          
+          # 5. Reiniciar servicios
+          sudo supervisorctl restart all
+          EOF
