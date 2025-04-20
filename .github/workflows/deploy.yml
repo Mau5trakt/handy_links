@@ -24,6 +24,7 @@ jobs:
           echo 'eval "$(pyenv init -)"' >> ~/.profile
           exec $SHELL
           pyenv --version
+          pyenv install 3.13.0
           
         
       - name: install ssh keys
@@ -33,4 +34,4 @@ jobs:
           ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
 
       - name: connect and pull
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /home/ubuntu/handy_links && git checkout master && git pull && pyenv activate links "
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /home/ubuntu/handy_links && git checkout master && git pull"
