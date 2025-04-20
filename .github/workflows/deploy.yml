@@ -13,14 +13,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install SSH key
-        uses: webfactory/ssh-agent@v0.7.0
+        uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{secrets.SSH_PRIVATE_KEY}}
 
       - name: Execute deploy script
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
-            cd ${{ secrets.PROJECT_PATH }} && \
+          ssh -o StrictHostKeyChecking=no ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}} "
+            cd ${{secrets.PROJECT_PATH}} && \
             git pull origin master && \
             pyenv activate links && \  
             pip install -r requirements.txt && \
