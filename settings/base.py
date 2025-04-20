@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'links',
     'widget_tweaks',
-    #'debug_toolbar',
     'django_extensions',
 ]
 

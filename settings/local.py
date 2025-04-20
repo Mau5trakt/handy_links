@@ -1,7 +1,6 @@
 from settings.base import *
 
 DEBUG=True
-
 ALLOWED_HOSTS = ['51.79.70.236', 'mysite.com', 'localhost', '127.0.0.1']
 
 
@@ -21,5 +20,5 @@ INSTALLED_APPS += [
 ]
 
 MIDDLEWARE +=[
-    'debug_toolbar.middleware.DebugToolbarMiddleware'
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]

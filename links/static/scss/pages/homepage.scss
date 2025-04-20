@@ -104,6 +104,9 @@
         justify-content: center;
         grid-template-columns: repeat(1, 250px);
       }
+      @include mquery(420px) {
+        grid-template-columns: repeat(1, 1fr);
+      }
 
 
       &-empty-msj {

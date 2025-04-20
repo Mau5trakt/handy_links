@@ -20,11 +20,11 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from debug_toolbar.toolbar import debug_toolbar_urls
-
+from decouple import config
 
 urlpatterns = [
 
-     path('admin/', admin.site.urls),
+     path(f'{config("ADMIN_PREFIX")}/', admin.site.urls),
      path("", include('links.urls')),
      path("social-auth/", include('social_django.urls', namespace='social')),
 ]

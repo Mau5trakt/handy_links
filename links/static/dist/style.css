@@ -1404,6 +1404,11 @@ body {
     grid-template-columns: repeat(1, 250px);
   }
 }
+@media screen and (max-width: 420px) {
+  .homepage__wrapper--folders {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
 .homepage__wrapper--folders-empty-msj {
   opacity: 0.4;
   font-size: 18px;
@@ -2095,6 +2100,11 @@ body {
     grid-template-columns: repeat(1, 250px);
   }
 }
+@media screen and (max-width: 420px) {
+  .user-folders__wrapper--results {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
 .user-folders__wrapper--results-empty-msj {
   opacity: 0.4;
   font-size: 18px;
@@ -2227,7 +2237,7 @@ body {
     grid-template-columns: repeat(1, 250px);
   }
 }
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 420px) {
   .search-results__wrapper--results {
     grid-template-columns: repeat(1, 1fr);
   }

@@ -6,11 +6,12 @@
             <div class="header__wrapper--nav-menu-toggle">
                 <img src="{% static 'media/img/hamburger-menu-svgrepo-com.svg' %}" alt="" id="mobilemenu">
                 <div class="header__wrapper--nav-menu-toggle--container" id="mobilemenuctn">
-                    <span class="header__wrapper--nav-menu-toggle--container--element">Add a Link</span>
+                    <span class="header__wrapper--nav-menu-toggle--container--element" id="addLink">Add a Link</span>
                     <span class="header__wrapper--nav-menu-toggle--container--element" id="folderCreationLink">Add a Folder</span>
                     <div class="header__wrapper--nav-menu-toggle--container--element">
-                        <form action="" class="header__wrapper--nav-menu-toggle--container--element--form-ctn"><input  type="text" autocomplete="off"
+                        <form action="{% url 'search_form' %}" class="header__wrapper--nav-menu-toggle--container--element--form-ctn"><input  type="text" autocomplete="off"
                                                class="header__wrapper--div-search-form--input"
+                                                name="q"
                                                placeholder="Search">
                             <input type="submit" value="Search" class="header__wrapper--nav-menu-toggle--container--element--form-ctn-submit">
                         </form>
