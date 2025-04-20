@@ -19,4 +19,4 @@ jobs:
       - name: connect and pull
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /home/ubuntu/handy_links && git checkout master 
-          && git pull
+          && git pull && exit"
