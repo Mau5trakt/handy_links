@@ -18,6 +18,7 @@ class ActiveManager(models.Manager):
 class CustomUser(AbstractUser):
     avatar = models.URLField("Avatar", max_length=400)
     is_premium = models.BooleanField(default=False)
+    test_field = models.CharField('Folder Name', max_length=100)
 
     def get_avatar(self):
         if len(self.avatar) > 0:
