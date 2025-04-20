@@ -33,13 +33,9 @@ jobs:
           git fetch origin
           git reset --hard origin/master
           
-          # 3. Configurar entorno Python (solo si no existe)
-          if [ ! -d "/home/ubuntu/venvs/links" ]; then
-              python3.13 -m venv /home/ubuntu/venvs/links
-          fi
+          pyenv activate links
           
-          # 4. Activar entorno e instalar dependencias
-          source /home/ubuntu/venvs/links/bin/activate
+          
           pip install -r /home/ubuntu/handy_links/requirements.txt
           
           # 5. Ejecutar comandos Django
