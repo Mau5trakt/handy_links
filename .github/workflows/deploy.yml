@@ -6,6 +6,7 @@ on:
 jobs:
   run_deploy:
     name: run deploy
+    environment: ovh-deploy
     runs-on: ubuntu-latest
 
     steps:
