@@ -18,23 +18,22 @@ jobs:
 
       - name: connect and pull
         run: |
-              ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 
-              curl https://pyenv.run | bash
-              echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
-              echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-              echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-              echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
-              echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
-              echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
-              echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.profile
-              echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.profile
-              echo 'eval "$(pyenv init -)"' >> ~/.profile
-              exec $SHELL
-              pyenv --version
-              pyenv install 3.13.0
-              cd /home/ubuntu/handy_links 
-              git checkout master 
+              ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+              # Instalar pyenv
+              curl -fsSL https://pyenv.run | bash
+              
+              
+              echo 'export PYENV_ROOT=\"\$HOME/.pyenv\"' >> ~/.bashrc
+              echo '[[ -d \$PYENV_ROOT/bin ]] && export PATH=\"\$PYENV_ROOT/bin:\$PATH\"' >> ~/.bashrc
+              echo 'eval \"\$(pyenv init -)\"' >> ~/.bashrc
+              
+              
+              source ~/.bashrc
+              pyenv install 3.13.0 --skip-existing
+              cd /home/ubuntu/handy_links
+              git checkout master
               git pull
               pyenv virtualenv 3.13.0 links
-              pyenv activate links
+              source \$PYENV_ROOT/versions/links/bin/activate
               pip install -r requirements.txt
+            "
