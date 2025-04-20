@@ -1007,7 +1007,7 @@ textarea {
   transition: all 400ms ease-in-out;
 }
 .dialog--ctn__footer button.blue-bg {
-  background-color: green;
+  background-color: #579dff;
   border: 1px solid #579dff;
 }
 .dialog--ctn__footer button.red-bg {
