@@ -23,7 +23,7 @@
             </div>
 
             <div class="header__wrapper--nav-logo">
-                {% if loged %} <a class="header__wrapper--nav-logo" href="{% url 'home' %}">Handylinks</a> {% else %} <span class="header__wrapper--nav-logo">Handylinks</span> {% endif %}
+                {% if loged %} <a class="header__wrapper--nav-logo" href="{% url 'home' %}">{{ PROJECT_NAME }}</a> {% else %} <span class="header__wrapper--nav-logo">{{ PROJECT_NAME }}</span> {% endif %}
 
             </div>
 
