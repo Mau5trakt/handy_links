@@ -18,7 +18,12 @@ jobs:
           echo 'eval "$(pyenv init - bash)"' >> ~/.bashrc
           echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
           source ~/.bashrc
+
+      - name: Validate pyenv
+        run: |
+          source ~/.bashrc
           pyenv --version
+          
         
       - name: install ssh keys
         run: |
