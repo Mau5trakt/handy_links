@@ -21,12 +21,11 @@ jobs:
 
       - name: Execute deploy script
         run: |
-          ssh -o StrictHostKeyChecking=no ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}} "
-            cd ${{secrets.PROJECT_PATH}} && \
-            git pull origin master && \
-            pyenv activate links && \  
-            pip install -r requirements.txt && \
-            python manage.py migrate && \
-            python manage.py collectstatic --noinput && \
-            sudo supervisorctl restart handy_links
+          ssh -o StrictHostKeyChecking=no -o User=deploy ${{ secrets.SSH_HOST }} "
+          cd ${{ secrets.PROJECT_PATH }} && \
+          git pull origin master && \
+          /home/deploy/.pyenv/versions/links/bin/python -m pip install -r requirements.txt && \
+          /home/deploy/.pyenv/versions/links/bin/python manage.py migrate && \
+          /home/deploy/.pyenv/versions/links/bin/python manage.py collectstatic --noinput && \
+          sudo supervisorctl restart handy_links
           "
