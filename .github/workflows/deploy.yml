@@ -39,6 +39,8 @@ jobs:
           pip install -r /home/ubuntu/handy_links/requirements.txt
           
           # 5. Ejecutar comandos Django
+          npm install
+          npm run build
           python manage.py migrate
           python manage.py collectstatic --no-input
           

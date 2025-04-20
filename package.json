@@ -4,7 +4,8 @@
   "description": "Django Based web app to save and share your links",
   "main": "index.js",
   "scripts": {
-    "dev": "sass links/static/scss/project.scss links/static/dist/style.css -w"
+    "dev": "sass links/static/scss/project.scss links/static/dist/style.css -w",
+    "build": "sass links/static/scss/project.scss links/static/dist/style.css --style=compressed"
   },
   "author": "Enrique Alemany",
   "license": "ISC",
