@@ -1,0 +1,30 @@
+name: Deploy Django to VPS
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Execute deploy script
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+            cd ${{ secrets.PROJECT_PATH }} && \
+            git pull origin master && \
+            pyenv activate links && \  
+            pip install -r requirements.txt && \
+            python manage.py migrate && \
+            python manage.py collectstatic --noinput && \
+            sudo supervisorctl restart handy_links
+          "
