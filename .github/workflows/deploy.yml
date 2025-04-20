@@ -22,35 +22,30 @@ jobs:
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
-      # Paso 2: Instalar dependencias en el runner (opcional, solo si necesitas procesar algo localmente)
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.13"
-          cache: "pip"
-
-      # Paso 3: Ejecutar comandos remotos via SSH
+      # Paso 2: Ejecutar todos los comandos en el servidor remoto
       - name: Execute Remote Deployment
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-          # 1. Actualizar código
+          # 1. Navegar al directorio del proyecto
           cd /home/ubuntu/handy_links
+          
+          # 2. Actualizar código
           git fetch origin
           git reset --hard origin/master
           
-          # 2. Configurar entorno Python
+          # 3. Configurar entorno Python (solo si no existe)
           if [ ! -d "/home/ubuntu/venvs/links" ]; then
               python3.13 -m venv /home/ubuntu/venvs/links
           fi
+          
+          # 4. Activar entorno e instalar dependencias
           source /home/ubuntu/venvs/links/bin/activate
+          pip install -r /home/ubuntu/handy_links/requirements.txt
           
-          # 3. Instalar dependencias
-          pip install -r requirements.txt
-          
-          # 4. Ejecutar comandos Django
+          # 5. Ejecutar comandos Django
           python manage.py migrate
           python manage.py collectstatic --no-input
           
-          # 5. Reiniciar servicios
+          # 6. Reiniciar servicios
           sudo supervisorctl restart all
           EOF
