@@ -17,4 +17,4 @@ jobs:
           ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
 
       - name: connect and pull
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /home/ubuntu/handy_links && git checkout master && git pull && printenv"
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /home/ubuntu/handy_links && git checkout master && git pull && echo -e '\n# Pyenv Configuration\neval "$(pyenv virtualenv-init -)"\nexport PYENV_ROOT="$HOME/.pyenv"\n[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"\neval "$(pyenv init - bash)"\neval "$(pyenv virtualenv-init -)"' >> ~/.bashrc && cat .bashrc "
