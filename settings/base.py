@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'links',
     'widget_tweaks',
     'django_extensions',
+    'traffic',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'traffic.middleware.RequestLogginMiddleware'
 ]
 
 ROOT_URLCONF = 'handy_links.urls'
