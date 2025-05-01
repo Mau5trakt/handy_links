@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Dashboard
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_header.html' with loged=True %}
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
+    <input type="hidden" id="detailRoute" value="{{ detail_route }}">
+    <section class="dashboard container_wrapper">
+        <div class="dashboard__wrapper">
+            <div class="dashboard__wrapper--header">
+                <span class="dashboard__wrapper--header--description">Routes Count</span>
+                <a class="dashboard__wrapper--header--permalink">View all</a>
+            </div>
+            <div
+            class="dashboard__wrapper--table"
+            id="routesGrid"
+            ></div>
+        </div>
+
+    <div class="dashboard__wrapper">
+            <div class="dashboard__wrapper--header">
+                <span class="dashboard__wrapper--header--description">Routes Logs </span>
+                <a class="dashboard__wrapper--header--permalink">View all</a>
+            </div>
+            <div
+            class="dashboard__wrapper--table"
+            id="logsGrid"
+            ></div>
+        </div>
+
+    </section>
+
+
+
+{% endblock %}
+
+{% block extrajs %}
+    <script>
+    let detailRoute = document.querySelector('#detailRoute');
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+        const routesCountGrid = document.querySelector('#routesGrid');
+        const logsGrid = document.querySelector("#logsGrid")
+
+    class linkRenderer{
+        eGui;
+        init(params) {
+            let cell = document.createElement('a');
+            cell.textContent = params.value;
+            cell.href = `${detailRoute.value}${params.value}`;
+            cell.classList.add('cell-link');
+            this.eGui = document.createElement('span');
+            this.eGui.setAttribute('style', 'display: flex; height: 100%; width: 100%; align-items: center');
+            this.eGui.appendChild(cell);
+        }
+        getGui() {
+            return this.eGui;
+        }
+        refresh(params) {
+        return false
+        }
+    }
+
+    const logsGridOptions = {
+        rowData: [
+            {% for log in logs %}
+                { route: "{{ log.route }}",  timestamp: "{{ log.timestamp }}" },
+            {% endfor %}
+        ],
+
+        columnDefs: [
+            { field: 'route', cellRenderer: linkRenderer },
+            { field: 'timestamp' }
+        ]
+    }
+
+    const routesGridOptions = {
+    // Row Data: The data to be displayed.
+    rowData: [
+        // improve this asap
+        {% for count in counts %}
+            { route: "{{ count.route }}", count: "{{ count.count }}", last_accessed: "{{ count.last_accessed }}" },
+        {% endfor %}
+    ],
+    // Column Definitions: Defines the columns to be displayed.
+    columnDefs: [
+        { field: "route", cellRenderer: linkRenderer},
+        { field: "count" },
+        { field: "last_accessed" },
+    ]
+
+};
+    agGrid.createGrid(routesCountGrid, routesGridOptions);
+    agGrid.createGrid(logsGrid, logsGridOptions);
+
+    })
+</script>
+{% endblock %}

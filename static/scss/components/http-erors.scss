@@ -1,0 +1,44 @@
+@use "../globals" as *;
+
+.http-errors{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &__wrapper{
+    display: flex;
+    flex-direction: column;
+    max-width: 1440px;
+    width: 100%;
+    gap: 15px;
+    &--header{
+      color: $blue;
+      font-size: 40px;
+    }
+    &--description{
+      color: $contrast;
+      font-size: 26px;
+    }
+    &--permalink{
+      width: fit-content;
+      font-size: 20px;
+      @extend %permalink-reset;
+      height: 32px;
+      background: $blue;
+      color: $bg-principal;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 10px;
+      border-radius: 3px;
+      border: 1px solid $blue;
+
+
+      &:hover{
+        background: $bg-principal;
+        color: $blue;
+
+      }
+    }
+  }
+}

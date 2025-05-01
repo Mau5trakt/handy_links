@@ -178,3 +178,31 @@
   }
 }
 
+.cell-link{
+  font-size: 14px;
+  color: $blue;
+  text-decoration: none;
+  box-shadow: none;
+  padding: 0;
+  height: auto;
+  width: auto;
+  border-radius: 0;
+  cursor: pointer;
+
+  &:hover{
+    opacity: 0.8;
+  }
+}
+
+%permalink-reset{
+  text-decoration: none;
+  box-shadow: none;
+  border: none;
+  width: auto;
+  height: auto;
+  color: $blue;
+}
+
+.text-blue{
+  color: $blue !important;
+}

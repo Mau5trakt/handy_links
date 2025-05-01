@@ -6,7 +6,8 @@
             <div class="header__wrapper--nav-menu-toggle">
                 <img src="{% static 'media/img/hamburger-menu-svgrepo-com.svg' %}" alt="" id="mobilemenu">
                 <div class="header__wrapper--nav-menu-toggle--container" id="mobilemenuctn">
-                    <span class="header__wrapper--nav-menu-toggle--container--element" id="addLink">Add a Link</span>
+                    {% if user.is_authenticated %}
+                        <span class="header__wrapper--nav-menu-toggle--container--element" id="addLink">Add a Link</span>
                     <span class="header__wrapper--nav-menu-toggle--container--element" id="folderCreationLink">Add a Folder</span>
                     <div class="header__wrapper--nav-menu-toggle--container--element">
                         <form action="{% url 'search_form' %}" class="header__wrapper--nav-menu-toggle--container--element--form-ctn"><input  type="text" autocomplete="off"
@@ -19,6 +20,13 @@
                     <span class="header__wrapper--nav-menu-toggle--container--element">Settings</span>
                     <span class="header__wrapper--nav-menu-toggle--container--element">Info</span>
                     <a href="{% url 'logout' %}" class="header__wrapper--nav-menu-toggle--container--element">Logout</a>
+                        {% else %}
+                        <a class="header__wrapper--nav-menu-toggle--container--element" href="{% url 'login' %}">Sign in</a>
+                        <a class="header__wrapper--nav-menu-toggle--container--element text-blue" href="{% url 'register' %}">Sign up</a>
+
+                    {% endif %}
+
+
                 </div>
             </div>
 
@@ -42,6 +50,14 @@
                                     class="header__wrapper--nav--ul-dropdown-menu-link-text" id="folderCreationLink">Folder</span></li>
                         </ul>
                     </div>
+                {% else %}
+                    <div class="header__wrapper--nav--ul-auth-links">
+                        <a href="{% url 'login' %}" class="header__wrapper--nav--ul-auth-links--login">Sign in</a>
+                        <a href="{% url 'register' %}" class="header__wrapper--nav--ul-auth-links--register" >Sign up</a>
+                    </div>
+
+
+                    
                 {% endif %}
             </ul>
         </nav>
