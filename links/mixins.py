@@ -10,7 +10,7 @@ class FolderAccessMixin:
     def dispatch(self, request, *args, **kwargs):
         folder = get_object_or_404(Folder, id=kwargs.get('uuid'))
         if not self.has_access(request.user, folder):
-            raise PermissionDenied('You dont have access to this folder')
+            raise PermissionDenied('Access denied. You must be a collaborator or watcher to view this folder. Contact the owner for access.')
         return super().dispatch(request, *args, **kwargs)
 
     def has_access(self, user, folder):
