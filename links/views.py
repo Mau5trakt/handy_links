@@ -291,7 +291,7 @@ def get_user_folders(request):
     active_folders = Folder.objects.filter(
         Q(status=Folder.Status.ACTIVE) & 
             (Q(owner=request.user) | Q(collaborators=request.user))
-    ).distinct()
+    ).distinct().order_by("title")
     folders = []
     for folder in active_folders:
         element = {"id": folder.id, "title": folder.title} 
@@ -416,3 +416,5 @@ class AsyncSearchView(LoginRequiredMixin ,View, JsonRequestResponseMixin):
         data = self.request_json
         print(data)
 
+class NotFoundHandler(TemplateView):
+    template_name = '404.html'
