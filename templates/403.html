@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
-
-
-
 {% block title %}
-    403
+    403 - Access denied.
 {% endblock  %}
 
 {% block content %}
-    {% include 'partials/_header.html' with loged=True %}
-
-
-    
+    {% include 'partials/_header.html' with loged=user.is_authenticated %}
+    <section class="http-errors container_wrapper" >
+        <div class="http-errors__wrapper">
+            <h3 class="http-errors__wrapper--header">403 Access denied</h3>
+            <p class="http-errors__wrapper--description"> {{ exception }}</p>
+            <a href="{% url 'home' %}" class="http-errors__wrapper--permalink">Go to home</a>
+        </div>
+    </section>
 {% endblock  %}

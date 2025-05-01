@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}
+    404 - Not found.
+{% endblock  %}
+
+{% block content %}
+    {% include 'partials/_header.html' with loged=user.is_authenticated %}
+    <section class="http-errors container_wrapper" >
+        <div class="http-errors__wrapper">
+            <h3 class="http-errors__wrapper--header">404 Not found</h3>
+            <p class="http-errors__wrapper--description"> This page doesn't exist.</p>
+            <a href="{% url 'home' %}" class="http-errors__wrapper--permalink">Go to home</a>
+        </div>
+    </section>
+{% endblock  %}
