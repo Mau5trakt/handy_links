@@ -256,6 +256,50 @@
             }
           }
         }
+
+        &-auth-links{
+          height: 100%;
+          display: flex;
+          align-items: center;
+          gap: 15px;
+
+          @include mquery($bp-sm){
+            gap: 5px;
+          }
+
+          &--login, &--register{
+            @extend %permalink-reset;
+            padding: 0 10px;
+            height: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            white-space: nowrap;
+          }
+
+          &--login{
+            border: 1px solid $bg-principal;
+
+            &:hover{
+              background: #2c333a;
+              border-color: #2c333a;
+              border-radius: 3px;
+            }
+          }
+
+          &--register{
+              color: $blue !important;
+              border: 1px solid $blue;
+              border-radius: 3px;
+
+              &:hover{
+                background: $blue;
+                color: $bg-principal !important;
+              }
+          }
+
+
+        }
       }
     }
 
