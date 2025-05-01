@@ -12,6 +12,7 @@ class RequestLogginMiddleware:
 
     def _track_route(self, route_path, request):
         RouteCount.increment_count(route_path)
+        RouteLog.objects.create(route=route_path)
 
 
 
