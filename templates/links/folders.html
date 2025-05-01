@@ -27,7 +27,7 @@
                                 </div>
                                 <span class="user-folders__wrapper--results--info-ctn--description" {% if folder.owner == user %} id="folderLinksQty"{% endif %}>
                                     {% if folder.owner == user %}
-                                        <b>{{ folder.Links.count | pluralize_links }}</b>
+                                        <p>{{ folder.Links.count | pluralize_links }}</p>
                                         {% else %}
                                         Folder by {{ folder.owner }}
                                     {% endif %}
