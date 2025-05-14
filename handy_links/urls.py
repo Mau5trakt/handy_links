@@ -27,7 +27,7 @@ urlpatterns = [
      path(f'{config("ADMIN_PREFIX")}/', admin.site.urls),
      path("", include('links.urls')),
      path("social-auth/", include('social_django.urls', namespace='social')),
-     path("traffic", include('traffic.urls', namespace='traffic'))
+     path("traffic/", include('traffic.urls', namespace='traffic'))
 ]
 
 if settings.DEBUG:

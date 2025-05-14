@@ -1,11 +1,11 @@
-{% load static %}
+{% load static webpack_loader %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'dist/style.css' %}">
-    <link rel="shortcut icon" href="{% static 'media/img/Handy.ico' %}" type="image/x-icon">
+    {% stylesheet_pack 'app' %}
+    <link rel="shortcut icon" href="{% static 'vendors/img/Handy.ico' %}" type="image/x-icon">
     <title>{% block title %} {% endblock %} | {{ PROJECT_NAME }}</title>
 
 </head>
@@ -22,6 +22,6 @@
 
 {% endblock extrajs %}
 </body>
-<script src="{% static 'dist/project.js' %}" type="module" defer></script>
+{% javascript_pack 'app' %}
 
 </html>

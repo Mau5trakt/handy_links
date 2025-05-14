@@ -1,7 +1,7 @@
 from settings.base import *
 
 DEBUG=True
-ALLOWED_HOSTS = ['51.79.70.236', 'mysite.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 DATABASES = {

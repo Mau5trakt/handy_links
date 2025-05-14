@@ -4,7 +4,7 @@
     <div class="header__wrapper">
         <nav class="header__wrapper--nav">
             <div class="header__wrapper--nav-menu-toggle">
-                <img src="{% static 'media/img/hamburger-menu-svgrepo-com.svg' %}" alt="" id="mobilemenu">
+                <img src="{% static 'vendors/img/hamburger-menu-svgrepo-com.svg' %}" alt="" id="mobilemenu">
                 <div class="header__wrapper--nav-menu-toggle--container" id="mobilemenuctn">
                     {% if user.is_authenticated %}
                         <span class="header__wrapper--nav-menu-toggle--container--element" id="addLink">Add a Link</span>
@@ -40,7 +40,7 @@
                     <button class="header__wrapper--nav--ul-button">
                         <span class="header__wrapper--nav--ul-button-span">Add</span>
                         <img class="header__wrapper--nav--ul-button-icon"
-                             src="{% static 'media/img/down-arrow-5-svgrepo-com.svg' %}" alt="down arrow">
+                             src="{% static 'vendors/img/down-arrow-5-svgrepo-com.svg' %}" alt="down arrow">
                     </button>
                     <div class="header__wrapper--nav--ul-dropdown" id="add-btn-dropdown">
                         <ul class="header__wrapper--nav--ul-dropdown-menu">

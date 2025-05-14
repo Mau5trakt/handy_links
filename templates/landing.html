@@ -1,0 +1,27 @@
+{% load static webpack_loader %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ PROJECT_NAME }}</title>
+
+    {% stylesheet_pack 'app' %}
+</head>
+<body>
+
+    <section class="landing container_wrapper">
+        <div class="landing__wrapper">
+            <p class="landing__wrapper--header" id="header">This is the header</p>
+            <p class="landing__wrapper--content" id="description"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab dignissimos exercitationem, expedita maiores minima nisi officiis quaerat qui quibusdam quod, similique, tempore vel voluptatum! Exercitationem magnam maiores porro quod reprehenderit!</p>
+
+        </div>
+    </section>
+
+    {% javascript_pack 'landing' %}
+
+
+</body>
+</html>
