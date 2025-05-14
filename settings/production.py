@@ -1,8 +1,5 @@
-#from handy_links.settings.base import *
 from .base import *
 
-
-STATIC_ROOT = BASE_DIR / 'static'
 DEBUG=False
 
 ADMINS = [
