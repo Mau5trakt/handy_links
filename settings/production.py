@@ -2,6 +2,8 @@ from .base import *
 
 DEBUG=False
 
+STATIC_ROOT = BASE_DIR / 'frontend/build'
+
 ADMINS = [
     ("Enrique Alemany", "alemanye04@gmail.com")
 ]
