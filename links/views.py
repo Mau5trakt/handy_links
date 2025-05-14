@@ -418,3 +418,11 @@ class AsyncSearchView(LoginRequiredMixin ,View, JsonRequestResponseMixin):
 
 class NotFoundHandler(TemplateView):
     template_name = '404.html'
+
+class LandingView(TemplateView):
+    template_name = 'landing.html'
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        return context

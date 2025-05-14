@@ -10,10 +10,10 @@
         <p class="link-card__body-description" id="linkDescription">{{link.description}}</p>
     </div>
     <div class="link-card__footer">
-        <img src="{% static 'media/img/clip-attach-svgrepo-com.svg' %}" alt="clip icon" title="Copy to clipboard" id="copyLink">
+        <img src="{% static 'vendors/img/clip-attach-svgrepo-com.svg' %}" alt="clip icon" title="Copy to clipboard" id="copyLink">
         {% if request.user == link.owner or request.user == folder.owner %}
-            <img src="{% static 'media/img/pencil-svgrepo-com.svg' %}" alt="edit icon" title="Edit this link" id="editLink"  data-origin="card-icon">
-            <img src="{% static 'media/img/trash-can-svgrepo-com.svg' %}" alt="delete icon" title="Delete this link" id="deleteLink">
+            <img src="{% static 'vendors/img/pencil-svgrepo-com.svg' %}" alt="edit icon" title="Edit this link" id="editLink"  data-origin="card-icon">
+            <img src="{% static 'vendors/img/trash-can-svgrepo-com.svg' %}" alt="delete icon" title="Delete this link" id="deleteLink">
         {% endif %}
     </div>
 </div>

@@ -25,7 +25,12 @@ class TrafficDashboardView(SuperuserRequiredMixin, TemplateView):
         return context
 
 
+class WebpackRenderView(SuperuserRequiredMixin, TemplateView):
+    template_name = 'traffic/wp.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return  context
 
         
 

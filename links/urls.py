@@ -24,6 +24,7 @@ urlpatterns = [
     path('search', views.SearchView.as_view(), name='search'),
     path('folders', views.AllUserFolders.as_view(), name='get_folders'),
     path("search-form", views.SearchRedirectView.as_view(), name="search_form"),
-    path('404', views.NotFoundHandler.as_view(), kwargs={"exception": Exception("aver")})
+    path('404', views.NotFoundHandler.as_view(), kwargs={"exception": Exception("aver")}),
+    #path('landing', views.LandingView.as_view(), name='landing')
 
 ]

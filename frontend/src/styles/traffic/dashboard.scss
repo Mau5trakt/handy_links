@@ -1,0 +1,45 @@
+@use "../globals" as *;
+
+.dashboard{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  &__wrapper{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 1440px;
+    width: 100%;
+    gap: 15px;
+
+    &--header{
+      display: flex;
+      justify-content: space-between;
+      &--description{
+
+      }
+      &--permalink{
+        font-size: 14px;
+        color: $blue;
+        text-decoration: none;
+        box-shadow: none;
+        padding: 0;
+        height: auto;
+        width: auto;
+        border-radius: 0;
+        cursor: pointer;
+
+        &:hover{
+          opacity: 0.8;
+        }
+
+      }
+
+    }
+    &--table{
+      height: 15rem;
+      max-width: 50%;
+      overflow: auto
+    }
+  }
+}

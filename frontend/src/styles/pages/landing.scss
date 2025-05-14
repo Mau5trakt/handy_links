@@ -1,0 +1,28 @@
+@use "../globals" as *;
+
+.landing{
+  font-family: Arial, sans-serif;
+
+  display: flex;
+  justify-content: center;
+
+
+  &__wrapper{
+    display: flex;
+    max-width: 1440px;
+    width: 100%;
+    padding: 100px;
+
+    &--header{
+      width: 100%;
+      font-size: 40px;
+
+    }
+
+    &--content{
+      width: 100%;
+      font-size: 22px;
+    }
+  }
+
+}

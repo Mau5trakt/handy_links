@@ -1,0 +1,407 @@
+@use "../globals" as *;
+
+.header {
+  background-color: $bg-principal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column wrap;
+  box-sizing: border-box;
+  top: 0;
+  height: 56px;
+  border-bottom: 1px solid #39424b;
+  padding: 0 20px;
+
+
+  @include mquery($bp-lg) {
+    padding: 0 20px;
+  }
+
+  @include mquery($bp-md) {
+    padding: 0 10px;
+  }
+
+  @include mquery($bp-sm) {
+    padding: 0 10px;
+  }
+
+
+  &__wrapper {
+    max-width: 1440px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    height: 100%;
+    align-items: center;
+
+
+    &--nav {
+      display: flex;
+      gap: 20px;
+
+      @include mquery($bp-sm) {
+        width: 100%;
+        position: relative;
+      }
+
+      &-menu-toggle {
+        display: none;
+
+        @include mquery($bp-sm) {
+          display: block;
+
+        }
+
+        img {
+          height: 30px;
+          width: 30px;
+          display: none;
+
+
+          @include mquery($bp-sm) {
+            display: block;
+            cursor: pointer;
+          }
+
+        }
+
+        &--container {
+          position: absolute;
+          top: 50px;
+          width: calc(100vw - 5px);
+          left: -10px;
+          display: none;
+
+          flex-direction: column;
+          border-radius: 5px;
+          background: #282e33;
+          border: 1px solid $border;
+          padding: 5px 10px;
+          box-sizing: border-box;
+          gap: 10px;
+
+          &--element {
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 40px;
+            line-height: 20px;
+            cursor: pointer;
+            padding: 10px 8px;
+            font-family: $font3;
+            font-size: 1rem;
+            color: $text;
+
+            &:last-child {
+              color: $red;
+              text-decoration: none;
+            }
+
+            &--form-ctn {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              gap: 10px;
+              padding: 0;
+
+              &-input {
+                flex-grow: 1;
+                background: #282e33;
+              }
+
+              &-submit {
+                flex-grow: 2;
+                background: $blue;
+                height: 32px;
+
+                border: 1px solid $blue;
+                cursor: pointer;
+                border-radius: 3px;
+                position: relative;
+                color: $bg-principal;
+                font-size: 14px;
+                padding: 0 10px;
+                font: $font3;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                &:hover {
+                  background: #85b8ff;
+                  transition: all 0.4s ease;
+                }
+
+              }
+
+
+            }
+
+
+            &:hover {
+              background: #323940;
+              transition: all 0.4s ease;
+            }
+
+          }
+
+
+        }
+
+      }
+
+      &-logo {
+        color: $text;
+        font-family: $font3;
+        font-size: 22px;
+        text-align: center;
+        text-decoration: none;
+
+        @include mquery($bp-sm) {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+      }
+
+      &--ul {
+        display: flex;
+        gap: 10px;
+
+        @include mquery($bp-sm) {
+          display: none;
+
+        }
+
+        &-button {
+          background: $blue;
+          height: 32px;
+
+          border: 1px solid $blue;
+          cursor: pointer;
+          border-radius: 3px;
+          position: relative;
+          color: $bg-principal;
+          font-size: 14px;
+          padding: 0 10px;
+          font: $font3;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          &:hover {
+            background: #85b8ff;
+            transition: all 0.4s ease;
+          }
+
+          @include mquery($bp-sm) {
+            display: none;
+
+          }
+
+          &-span {
+            font-size: 14px;
+            font-family: $font3;
+            flex: 1;
+          }
+
+          &-icon {
+            flex: 1;
+            height: 24px;
+            width: 24px;
+
+          }
+        }
+
+        &-dropdown {
+          position: absolute;
+          border: 1px solid $border-input;
+          top: 48px;
+          border-radius: 5px;
+          background: #282e33;
+          display: none;
+          z-index: 999;
+
+
+          &-menu {
+            width: 150px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 5px 0;
+
+
+            &-link {
+              width: 100%;
+              box-sizing: border-box;
+              min-height: 40px;
+              line-height: 20px;
+              cursor: pointer;
+              padding: 10px 8px;
+
+              &:hover {
+                background: #323940;
+                transition: all 0.4s ease;
+              }
+
+              &-text {
+                font-size: 14px;
+                font-family: $font3;
+                color: $text;
+              }
+
+
+            }
+          }
+        }
+
+        &-auth-links{
+          height: 100%;
+          display: flex;
+          align-items: center;
+          gap: 15px;
+
+          @include mquery($bp-sm){
+            gap: 5px;
+          }
+
+          &--login, &--register{
+            @extend %permalink-reset;
+            padding: 0 10px;
+            height: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            white-space: nowrap;
+          }
+
+          &--login{
+            border: 1px solid $bg-principal;
+
+            &:hover{
+              background: #2c333a;
+              border-color: #2c333a;
+              border-radius: 3px;
+            }
+          }
+
+          &--register{
+              color: $blue !important;
+              border: 1px solid $blue;
+              border-radius: 3px;
+
+              &:hover{
+                background: $blue;
+                color: $bg-principal !important;
+              }
+          }
+
+
+        }
+      }
+    }
+
+    &--div {
+      display: flex;
+      gap: 20px;
+
+      @include mquery($bp-sm) {
+        display: none;
+      }
+
+      &-search {
+        width: 100%;
+
+        &-form {
+          &--input {
+            border: 1px solid $border-input;
+            border-radius: 5px;
+            height: 32px;
+            padding: 0 15px;
+            box-sizing: border-box;
+            outline: none;
+            font-family: $font3;
+            background: #22272b;
+            color: $text;
+            width: 100%;
+          }
+        }
+      }
+
+      &-icons {
+        display: flex;
+        gap: 10px;
+        cursor: pointer;
+        position: relative;
+
+        img {
+          width: 30px;
+          height: 30px;
+        }
+
+        &--dropdown{
+          position: absolute;
+          box-sizing: border-box;
+          top: 50px;
+          right: 0;
+          min-width: 120px;
+          width: fit-content;
+          padding: 10px 0;
+          height: fit-content;
+          z-index: 1;
+          background: #282e33;
+          border-radius: 4px;
+          border: 1px solid $border-input;
+          display: none;
+
+          &--list{
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+
+            white-space: nowrap;
+
+            &-element{
+              display: flex;
+              flex-direction: column;
+              gap: 3px;
+              padding: 10px 8px;
+
+              &:first-child{
+                cursor: default;
+              }
+
+              &:first-child:hover{
+                background: none;
+              }
+
+              &:hover{
+                background: #323940;
+              }
+
+              &-username{
+                color: $blue;
+                font-size: 14px;
+              }
+
+              &-description{
+                font-size: 12px;
+                color: #5a6169;
+              }
+
+              &-link{
+                color: $text;
+              }
+
+            }
+
+          }
+
+
+        }
+      }
+    }
+  }
+}
