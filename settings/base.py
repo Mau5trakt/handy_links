@@ -136,10 +136,12 @@ USE_TZ = True
 STATIC_URL='/static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'frontend' / 'build' / 'static',               # Aquí están tus CSS/JS generados
+    BASE_DIR / 'frontend' / 'build' / 'static',    
+ 
 ]    
 
-STATIC_ROOT = BASE_DIR / "staticfiles" # Donde vuelca los archivos staticos
+#STATIC_ROOT = BASE_DIR / "staticfiles" # Donde vuelca los archivos staticos
+STATIC_ROOT = BASE_DIR / 'frontend' / 'src'
 
 
 WEBPACK_LOADER = {

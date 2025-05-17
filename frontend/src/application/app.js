@@ -5,7 +5,13 @@ import "../styles/project.scss";
 // We can import other JS file as we like
 //import Jumbotron from "../components/jumbotron";
 
+
+
 document.addEventListener("DOMContentLoaded", () => {
+  
+  console.log("Detectado Otro más")
+
+
   let openModal = false;
   let userToremove;
   let actionToSend;

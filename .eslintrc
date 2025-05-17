@@ -1,4 +1,4 @@
-{
+/*{
   "parser": "@babel/eslint-parser",
   "extends": [
     "eslint:recommended"
@@ -14,5 +14,25 @@
   },
   "rules": {
     "semi": 2
+  }
+}*/
+
+{
+  "parser": "@babel/eslint-parser",
+  "extends": [],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module",
+    "requireConfigFile": false
+  },
+  "rules": {
+    "semi": "off",
+    "no-unused-vars": "off",
+    "no-undef": "off",
+    "no-console": "off"
   }
 }
