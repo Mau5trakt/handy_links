@@ -1,0 +1,50 @@
+@use "../globals" as *;
+
+.landing-header{
+    
+
+    background-color: #EDF2FA;
+    height: 72px;
+    margin: 0 !important;
+
+    &__wrapper{
+        display: flex;
+        width: 100%;
+        max-width: 1440px;
+        &--navigation{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            &-list{
+                display: flex;
+                align-items: center;
+                &-element{
+                    padding: 1.5rem 1rem;
+                    color: $bg-principal;
+                    a{
+                        color: $bg-principal;
+                    }
+                    
+                }
+
+                .login{
+                    padding: 0.25rem 0.625rem;
+
+
+                }
+
+                .join{
+                    background-color: $blue;
+                    padding: 0.25rem 0.625rem;
+
+                }
+
+
+            }
+            
+        }
+    }
+
+    
+
+}

@@ -1,0 +1,18 @@
+{% load static %}
+<header class="landing-header container_wrapper">
+    <div class="landing-header__wrapper">
+        <nav class="landing-header__wrapper--navigation">
+            <ul class="landing-header__wrapper--navigation-list">
+                <li class="landing-header__wrapper--navigation-list-element" > {{PROJECT_NAME}} </li>
+                <li class="landing-header__wrapper--navigation-list-element"> <a href="#features">Features</a> </li>
+                <li class="landing-header__wrapper--navigation-list-element"> <a href="#blog">Blog</a> </li>
+                <li class="landing-header__wrapper--navigation-list-element"> <a href="#pricing">Pricing</a> </li>
+                <li class="landing-header__wrapper--navigation-list-element"> <a href="{% url "register" %}">Sign Up</a> </li>
+            </ul>
+            <ul class="landing-header__wrapper--navigation-list">
+                <li class="landing-header__wrapper--navigation-list-element login"><a href="">Login</a></li>
+                <li class="landing-header__wrapper--navigation-list-element join"><a href="">Join</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
