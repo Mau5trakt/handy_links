@@ -132,13 +132,18 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-STATIC_ROOT = BASE_DIR / 'frontend'
-STATIC_URL='/frontend/'
 
+STATIC_URL='/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'frontend' / 'build' / 'static',               # Aquí están tus CSS/JS generados
+]    
+
+STATIC_ROOT = BASE_DIR / "staticfiles" # Donde vuelca los archivos staticos
 
 
 WEBPACK_LOADER = {
-    'MANIFEST_FILE': BASE_DIR / 'frontend/build/manifest.json'
+    'MANIFEST_FILE': BASE_DIR / 'frontend/build/static/manifest.json'
 }
 
 # Default primary key field type
